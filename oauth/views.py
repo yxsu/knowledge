@@ -1,9 +1,8 @@
 from evernote.api.client import EvernoteClient
-
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
-
+from oauth.models import AuthUser
 EN_CONSUMER_KEY = 'suyuxin-9809'
 EN_CONSUMER_SECRET = 'f2541e0d8ea719ff'
 
@@ -15,9 +14,8 @@ def get_evernote_client(token=None):
         return EvernoteClient(
             consumer_key=EN_CONSUMER_KEY,
             consumer_secret=EN_CONSUMER_SECRET,
-            sandbox=True
+            sandbox=False
         )
-        EvernoteClient()
 
 
 def index(request):
@@ -41,11 +39,13 @@ def auth(request):
 def callback(request):
     try:
         client = get_evernote_client()
-        client.get_access_token(
+        
+        access_token = client.get_access_token(
             request.session['oauth_token'],
             request.session['oauth_token_secret'],
             request.GET.get('oauth_verifier', '')
         )
+        AuthUser(access_token=access_token).save()
     except KeyError:
         return redirect('/')
 
