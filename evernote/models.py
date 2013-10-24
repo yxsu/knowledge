@@ -1,0 +1,44 @@
+from django.db import models
+from evernote.edam.limits import constants
+
+
+class Tag(models.Model):
+    guid = models.CharField(max_length=constants.EDAM_GUID_LEN_MAX)
+    name = models.CharField(max_length=constants.EDAM_TAG_NAME_LEN_MAX)
+    parent_guid = models.CharField(max_length=constants.EDAM_GUID_LEN_MAX)
+    update_sequence_num = models.IntegerField()
+
+
+class Notebook(models.Model):
+    guid = models.CharField(max_length=constants.EDAM_GUID_LEN_MAX)
+    name = models.CharField(max_length=constants.EDAM_NOTEBOOK_NAME_LEN_MAX)
+    update_sequence_num = models.IntegerField()
+    default_notebook = models.BooleanField()
+    service_created = models.DateTimeField()
+    service_updated = models.DateTimeField()
+    published = models.BooleanField()
+    stack = models.CharField(max_length=constants.EDAM_NOTEBOOK_NAME_LEN_MAX)
+
+    def updateContent(notebook):
+        name = notebook.name
+        update_sequence_num = notebook.update_sequence_num
+        default_notebook = notebook.default_notebook
+        service_created = notebook.service_created
+        service_updated = notebook.service_updated
+        published = notebook.published
+        stack = notebook.stack
+
+
+class Note(models.Model):
+    guid = models.CharField(max_length=constants.EDAM_GUID_LEN_MAX)
+    title = models.CharField(max_length=constants.EDAM_NOTE_TITLE_LEN_MAX)
+    content = models.TextField(max_length=constants.EDAM_NOTE_CONTENT_LEN_MAX)
+    content_hash = models.CharField(max_length=constants.EDAM_HASH_LEN)
+    content_length = models.IntegerField()
+    created = models.DateTimeField()
+    updated = models.DateTimeField()
+    deleted = models.DateTimeField()
+    active = models.BooleanField()
+    update_sequence_num = models.IntegerField()
+    notebook = models.ForeignKey(Notebook)
+    tags = models.ManyToManyField(Tag)

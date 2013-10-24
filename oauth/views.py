@@ -3,8 +3,17 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
 from oauth.models import AuthUser
+from datetime import datetime
+from evernote.sync import updateNotebookList
 EN_CONSUMER_KEY = 'suyuxin-9809'
 EN_CONSUMER_SECRET = 'f2541e0d8ea719ff'
+
+
+def get_current_client():
+    """for internal use
+    """
+    token = AuthUser.objects.order_by('-time')[0].access_token
+    return get_evernote_client(token)
 
 
 def get_evernote_client(token=None):
@@ -39,20 +48,18 @@ def auth(request):
 def callback(request):
     try:
         client = get_evernote_client()
-        
         access_token = client.get_access_token(
             request.session['oauth_token'],
             request.session['oauth_token_secret'],
             request.GET.get('oauth_verifier', '')
         )
-        AuthUser(access_token=access_token).save()
+        AuthUser.objects.create(access_token=access_token,
+                                user_name='suyuxin',
+                                time=datetime.today())
     except KeyError:
         return redirect('/')
-
-    note_store = client.get_note_store()
-    notebooks = note_store.listNotebooks()
-
-    return render_to_response('oauth/callback.html', {'notebooks': notebooks})
+    updateNotebookList()
+    return redirect('/notebook/')
 
 
 def reset(request):
