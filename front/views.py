@@ -15,7 +15,10 @@ def index(request):
 
 
 def list_notebook(request):
-    updateNotebookList()
     notebook_list = listNotebooks()
     return render_to_response('list_notebook.html',
                               {'notebook_list': notebook_list})
+
+
+def show_note(request):
+    return render_to_response('note.html')

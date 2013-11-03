@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index),
     url(r'^notebook/$', views.list_notebook),
+    url(r'^note/$', views.show_note),
     url(r'^auth/', include('oauth.urls')),
                        
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
