@@ -1,6 +1,6 @@
 from datetime import datetime
 from evernote.models import *
-from oauth.views import *
+from oauth.views import get_current_client
 
 
 def updateNotebookList():
@@ -9,12 +9,12 @@ def updateNotebookList():
     for notebook in note_store.listNotebooks():
         if notebook.guid in local_guid_set:
             local = Notebook.objects.get(guid=notebook.guid)
-            if notebook.update_sequence_num > local.update_sequence_num:
+            if notebook.updateSequenceNum > local.update_sequence_num:
                 local.updateContent(notebook)
                 local.save()
         else:
             new = Notebook(guid=notebook.guid)
-            new.updateContent()
+            new.updateContent(notebook)
             new.save()
             
 

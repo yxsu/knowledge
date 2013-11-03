@@ -1,5 +1,6 @@
 from django.db import models
 from evernote.edam.limits import constants
+from datetime import datetime
 
 
 class Tag(models.Model):
@@ -19,14 +20,17 @@ class Notebook(models.Model):
     published = models.BooleanField()
     stack = models.CharField(max_length=constants.EDAM_NOTEBOOK_NAME_LEN_MAX)
 
-    def updateContent(notebook):
-        name = notebook.name
-        update_sequence_num = notebook.update_sequence_num
-        default_notebook = notebook.default_notebook
-        service_created = notebook.service_created
-        service_updated = notebook.service_updated
-        published = notebook.published
-        stack = notebook.stack
+    def updateContent(self, notebook):
+        self.name = notebook.name
+        self.update_sequence_num = notebook.updateSequenceNum
+        self.default_notebook = notebook.defaultNotebook
+        self.service_created = datetime.utcfromtimestamp(notebook.serviceCreated/1000)
+        self.service_updated = datetime.utcfromtimestamp(notebook.serviceUpdated/1000)
+        self.published = False
+        if notebook.stack:
+            self.stack = notebook.stack
+        else:
+            self.stack = ''
 
 
 class Note(models.Model):

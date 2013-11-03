@@ -4,7 +4,6 @@ from django.shortcuts import render_to_response
 from django.shortcuts import redirect
 from oauth.models import AuthUser
 from datetime import datetime
-from evernote.sync import updateNotebookList
 EN_CONSUMER_KEY = 'suyuxin-9809'
 EN_CONSUMER_SECRET = 'f2541e0d8ea719ff'
 
@@ -58,7 +57,6 @@ def callback(request):
                                 time=datetime.today())
     except KeyError:
         return redirect('/')
-    updateNotebookList()
     return redirect('/notebook/')
 
 
