@@ -9,7 +9,6 @@ $(function(){
 		cache: false
 	});
 	/**************启动Title自定义提示***************/
-	/*
 	$("[title],[original-title]").live("mouseover", function(){
 		var target = $(this);
 		if(target.attr("title")){
@@ -47,7 +46,7 @@ $(function(){
 		}
 	}).live("mouseout", function(){
 		$("#hover_tip").hide();
-	});*/
+	});
 	/**************启动通知加载***************/
 	var badges = $(".notification_badge");
 	if(badges.length){
@@ -55,7 +54,6 @@ $(function(){
 	}
 	/**************Header导航***************/
 	var leaveTimeout;
-	/*
 	$("#header-user").live("mouseenter",function(){
 		clearTimeout(leaveTimeout);
 		var target = $(this);
@@ -75,11 +73,10 @@ $(function(){
 	}).live("mouseleave", function(){
 		var target = $(this);
 		leaveTimeout = setTimeout(function(){$("#header_user_menu").popMenu("close");target.removeClass("droped");}, 200);
-	}); */
+	});
 	/**************启动user quickinfo***************/
 	var userInfoRequest;
 	var closeUserInfoTimeout;
-	/*
 	$(".user_quickinfo").live("mouseenter", function(){
 		var target = $(this);
 		var userId = target.attr("userId");
@@ -126,7 +123,6 @@ $(function(){
 			$("#userQuickInfo").popMenu("close");
 		},400);
 	});
-*/
 	
 	function getQuickInfoBox(){
 		var box = $("#userQuickInfo");
