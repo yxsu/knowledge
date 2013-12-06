@@ -3,10 +3,13 @@
 	{% load staticfiles %}
 	<title>Knowledge -- powered by suyuxin</title>
 	<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" media="screen">
+	<link href="{% static "css/global.css" %}" ref="stylesheet">
+	<link href="{% static "css/designer.css" %}" ref="stylesheet">
+	<link href="{% static "css/ui.css" %}" ref="stylesheet">
 	<link href="{% static "css/note.css" %}" ref="stylesheet">
 	<script src="{% static "js/plugins/jquery-2.0.3.min.js" %}"></script>
 	<script src="{% static "js/plugins/bootstrap.min.js" %}"></script>
-	<script src="{% static "js/plugins/jcanvas.min.js" %}"></script>
+
 	<script type="text/x-mathjax-config">
 		 MathJax.Hub.Config({
     		extensions: ["tex2jax.js"],
@@ -15,11 +18,558 @@
   		});
 	</script>
 	<script src="{% static "js/plugins/mathjax/MathJax.js" %}"></script>
-	<script src="{% static "js/note.js" %}"></script>
+	<script src="{% static "js/util.js" %}" type="text/javascript" charset="UTF-8"></script>
+	<script src="{% static "js/schema.js" %}" type="text/javascript" charset="UTF-8"></script>
+	<script src="{% static "js/basic.js" %}" type="text/javascript" charset="UTF-8"></script>
+	<script src="{% static "js/note_core.js" %}" type="text/javascript" charset="UTF-8"></script>
+	<script src="{% static "js/designer_event.js" %}" type="text/javascript" charset="UTF-8"></script>
+	<script src="{% static "js/designer_function.js" %}" type="text/javascript" charset="UTF-8"></script>
+	<script src="{% static "js/designer_ui.js" %}" type="text/javascript" charset="UTF-8"></script>
+	<script src="{% static "js/note.js" %}" type="text/javascript" charset="UTF-8"></script>
 </head>
 <body>
-	there are $x = {-b \pm \sqrt{b^2 - 4ac} \over 2a }. $
-	<button type="button" class="btn btn-primary" id="test">Click me!</button>
-	<canvas id="a"></canvas>
+	<h1 style="display: none;">Online Diagramming</h1>
+<div id="designer_header">
+	<a class="btn_back" href="http://www.processon.com/diagraming/back?id=529ec03b0cf20042951b4052" title="Back"><span class="ico ico_goback"></span></a>
+	<div class="row row1">
+		<div id="title_container">
+			<span class="diagram_title">rapmf</span>
+		</div>
+	</div>
+	<div class="row row2 menubar">
+		<ul id="menu_bar">
+			<li id="menu_bar_file" menu="bar_list_file">File</li>
+			<li id="menu_bar_edit" menu="bar_list_edit">Edit</li>
+			<li id="menu_bar_view" menu="bar_list_view">View</li>
+			<li id="menu_bar_insert" menu="bar_list_insert">Insert</li>
+			<li id="menu_bar_page" menu="bar_list_page">Page</li>
+			<li id="menu_bar_arrange" menu="bar_list_arrange">Arrange</li>
+			<li id="menu_bar_help" menu="bar_list_help">Help</li>
+		</ul>
+		<div id="saving_tip">All changes saved</div>
+	</div>
+	<div class="toolbar">
+		<!-- Clipboard -->
+		<div original-title="Undo (Ctrl+Z)" id="bar_undo" class="toolbar_button"><div class="ico undo"></div></div>
+		<div id="bar_redo" class="toolbar_button disabled" title="Redo (Ctrl+Y)"><div class="ico redo"></div></div>
+		<div original-title="Brush (Ctrl+Shift+B)" id="bar_brush" class="toolbar_button disabled"><div class="ico brush"></div></div>
+		<div class="toolbar_devider"></div>
+		
+		<!-- Font -->
+		<div original-title="Font" id="bar_font_family" class="toolbar_button disabled" style="width: 80px;"><div class="text_content">Arial</div><div class="ico ico_dropdown"></div></div>
+		<div class="toolbar_small_devider"></div>
+		<div old="13px" max="100" min="12" id="bar_font_size" title="Font size" class="spinner disabled" style="width: 50px;"><div class="spinner_input"><input value="13px" disabled="disabled"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+		<div class="toolbar_small_devider"></div>
+		<div original-title="Bold (Ctrl+B)" id="bar_font_bold" class="toolbar_button disabled"><div class="ico bold"></div></div>
+		<div original-title="Italic (Ctrl+I)" id="bar_font_italic" class="toolbar_button disabled"><div class="ico italic"></div></div>
+		<div original-title="Underline (Ctrl+U)" id="bar_font_underline" class="toolbar_button disabled"><div class="ico underline"></div></div>
+		<div id="bar_font_color" title="Text color" class="toolbar_button drop_button disabled">
+			<div class="ico fontcolor"></div>
+			<div class="btn_color" style="background-color: rgb(50,50,50)"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div original-title="Align" id="bar_font_align" class="toolbar_button drop_button disabled">
+			<div class="ico alignleft"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div class="toolbar_devider"></div>
+		
+		<!-- Style -->
+		<div id="bar_fill" title="Fill" class="toolbar_button drop_button disabled">
+			<div class="ico fillcolor"></div>
+			<div class="btn_color" style="background-color: rgb(255,255,255)"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div id="bar_line_color" title="Line color" class="toolbar_button drop_button disabled">
+			<div class="ico linecolor"></div>
+			<div class="btn_color" style="background-color: rgb(50,50,50)"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div id="bar_line_width" title="Line width" class="toolbar_button drop_button disabled">
+			<div class="ico linewidth"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div original-title="Line dash" id="bar_line_style" class="toolbar_button drop_button disabled">
+			<div class="ico linedash"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div class="toolbar_devider"></div>
+		
+		<!-- Linker Style -->
+		<div original-title="Line type" id="bar_linkertype" class="toolbar_button drop_button disabled">
+			<div class="ico linkertype_broken"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div original-title="Line beginning" id="bar_beginarrow" class="toolbar_button drop_button disabled">
+			<div class="ico ico_arrow larrow_none"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div original-title="Line ending" id="bar_endarrow" class="toolbar_button drop_button disabled">
+			<div class="ico ico_arrow rarrow_none"></div>
+			<div class="ico ico_dropdown"></div>
+		</div>
+		<div class="toolbar_devider"></div>
+		<div original-title="Bring To Front (Ctrl+] )" id="bar_front" class="toolbar_button disabled"><div class="ico ico_front"></div></div>
+		<div original-title="Send To Back (Ctrl+[ )" id="bar_back" class="toolbar_button disabled"><div class="ico ico_back"></div></div>
+		<div class="toolbar_devider"></div>
+		<div original-title="Lock (Ctrl+L)" id="bar_lock" class="toolbar_button disabled"><div class="ico ico_lock"></div></div>
+		<div id="bar_unlock" title="Unlock (Ctrl+Shift+L)" class="toolbar_button disabled"><div class="ico ico_unlock"></div></div>
+		<div class="toolbar_small_devider"></div>
+		<div id="bar_link" title="Insert Link" class="toolbar_button disabled"><div class="ico ico_link"></div></div>
+	</div>
+</div>
+<div id="designer">
+	<div style="height: 847px;" id="shape_panel" class="layout"><div class="panel_container"><h3 class="panel_title"><div class="ico ico_accordion"></div>Basic Shape</h3><div id="panel_basic" class="content"><div class="panel_box" shapename="text"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="note"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="round"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="rectangle"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="roundRectangle"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="triangle"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="polygon"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="hexagon"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="octagon"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="pentagon"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="cross"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="cloud"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="braces"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="parentheses"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="rightBrace"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="leftBrace"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="apqc"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="teardrop"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="singleLeftArrow"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="singleRightArrow"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="doubleHorizontalArrow"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="singleUpArrow"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="singleDownArrow"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="doubleVerticalArrow"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="backArrow"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="rightBackArrow"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="corner"><canvas class="panel_item" width="30" height="30"></canvas></div></div></div>
+</div>
+	
+	<div id="designer_viewport">
+		
+		<div style="height: 847px;" id="designer_layout" class="layout">
+			<div style="width: 1050px; height: 1500px; padding: 1000px; cursor: default;" id="canvas_container">
+				<div style="background-color: rgb(242, 242, 242);" id="designer_canvas">
+					<canvas height="1500" width="1050" id="designer_grids"></canvas>
+					<canvas id="navigation_canvas" width="120px" height="160px"></canvas>
+				</div>
+			</div>
+			<div id="shape_img_container"></div>
+			<div id="layout_block"></div>
+		</div>
+		<div style="display: none; top: 21.5px;" current="hexagon" id="shape_thumb" class="menu"><canvas height="90" width="180"></canvas><div>Hexagon</div></div>
+		<div style="right: 13px;" id="dock">
+			<div class="dock_header"></div>
+			<div class="dock_buttons">
+				<div id="dock_btn_navigator" class="toolbar_button selected" onclick="Dock.showView('navigator')"><div class="ico ico_dock_nav"></div></div>
+				<div id="dock_btn_graphic" class="toolbar_button" onclick="Dock.showView('graphic')"><div class="ico ico_dock_styles"></div></div>
+				<div id="dock_btn_metric" class="toolbar_button" onclick="Dock.showView('metric')"><div class="ico ico_dock_metric"></div></div>
+				<div id="dock_btn_attribute" class="toolbar_button" onclick="Dock.showView('attribute')"><div class="ico ico_dock_attribute"></div></div>
+				<div id="dock_btn_page" class="toolbar_button" onclick="Dock.showView('page')"><div class="ico ico_dock_page"></div></div>
+				<div id="dock_btn_history" class="toolbar_button" onclick="Dock.showView('history')"><div class="ico ico_history"></div></div>
+			</div>
+		</div>
+	</div>
+<div style="left: 0px; top: 0px; width: 149px; height: 847px; display: none;" id="creating_shape_container"><canvas style="left: 335px; top: 518px;" id="creating_shape_canvas" width="30" height="30"></canvas></div></div>
+
+<div id="ui_container">
+	<ul id="bar_list_file" class="menu list options_menu noico">
+		<li ac="rename">Rename Diagram</li>
+		<li class="devider"></li>
+		<li ac="saveAs">Save As...</li>
+		<li ac="export">Download As...</li>
+		<li class="devider"></li>
+		<li ac="close">Close</li>
+	</ul>
+	<ul id="bar_list_edit" class="menu list options_menu">
+		<li class="" ac="undo"><div class="ico undo"></div>Undo<div class="extend">Ctrl+Z</div></li>
+		<li class="disabled" ac="redo"><div class="ico redo"></div>Redo<div class="extend">Ctrl+Y</div></li>
+		<li class="devider"></li>
+		<li class="disabled" ac="cut"><div class="ico cut"></div>Cut<div class="extend">Ctrl+X</div></li>
+		<li class="disabled" ac="copy"><div class="ico copy"></div>Copy<div class="extend">Ctrl+C</div></li>
+		<li class="disabled" ac="paste"><div class="ico paste"></div>Paste<div class="extend">Ctrl+V</div></li>
+		<li class="disabled" ac="duplicate">Duplicate<div class="extend">Ctrl+D</div></li>
+		<li class="disabled" ac="brush"><div class="ico brush"></div>Brush<div class="extend">Ctrl+Shift+B</div></li>
+		<li class="devider"></li>
+		<li ac="selectall">Select All<div class="extend">Ctrl+A</div></li>
+		<li class="disabled" ac="delete"><div class="ico remove"></div>Delete<div class="extend">Delete/Backspace</div></li>
+	</ul>
+	<ul id="bar_list_view" class="menu list options_menu">
+		<li ac="zoom" zoom="in"><div class="ico zoomin"></div>Zoom In<div class="extend">Ctrl+(&gt;)</div></li>
+		<li ac="zoom" zoom="out"><div class="ico zoomout"></div>Zoom Out<div class="extend">Ctrl+(&lt;)</div></li>
+		<li class="devider"></li>
+		<li ac="zoom" zoom="0.5" class="static">50%</li>
+		<li ac="zoom" zoom="0.75" class="static">75%</li>
+		<li ac="zoom" zoom="1" class="static">100%</li>
+		<li ac="zoom" zoom="1.5" class="static">150%</li>
+		<li ac="zoom" zoom="2" class="static">200%</li>
+		<li class="devider"></li>
+		<li ac="zoom" zoom="1">Reset Zoom</li>
+	</ul>
+	<ul id="bar_list_insert" class="menu list options_menu">
+		<li ac="insert" in="text"><div class="ico text"></div>Text<div class="extend">T</div></li>
+		<li ac="insert" in="image"><div class="ico ico_img"></div>Image<div class="extend">I</div></li>
+		<li ac="insert" in="line"><div class="ico linkertype_normal"></div>Line<div class="extend">L</div></li>
+	</ul>
+
+	</div></li>
+		<li>
+			Page Size<div class="extend ex_arrow">►</div>
+			<ul id="bar_list_pagesize" class="menu list extend_menu menu_ico">
+				<li ac="set_page_size" w="1500" h="2100">A3(1500x2100)</li>
+				<li ac="set_page_size" w="1050" h="1500">A4(1050x1500)</li>
+				<li ac="set_page_size" w="750" h="1050">A5(750x1050)</li>
+				<li class="devider"></li>
+				<li class="menu_text" id="page_size_custom">Customize</li>
+				<li class="menu_text" style="line-height: 30px;"><span class="lbl">W:</span><div old="200px" min="200" id="page_size_w" class="spinner active" style="width: 75px;"><div class="spinner_input"><input value="200px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div></li>
+				<li class="menu_text" style="line-height: 30px;"><span class="lbl">H:</span><div old="200px" min="200" id="page_size_h" class="spinner active" style="width: 75px;"><div class="spinner_input"><input value="200px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div></li>
+			</ul>
+		</li>
+		<li>
+			<div class="ico padding"></div>
+			Padding<div class="extend ex_arrow">►</div>
+			<ul id="bar_list_padding" class="menu list extend_menu menu_ico">
+				<li ac="set_page_padding" p="0">0px</li>
+				<li ac="set_page_padding" p="20">20px</li>
+				<li ac="set_page_padding" p="40">40px</li>
+				<li ac="set_page_padding" p="60">60px</li>
+				<li ac="set_page_padding" p="80">80px</li>
+				<li ac="set_page_padding" p="100">100px</li>
+			</ul>
+		</li>
+		<li class="devider"></li>
+		<li ac="set_page_showgrid"><div class="ico ico_selected"></div>Show Grid</li>
+		<li>
+			<div class="ico gridsize"></div>
+			Grid Size<div class="extend ex_arrow">►</div>
+			<ul id="bar_list_gridsize" class="menu list extend_menu menu_ico">
+				<li ac="set_page_gridsize" s="10">Small</li>
+				<li ac="set_page_gridsize" s="15">Normal</li>
+				<li ac="set_page_gridsize" s="20">Large</li>
+				<li ac="set_page_gridsize" s="30">Very Large</li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="bar_list_arrange" class="menu list options_menu">
+		<li class="disabled" ac="front"><div class="ico ico_front"></div>Bring To Front<div class="extend">Ctrl+]</div></li>
+		<li class="disabled" ac="back"><div class="ico ico_back"></div>Send To Back<div class="extend">Ctrl+[</div></li>
+		<li class="disabled" ac="forward">Bring Forward<div class="extend">Ctrl+Shift+]</div></li>
+		<li class="disabled" ac="backward">Send Backward<div class="extend">Ctrl+Shift+[</div></li>
+		<li class="devider"></li>
+		<li class="disabled" id="bar_arrange_align">
+			Align Shapes<div class="extend ex_arrow">►</div>
+			<ul class="menu list extend_menu">
+				<li ac="align_shape" al="left">Left</li>
+				<li ac="align_shape" al="center">Center</li>
+				<li ac="align_shape" al="right">Right</li>
+				<li class="devider"></li>
+				<li ac="align_shape" al="top">Top</li>
+				<li ac="align_shape" al="middle">Middle</li>
+				<li ac="align_shape" al="bottom">Bottom</li>
+			</ul>
+		</li>
+		<li class="disabled" id="bar_arrange_dist">
+			Distribute Shapes<div class="extend ex_arrow">►</div>
+			<ul class="menu list extend_menu">
+				<li ac="distribute_shape" dis="h">Horizontally</li>
+				<li ac="distribute_shape" dis="v">Vertically</li>
+			</ul>
+		</li>
+		<li class="disabled" id="bar_arrange_match">
+			Match Size<div class="extend ex_arrow">►</div>
+			<ul class="menu list extend_menu">
+				<li ac="match_size" w="auto" h="">Width</li>
+				<li ac="match_size" w="" h="auto">Height</li>
+				<li ac="match_size" w="auto" h="auto">Width And Height</li>
+				<li ac="match_size" custom="true">Customize</li>
+			</ul>
+		</li>
+		<li class="devider"></li>
+		<li class="disabled" ac="lock"><div class="ico ico_lock"></div>Lock<div class="extend">Ctrl+L</div></li>
+		<li class="disabled" ac="unlock"><div class="ico ico_unlock"></div>Unlock<div class="extend">Ctrl+Shift+L</div></li>
+		<li class="devider"></li>
+		<li class="disabled" ac="group">Group<div class="extend">Ctrl+G</div></li>
+		<li class="disabled" ac="ungroup">Ungroup<div class="extend">Ctrl+Shift+G</div></li>
+	</ul>
+	<ul id="bar_list_help" class="menu list options_menu noico">
+		<li ac="hotkey">Hotkey Reference</li>
+		<li ac="getting_started">Getting Started</li>
+		<li ac="feedback">Send Feedback</li>
+	</ul>
+	<ul id="font_list" class="menu list menu_ico" style="display: none;">
+		<li style="font-family: Arial">Arial</li>
+		<li style="font-family: Verdana">Verdana</li>
+		<li style="font-family: Georgia">Georgia</li>
+		<li style="font-family: Times New Roman">Times New Roman</li>
+		<li style="font-family: Courier New">Courier New</li>
+		<li style="font-family: Impact">Impact</li>
+		<li style="font-family: Comic Sans MS">Comic Sans MS</li>
+		<li style="font-family: Tahoma">Tahoma</li>
+		<li style="font-family: Garamond">Garamond</li>
+		<li style="font-family: Lucida Console">Lucida Console</li>
+		
+	</ul>
+	<ul id="font_size_list" class="menu list" style="display: none;">
+		<li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>14</li><li>18</li><li>24</li><li>30</li><li>36</li><li>48</li><li>60</li><li>72</li>
+	</ul>
+	<ul id="font_align_list" class="menu list" style="display: none;">
+		<li cate="textAlign" al="left"><div class="ico alignleft"></div></li>
+		<li cate="textAlign" al="center"><div class="ico aligncenter"></div></li>
+		<li cate="textAlign" al="right"><div class="ico alignright"></div></li>
+		<li cate="vAlign" al="top"><div class="ico aligntop"></div></li>
+		<li cate="vAlign" al="middle"><div class="ico alignmiddle"></div></li>
+		<li cate="vAlign" al="bottom"><div class="ico alignbottom"></div></li>
+	</ul>
+	<ul id="line_width_list" class="menu list menu_ico" style="display: none;">
+		<li>0px</li>
+		<li>1px</li>
+		<li>2px</li>
+		<li>3px</li>
+		<li>4px</li>
+		<li>5px</li>
+		<li>6px</li>
+		<li>8px</li>
+		<li>10px</li>
+	</ul>
+	<ul id="line_style_list" class="menu list menu_ico" style="display: none;">
+		<li line="solid"><div class="ico linestyle linesolid"></div></li>
+		<li line="dashed"><div class="ico linestyle linedashed"></div></li>
+		<li line="dot"><div class="ico linestyle linedot"></div></li>
+		<li line="dashdot"><div class="ico linestyle linedashdot"></div></li>
+	</ul>
+	<ul id="line_type_list" class="menu list" style="display: none;">
+		<li tp="broken"><div class="ico linkertype_broken"></div></li>
+		<li tp="curve"><div class="ico linkertype_curve"></div></li>
+		<li tp="normal"><div class="ico linkertype_normal"></div></li>
+	</ul>
+	<ul id="beginarrow_list" class="menu list menu_ico" style="display: none;">
+		<li arrow="none"><div class="ico ico_arrow larrow_none"></div></li>
+		<li arrow="solidArrow"><div class="ico ico_arrow larrow_solidarrow"></div></li>
+		<li arrow="dashedArrow"><div class="ico ico_arrow larrow_dashedarrow"></div></li>
+		<li arrow="normal"><div class="ico ico_arrow larrow_normal"></div></li>
+		<li arrow="solidDiamond"><div class="ico ico_arrow larrow_soliddiamond"></div></li>
+		<li arrow="dashedDiamond"><div class="ico ico_arrow larrow_dasheddiamond"></div></li>
+		<li arrow="solidCircle"><div class="ico ico_arrow larrow_solidcircle"></div></li>
+		<li arrow="dashedCircle"><div class="ico ico_arrow larrow_dashedcircle"></div></li>
+		<li arrow="cross"><div class="ico ico_arrow larrow_cross"></div></li>
+	</ul>
+	<ul id="endarrow_list" class="menu list menu_ico" style="display: none;">
+		<li arrow="none"><div class="ico ico_arrow rarrow_none"></div></li>
+		<li arrow="solidArrow"><div class="ico ico_arrow rarrow_solidarrow"></div></li>
+		<li arrow="dashedArrow"><div class="ico ico_arrow rarrow_dashedarrow"></div></li>
+		<li arrow="normal"><div class="ico ico_arrow rarrow_normal"></div></li>
+		<li arrow="solidDiamond"><div class="ico ico_arrow rarrow_soliddiamond"></div></li>
+		<li arrow="dashedDiamond"><div class="ico ico_arrow rarrow_dasheddiamond"></div></li>
+		<li arrow="solidCircle"><div class="ico ico_arrow rarrow_solidcircle"></div></li>
+		<li arrow="dashedCircle"><div class="ico ico_arrow rarrow_dashedcircle"></div></li>
+		<li arrow="cross"><div class="ico ico_arrow rarrow_cross"></div></li>
+	</ul>
+	<div id="hotkey_list" class="dialog">
+		<div class="dialog_header">Hotkey Reference</div>
+		<div class="dialog_content">
+			<div class="hotkey_content">
+				<span class="hotkey_line hotkey_group">General </span>
+				<span class="hotkey_line">
+					<span class="hotkey">Alt</span><span class="hotkey_desc">Hold down alt, click and drag to pan around the page </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl</span><span class="hotkey_desc">Hold down ctrl, click on an shape to add or remove it from the selection </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + &lt; , Ctrl + &gt;</span><span class="hotkey_desc">Zoom in or out </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + A</span><span class="hotkey_desc">Select all </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Esc</span><span class="hotkey_desc">Unselect all and cancel current operation </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">T</span><span class="hotkey_desc">Insert text </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">I</span><span class="hotkey_desc">Insert an image </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">L</span><span class="hotkey_desc">Draw line </span>
+				</span>
+				<span class="hotkey_line null_line">&nbsp;</span>
+				<span class="hotkey_line hotkey_group">With Selected Shapes </span>
+				<span class="hotkey_line">
+					<span class="hotkey">Arrow Keys (←↑↓→) </span><span class="hotkey_desc">Move selected shapes left, up, down or right </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Arrow Keys (←↑↓→) </span><span class="hotkey_desc">Move selected shapes one pixel at a time </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Resize </span><span class="hotkey_desc">Resize shapes and constrain proportions </span>
+				</span>
+				<span class="hotkey_line">&nbsp;</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Z</span><span class="hotkey_desc">Undo </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Y</span><span class="hotkey_desc">Redo </span>
+				</span>
+				<span class="hotkey_line">&nbsp;</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + X</span><span class="hotkey_desc">Cut </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + C</span><span class="hotkey_desc">Copy </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + V</span><span class="hotkey_desc">Paste </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + D</span><span class="hotkey_desc">Duplicate </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Shift + B</span><span class="hotkey_desc">Brush </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Delete, Backspace</span><span class="hotkey_desc">Delete selection </span>
+				</span>
+				<span class="hotkey_line">&nbsp;</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + ]</span><span class="hotkey_desc">Bring selected items to front layer </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + [</span><span class="hotkey_desc">Send selected items to back layer </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Shift + ]</span><span class="hotkey_desc">Bring selected items forward one layer </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Shift + [</span><span class="hotkey_desc">Send selected items backward one layer </span>
+				</span>
+				<span class="hotkey_line">&nbsp;</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + L</span><span class="hotkey_desc">Lock selection </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Shift + L</span><span class="hotkey_desc">Unlock selection </span>
+				</span>
+				<span class="hotkey_line">&nbsp;</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + G</span><span class="hotkey_desc">Group selection </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Shift + G</span><span class="hotkey_desc">Ungroup selection </span>
+				</span>
+				<span class="hotkey_line null_line">&nbsp;</span>
+				<span class="hotkey_line hotkey_group">Edit Text </span>
+				<span class="hotkey_line">
+					<span class="hotkey">Space </span><span class="hotkey_desc">Edit Text </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + B</span><span class="hotkey_desc">Bold </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + I</span><span class="hotkey_desc">Italic </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + U</span><span class="hotkey_desc">Underline </span>
+				</span>
+				<span class="hotkey_line">
+					<span class="hotkey">Ctrl + Enter</span><span class="hotkey_desc">Save text editing </span>
+				</span>
+			</div>
+		</div>
+		<div class="designer_button normal hotkey_ok" onclick="$('#hotkey_list').dlg('close')">OK </div>
+	</div>
+	
+	<div id="link_dialog" class="dialog" style="min-width: 500px;">
+		<div class="dialog_header">Insert Link</div>
+		<div class="dialog_content" style="padding: 30px 20px; text-align: center;">
+			<b>Link to:&nbsp;</b><input id="linkto_addr" class="input_text" style="width: 350px;" type="text">
+		</div>
+		<div class="dialog_buttons">
+			<div class="designer_button" onclick="UI.setLink()">OK</div>&nbsp;
+			<div class="designer_button normal" onclick="$('#link_dialog').dlg('close');">Cancel</div>
+		</div>
+	</div>
+	
+	<div id="saveas_dialog" class="dialog" style="min-width: 450px;">
+		<div class="dialog_header">Save As...</div>
+		<div class="dialog_content" style="padding: 30px 20px; text-align: center;">
+			<form id="saveas_form" action="/diagraming/saveas" method="post">
+			<input id="hid_saveas_id" name="id" type="hidden">
+			<b>Title:&nbsp;</b><input name="title" id="saveas_title" class="input_text" style="width: 300px;" onkeydown="if(event.keyCode == 13) return false;" type="text">
+			</form>
+		</div>
+		<div class="dialog_buttons">
+			<div class="designer_button" onclick="UI.doSaveAs()" id="btn_dosaveas">OK</div>&nbsp;
+			<div class="designer_button normal" onclick="$('#saveas_dialog').dlg('close');">Cancel</div>
+		</div>
+	</div>
+	
+	<!-- Dock Drops -->
+	<ul id="dock_fill_list" class="menu list menu_ico" style="display: none; width: 198px;">
+		<li ty="none">None</li>
+		<li ty="solid">Solid</li>
+		<li ty="gradient">Gradient</li>
+		<li ty="image">Image</li>
+	</ul>
+	<ul id="gradient_type_list" class="menu list menu_ico" style="display: none; z-index: 1;">
+		<li ty="linear" style="width: 60px">Linear</li>
+		<li ty="radial" style="width: 60px">Radial</li>
+	</ul>
+	<ul id="img_display_list" class="menu list" style="display: none;">
+		<li ty="fill">Scale to fill</li>
+		<li ty="fit">Scale to fit</li>
+		<li ty="stretch">Stretch</li>
+		<li ty="original">Original Size</li>
+		<li ty="tile">Tile</li>
+	</ul>
+	<ul id="page_size_list" class="menu list dock_page_menu menu_ico" style="display: none;">
+		<li ac="set_page_size" w="1500" h="2100">A3(1500x2100)</li>
+		<li ac="set_page_size" w="1050" h="1500">A4(1050x1500)</li>
+		<li ac="set_page_size" w="750" h="1050">A5(750x1050)</li>
+		<li class="devider"></li>
+		<li class="menu_text" id="dock_size_custom">Customize</li>
+		<li class="menu_text" style="line-height: 30px;"><span class="lbl">W:</span><div old="200px" min="200" id="dock_size_w" class="spinner active" style="width: 75px;"><div class="spinner_input"><input value="200px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div></li>
+		<li class="menu_text" style="line-height: 30px;"><span class="lbl">H:</span><div old="200px" min="200" id="dock_size_h" class="spinner active" style="width: 75px;"><div class="spinner_input"><input value="200px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div></li>
+	</ul>
+	<ul id="page_padding_list" class="menu list dock_page_menu menu_ico" style="display: none;">
+		<li p="0">0px</li>
+		<li p="20">20px</li>
+		<li p="40">40px</li>
+		<li p="60">60px</li>
+		<li p="80">80px</li>
+		<li p="100">100px</li>
+	</ul>
+	<ul id="page_gridsize_list" class="menu list dock_page_menu menu_ico" style="display: none;">
+		<li s="10">Small</li>
+		<li s="15">Normal</li>
+		<li s="20">Large</li>
+		<li s="30">Very Large</li>
+	</ul>
+	<ul id="attr_display_list" class="menu list dock_page_menu menu_ico" style="display: none;">
+		<li ty="none">None</li>
+		<li ty="text">Text</li>
+		<li ty="icon">Icon</li>
+	</ul>
+	<ul id="attr_icon_list" class="menu list dock_page_menu" style="display: none;">
+		<li></li>
+	</ul>
+	<ul id="attr_location_h_list" class="menu list attr_location_menu dock_page_menu" style="display: none;">
+		<li loc="mostleft"><div><span style="left: -5px"></span></div>Most Left</li>
+		<li loc="leftedge"><div><span style="left: -3px"></span></div>Left Edge</li>
+		<li loc="left"><div><span style="left: 0px"></span></div>Left</li>
+		<li loc="center"><div><span style="left: 3px"></span></div>Center</li>
+		<li loc="right"><div><span style="left: 6px"></span></div>Right</li>
+		<li loc="rightedge"><div><span style="left: 9px"></span></div>Right Edge</li>
+		<li loc="mostright"><div><span style="left: 11px"></span></div>Most Right</li>
+	</ul>
+	<ul id="attr_location_v_list" class="menu list attr_location_menu dock_page_menu" style="display: none;">
+		<li loc="mosttop"><div><span style="top: -5px"></span></div>Most Top</li>
+		<li loc="topedge"><div><span style="top: -3px"></span></div>Top Edge</li>
+		<li loc="top"><div><span style="top: 0px"></span></div>Top</li>
+		<li loc="middle"><div><span style="top: 3px"></span></div>Middle</li>
+		<li loc="bottom"><div><span style="top: 6px"></span></div>Bottom</li>
+		<li loc="bottomedge"><div><span style="top: 9px"></span></div>Bottom Edge</li>
+		<li loc="mostbottom"><div><span style="top: 11px"></span></div>Most Bottom</li>
+	</ul>
+	
+	<div id="shapes_dialog" class="dialog" style="width: 400px;">
+		<div class="dialog_header">Shapes Management</div>
+		<div class="dialog_content" style="padding: 0px; max-height: 372px; overflow: auto;">
+			<ul id="shape_manage_list">
+				<li><div><input value="basic" type="checkbox">Basic Shape</div></li>
+			</ul>
+		</div>
+		<div class="dialog_buttons" style="padding: 20px;">
+			<span class="designer_button" onclick="UI.saveShapesManage()">OK</span>&nbsp;
+			<span class="designer_button normal" onclick="$('#shapes_dialog').dlg('close')">Cancel</span>
+		</div>
+	</div>
+	<ul id="user_menu" class="menu list" style="z-index: 1; display: none;">
+		<li ac="dia">Diagrams</li>
+		<li ac="net">Network</li>
+		<li class="devider"></li>
+		<li ac="out">Sign Out</li>
+	</ul>
+</div>
+
+
+<div style="left: 740px; top: 102px; display: none;" id="hover_tip"><div class="tip_arrow"></div><div class="tip_content radius3">Lock (Ctrl+L)</div></div>
 </body>
 </html>
