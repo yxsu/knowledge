@@ -165,6 +165,7 @@ html,body{
 #designer_layout{
 	overflow: scroll;
 	position: relative;
+	background: url(../images/diagraming/canvas_bg.jpg) repeat;
 	z-index: 0;
 }
 #designer_canvas{
@@ -224,7 +225,9 @@ html,body{
 .shape_rotater{
 	position: absolute;
 }
-
+.shape_rotater.rotate_enable{
+	cursor: url(../images/diagraming/rotate.gif) 16 16, auto;
+}
 /**图形选择后的控件容器*/
 #shape_controls{
 	position: absolute; left: 0px; top: 0px;

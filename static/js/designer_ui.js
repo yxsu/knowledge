@@ -24,6 +24,7 @@ var UI = {
 		function changeTitle(){
 			var newTitle = $.trim($("#title_container").children("input").val());
 			var oldTitle = $(".diagram_title").text();
+			/*
 			if(newTitle != oldTitle && chartId != ""){
 				var msgObj = {
 					action: "changeTitle",
@@ -31,6 +32,7 @@ var UI = {
 				};
 				CLB.send(msgObj);
 			}
+			*/
 			var title = newTitle != "" ? newTitle : oldTitle;
 			$("title").text(title + " - ProcessOn");
 			$(".diagram_title").text(title).show();
@@ -1145,7 +1147,7 @@ var UI = {
 	/**
 	 * Getting Start END--
 	 */
-	
+	/*
 	showAddColla: function(){
 		Util.ajax({
 			url: "/collaboration/get_colla_role_list",
@@ -1327,7 +1329,7 @@ var UI = {
 				}
 			}
 		});
-	},
+	},*/
 	/**
 	 * 打开图形管理
 	 */
@@ -1397,11 +1399,13 @@ var UI = {
 		}).get();
 		var a = "";
 		//发送消息
+		/*
 		var msgObj = {
 			action: "changeSchema",
 			categories: checked.join(",")
 		};
 		CLB.send(msgObj);
+		*/
 		Designer.setSchema(checked, function(){
 			$('#shapes_dialog').dlg('close');
 		});
@@ -2384,7 +2388,7 @@ var Dock = {
 		$("#dock_btn_history").removeClass("disabled");
 		$(".panel_box").addClass("readonly");
 		//中止监听
-		CLB.stopListen();
+		//CLB.stopListen();
 	},
 	/**
 	 * 关闭历史版本
@@ -2410,7 +2414,7 @@ var Dock = {
 		$(".panel_box").removeClass("readonly");
 		$("#history_versions").children(".selected").removeClass("selected");
 		//继续监听
-		CLB.listen();
+		//CLB.listen();
 		Dock.loadHistorys();
 	},
 	/**

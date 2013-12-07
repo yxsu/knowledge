@@ -1,16 +1,30 @@
+
+
+
+
+
+
+
+  
+  
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-{% load staticfiles %}	
 
-<title>Knowledge -- powered by suyuxin</title>
-	
+
+<title>One Element - ProcessOn</title>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content='Free diagramming application to draw workflow,BPM,UML,org charts,EPC,EVC,Venn, network  diagrams,collaborate and share with friends in real time.' />
 
-<link href="{% static "css/global.css" %}" ref="stylesheet">
 
-<script src="{% static "js/ga.js" %}" async="" type="text/javascript"></script>
-<script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
-<script src="{% static "js/util.js" %}" type="text/javascript" charset="UTF-8"></script>
+  
+
+<link type='text/css' rel='stylesheet' href='/themes/default/global.css?1385606738'/>
+
+<script type="text/javascript" src="/scripts/jquery.js"></script>
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/util.js?1385709192'></script>
 <script type="text/javascript">
 //Google Anlytics
 var _gaq = _gaq || [];
@@ -28,40 +42,42 @@ if(isIE6){
 	window.location.href="/browser_not_support";
 }
 </script>
-<!--mathjax -->
-<script type="text/x-mathjax-config">
-	MathJax.Hub.Config({
-    	extensions: ["tex2jax.js"],
-    	jax: ["input/TeX","output/HTML-CSS"],
-    	tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
-  	});
-</script>
-<script src="{% static "js/plugins/mathjax/MathJax.js" %}"></script>
-<link type="text/css" rel="stylesheet" href="{% static "css/designer.css" %}">
-<link type="text/css" rel="stylesheet" href="{% static "css/ui.css" %}">
-<script src="{% static "js/schema.js" %}" type="text/javascript" charset="UTF-8"></script>
 
-<script type="text/javascript" charset="UTF-8" src="{% static "js/flow.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/lane.js" %}"></script>
 
+
+
+<link type='text/css' rel='stylesheet' href='/themes/default/diagraming/designer.css?1384765576'/>
+
+<link type='text/css' rel='stylesheet' href='/themes/default/diagraming/ui.css?1385633510'/>
+
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/diagraming/schema/schema.js?1385547120'></script>
+
+
+
+
+
+
+
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/diagraming/schema/categories/flow.js?1384420198'></script>
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/diagraming/schema/categories/lane.js?1384420201'></script>
 <script type="text/javascript">
-var chartId = "529ec03b0cf20042951b4052";
+var chartId = "52a2d0dd0cf231dc109a9a75";
 
-	var definition = {"page":{"showGrid":true,"padding":60,"width":1050,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements":{}}
+	var definition = {"page":{"showGrid":true,"padding":60,"width":1050,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements":{"142cc0cd03deb5":{"id":"142cc0cd03deb5","name":"process","title":"Process","category":"flow","group":"","groupName":null,"locked":false,"link":"","children":[],"parent":"","resizeDir":["tl","tr","br","bl"],"attribute":{"container":false,"visible":true,"rotatable":true,"linkable":true,"markerOffset":5},"dataAttributes":[{"name":"no.","type":"number","value":"","category":"default","id":"142cc0cd03efac"},{"name":"name","type":"string","value":"","category":"default","id":"142cc0cd03ea12"},{"name":"owner","type":"string","value":"","category":"default","id":"142cc0cd03ef4e"},{"name":"link","type":"link","value":"","category":"default","id":"142cc0cd03ee27"},{"name":"memo","type":"string","value":"","category":"default","id":"142cc0cd03e87b"},{"name":"cost","type":"number","value":"","category":"default","id":"142cc0cd03e445"},{"name":"time","type":"number","value":"","category":"default","id":"142cc0cd03e565"},{"name":"department","type":"string","value":"","category":"default","id":"142cc0cd03e188"},{"name":"input","type":"string","value":"","category":"default","id":"142cc0cd03e593"},{"name":"output","type":"string","value":"","category":"default","id":"142cc0cd03e0ad"},{"name":"risk","type":"string","value":"","category":"default","id":"142cc0cd03e32f"},{"name":"remarks","type":"string","value":"","category":"default","id":"142cc0cd03eab4"}],"props":{"x":243,"y":180,"w":100,"h":70,"zindex":1,"angle":0},"shapeStyle":{"alpha":1},"lineStyle":{"lineWidth":2,"lineColor":"50,50,50","lineStyle":"solid"},"fillStyle":{"type":"solid","color":"255,255,255"},"path":[{"actions":[{"action":"move","x":"0","y":"0"},{"action":"line","x":"w","y":"0"},{"action":"line","x":"w","y":"h"},{"action":"line","x":"0","y":"h"},{"action":"close"}]}],"fontStyle":{"fontFamily":"Arial","size":13,"color":"50,50,50","bold":false,"italic":false,"underline":false,"textAlign":"center","vAlign":"middle","orientation":"vertical"},"textBlock":[{"position":{"x":10,"y":0,"w":"w-20","h":"h"},"text":""}],"anchors":[{"x":"w/2","y":"0"},{"x":"w/2","y":"h"},{"x":"0","y":"h/2"},{"x":"w","y":"h/2"}]}}} 
+
 
 var role = "owner";
 var userId = "529ebc4d0cf20042951b2f49";
 var userName = "Su Yuxin";
-var time = "1386142082157";
+var time = "1386402982596";
 </script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/collaboration.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/designer_core.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/designer_ui.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/designer_event.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/designer_function.js" %}"></script>
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/diagraming/collaboration.js?1378457624'></script>
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/diagraming/designer.core.js?1385696179'></script>
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/diagraming/designer.methods.js?1384420314'></script>
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/diagraming/designer.events.js?1385695215'></script>
+<script type='text/javascript' charset='UTF-8' src='/scripts_bin/en/diagraming/designer.ui.js?1385720492'></script>
 </head>
 <body>
-
 <canvas id="support_canvas" style="display: none;"></canvas>
 <script type="text/javascript">
 if(!document.getElementById("support_canvas").getContext){
@@ -70,10 +86,10 @@ if(!document.getElementById("support_canvas").getContext){
 </script>
 <h1 style="display: none;">Online Diagramming</h1>
 <div id="designer_header">
-	<a class="btn_back" href="http://www.processon.com/diagraming/back?id=52a2d0dd0cf231dc109a9a75" title="Back"><span class="ico ico_goback"></span></a>
+	<a class="btn_back" href="/diagraming/back?id=52a2d0dd0cf231dc109a9a75" title='Back'><span class="ico ico_goback"></span></a>
 	<div class="row row1">
 		<div id="title_container">
-			<span class="diagram_title">Untitled Diagram</span>
+			<span class="diagram_title">One Element</span>
 		</div>
 	</div>
 	<div class="row row2 menubar">
@@ -90,82 +106,83 @@ if(!document.getElementById("support_canvas").getContext){
 	</div>
 	<div class="toolbar">
 		<!-- Clipboard -->
-		<div id="bar_undo" class="toolbar_button disabled" title="Undo (Ctrl+Z)"><div class="ico undo"></div></div>
-		<div id="bar_redo" class="toolbar_button disabled" title="Redo (Ctrl+Y)"><div class="ico redo"></div></div>
-		<div id="bar_brush" class="toolbar_button disabled" title="Brush (Ctrl+Shift+B)"><div class="ico brush"></div></div>
+		<div id="bar_undo" class="toolbar_button" title='Undo (Ctrl+Z)'><div class="ico undo"></div></div>
+		<div id="bar_redo" class="toolbar_button" title='Redo (Ctrl+Y)'><div class="ico redo"></div></div>
+		<div id="bar_brush" class="toolbar_button" title='Brush (Ctrl+Shift+B)'><div class="ico brush"></div></div>
 		<div class="toolbar_devider"></div>
 		
 		<!-- Font -->
-		<div id="bar_font_family" title="Font" class="toolbar_button disabled" style="width: 80px;"><div class="text_content">Arial</div><div class="ico ico_dropdown"></div></div>
+		<div id="bar_font_family" title='Font' class="toolbar_button" style="width: 80px;"><div class="text_content">Arial</div><div class="ico ico_dropdown"></div></div>
 		<div class="toolbar_small_devider"></div>
-		<div old="13px" max="100" min="12" id="bar_font_size" title="Font size" class="spinner disabled" style="width: 50px;"><div class="spinner_input"><input value="13px" disabled="disabled"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+		<div id="bar_font_size" title='Font size' class="spinner" style="width: 50px;"></div>
 		<div class="toolbar_small_devider"></div>
-		<div id="bar_font_bold" title="Bold (Ctrl+B)" class="toolbar_button disabled"><div class="ico bold"></div></div>
-		<div id="bar_font_italic" title="Italic (Ctrl+I)" class="toolbar_button disabled"><div class="ico italic"></div></div>
-		<div id="bar_font_underline" title="Underline (Ctrl+U)" class="toolbar_button disabled"><div class="ico underline"></div></div>
-		<div id="bar_font_color" title="Text color" class="toolbar_button drop_button disabled">
+		<div id="bar_font_bold" title='Bold (Ctrl+B)' class="toolbar_button"><div class="ico bold"></div></div>
+		<div id="bar_font_italic" title='Italic (Ctrl+I)' class="toolbar_button"><div class="ico italic"></div></div>
+		<div id="bar_font_underline" title='Underline (Ctrl+U)' class="toolbar_button"><div class="ico underline"></div></div>
+		<div id="bar_font_color" title='Text color' class="toolbar_button drop_button">
 			<div class="ico fontcolor"></div>
 			<div class="btn_color" style="background-color: rgb(50,50,50)"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
-		<div id="bar_font_align" title="Align" class="toolbar_button drop_button disabled">
+		<div id="bar_font_align" title='Align' class="toolbar_button drop_button">
 			<div class="ico alignleft"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
 		<div class="toolbar_devider"></div>
 		
 		<!-- Style -->
-		<div id="bar_fill" title="Fill" class="toolbar_button drop_button disabled">
+		<div id="bar_fill" title='Fill' class="toolbar_button drop_button">
 			<div class="ico fillcolor"></div>
 			<div class="btn_color" style="background-color: rgb(255,255,255)"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
-		<div id="bar_line_color" title="Line color" class="toolbar_button drop_button disabled">
+		<div id="bar_line_color" title='Line color' class="toolbar_button drop_button">
 			<div class="ico linecolor"></div>
 			<div class="btn_color" style="background-color: rgb(50,50,50)"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
-		<div id="bar_line_width" title="Line width" class="toolbar_button drop_button disabled">
+		<div id="bar_line_width" title='Line width' class="toolbar_button drop_button">
 			<div class="ico linewidth"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
-		<div original-title="Line dash" id="bar_line_style" class="toolbar_button drop_button disabled">
+		<div id="bar_line_style" title='Line dash' class="toolbar_button drop_button">
 			<div class="ico linedash"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
 		<div class="toolbar_devider"></div>
 		
 		<!-- Linker Style -->
-		<div id="bar_linkertype" title="Line type" class="toolbar_button drop_button disabled">
+		<div id="bar_linkertype" title='Line type' class="toolbar_button drop_button">
 			<div class="ico linkertype_broken"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
-		<div id="bar_beginarrow" title="Line beginning" class="toolbar_button drop_button disabled">
+		<div id="bar_beginarrow" title='Line beginning' class="toolbar_button drop_button">
 			<div class="ico ico_arrow larrow_none"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
-		<div id="bar_endarrow" title="Line ending" class="toolbar_button drop_button disabled">
+		<div id="bar_endarrow" title='Line ending' class="toolbar_button drop_button">
 			<div class="ico ico_arrow rarrow_none"></div>
 			<div class="ico ico_dropdown"></div>
 		</div>
 		<div class="toolbar_devider"></div>
-		<div id="bar_front" title="Bring To Front (Ctrl+] )" class="toolbar_button disabled"><div class="ico ico_front"></div></div>
-		<div id="bar_back" title="Send To Back (Ctrl+[ )" class="toolbar_button disabled"><div class="ico ico_back"></div></div>
+		<div id="bar_front" title='Bring To Front (Ctrl+] )' class="toolbar_button"><div class="ico ico_front"></div></div>
+		<div id="bar_back" title='Send To Back (Ctrl+[ )' class="toolbar_button"><div class="ico ico_back"></div></div>
 		<div class="toolbar_devider"></div>
-		<div id="bar_lock" title="Lock (Ctrl+L)" class="toolbar_button disabled"><div class="ico ico_lock"></div></div>
-		<div id="bar_unlock" title="Unlock (Ctrl+Shift+L)" class="toolbar_button disabled"><div class="ico ico_unlock"></div></div>
+		<div id="bar_lock" title='Lock (Ctrl+L)' class="toolbar_button"><div class="ico ico_lock"></div></div>
+		<div id="bar_unlock" title='Unlock (Ctrl+Shift+L)' class="toolbar_button"><div class="ico ico_unlock"></div></div>
 		<div class="toolbar_small_devider"></div>
-		<div id="bar_link" title="Insert Link" class="toolbar_button disabled"><div class="ico ico_link"></div></div>
+		<div id="bar_link" title='Insert Link' class="toolbar_button"><div class="ico ico_link"></div></div>
 	</div>
 </div>
 <div id="designer">
-	<div style="height: 535px;" id="shape_panel" class="layout"><div class="panel_container"><h3 class="panel_title"><div class="ico ico_accordion"></div>Flowchart</h3><div id="panel_flow" class="content"><div class="panel_box" shapename="process"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="decision"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="terminator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="document"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="data"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="predefinedProcess"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="storedData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="internalStorage"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="sequentialData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="directData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="manualInput"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="card"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="paperTape"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="display"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="manualOperation"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="preparation"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="parallelMode"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="loopLimit"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="onPageReference"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="offPageReference"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="annotation"><canvas class="panel_item" width="30" height="30"></canvas></div></div></div><div class="panel_container"><h3 class="panel_title"><div class="ico ico_accordion"></div>Pool/Lane</h3><div id="panel_lane" class="content"><div class="panel_box" shapename="verticalPool"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="verticalLane"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalSeparator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="verticalSeparator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalPool"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalLane"><canvas class="panel_item" width="30" height="30"></canvas></div></div></div></div>
+	<div id="shape_panel" class="layout">
+	</div>
 	<div id="designer_viewport">
 		
-		<div style="height: 535px;" id="designer_layout" class="layout">
-			<div style="width: 1050px; height: 1500px; padding: 1000px; cursor: default;" id="canvas_container">
-				<div style="background-color: rgb(242, 242, 242);" id="designer_canvas">
-					<canvas height="1500" width="1050" id="designer_grids"></canvas>
+		<div id="designer_layout" class="layout">
+			<div id="canvas_container">
+				<div id="designer_canvas">
+					<canvas id="designer_grids"></canvas>
 					<ul id="designer_contextmenu" class="menu list options_menu">
 						<li ac="cut"><div class="ico cut"></div>Cut<div class="extend">Ctrl+X</div></li>
 						<li ac="copy"><div class="ico copy"></div>Copy<div class="extend">Ctrl+C</div></li>
@@ -205,7 +222,7 @@ if(!document.getElementById("support_canvas").getContext){
 			<div id="layout_block"></div>
 		</div>
 		<div id="shape_thumb" class="menu"><canvas width="160px"></canvas><div></div></div>
-		<div style="right: 13px;" id="dock">
+		<div id="dock">
 			<div class="dock_header"></div>
 			<div class="dock_buttons">
 				<div id="dock_btn_navigator" class="toolbar_button selected" onclick="Dock.showView('navigator')"><div class="ico ico_dock_nav"></div></div>
@@ -216,7 +233,7 @@ if(!document.getElementById("support_canvas").getContext){
 				<div id="dock_btn_history" class="toolbar_button" onclick="Dock.showView('history')"><div class="ico ico_history"></div></div>
 			</div>
 		</div>
-		<div style="right: 49px; display: block;" id="navigation_view" class="dock_view dock_view_navigator">
+		<div id="navigation_view" class="dock_view dock_view_navigator">
 			<div class="dock_view_header">
 				Navigator
 				<div class="ico ico_dock_collapse"></div>
@@ -224,63 +241,63 @@ if(!document.getElementById("support_canvas").getContext){
 			<div class="navigation_bounding">
 				<div class="navigation_view_container">
 					<canvas id="navigation_canvas" width="120px" height="160px"></canvas>
-					<div style="left: -1px; top: -1px; width: 120px; height: 56px;" id="navigation_eye"></div>
+					<div id="navigation_eye"></div>
 				</div>
 			</div>
 			<div class="dock_devider" style="margin: 0px 10px"></div>
 			<div class="navigation_view_bar">
 				Zoom:
-				<div old="100%" max="200" min="50" id="dock_zoom" class="spinner active"><div class="spinner_input"><input value="100%"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
-				<div class="toolbar_button active" onclick="Dock.enterFullScreen()" title="Full Screen (F11)"><div class="ico ico_fullscreen"></div></div>
-				<div class="toolbar_button active" onclick="Dock.enterPresentation()" title="Presentation (F10)"><div class="ico ico_presentation"></div> </div>
+				<div id="dock_zoom" class="spinner active"></div>
+				<div class="toolbar_button active" onclick="Dock.enterFullScreen()" title='Full Screen (F11)'><div class="ico ico_fullscreen"></div></div>
+				<div class="toolbar_button active" onclick="Dock.enterPresentation()" title='Presentation (F10)'><div class="ico ico_presentation"></div> </div>
 			</div>
 			<div id="fullscreen_tip" class="alert error">
 				<div class="ico dlg_close" onclick="$('#fullscreen_tip').hide();"></div>
 				<div class="t"></div>
 				<div class="full_suggest"><span>Our recommended browser:&nbsp;</span>
 					<a href="http://www.google.com/chrome" target="_blank"><span class="ico chrome"></span></a>
-					<a href="http://www.firefox.com/" target="_blank"><span class="ico firefox"></span></a>
+					<a href="http://www.firefox.com" target="_blank"><span class="ico firefox"></span></a>
 				</div>
 			</div>
 		</div>
 		<!-- Graphic Dock Window -->
-		<div style="right: 49px; display: none;" class="dock_view dock_view_graphic">
+		<div class="dock_view dock_view_graphic">
 			<div class="dock_view_header">
 				Graphic
 				<div class="ico ico_dock_collapse"></div>
 			</div>
 			<div class="dock_content">
 				<div class="dock_content_title">Line</div>
-				<div id="dock_line_color" class="picker_btn btn_inline"><div class="picker_btn_holder"></div><div class="ico ico_colordrop"></div></div>
+				<div id="dock_line_color" class="picker_btn btn_inline"></div>
 				<div id="dock_line_style" class="toolbar_button drop_button active btn_inline" style="margin: 0px 0px 0px 10px">
 					<div class="ico linestyle linesolid"></div>
 					<div class="ico ico_dropdown"></div>
 				</div>
-				<div old="0px" max="10" min="0" id="dock_line_width" class="spinner active btn_inline" style="width: 82px; margin-left: 10px;"><div class="spinner_input"><input value="0px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+				<div id="dock_line_width" class="spinner active btn_inline" style="width: 82px; margin-left: 10px;"></div>
 				<div style="clear: both"></div>
 				<div class="dock_devider"></div>
 				<div class="dock_content_title">Fill</div>
 				<div id="dock_fill_type" class="toolbar_button active"><div class="text_content"></div><div class="ico ico_dropdown"></div></div>
 				<div class="fill_detail fill_detail_solid">
-					<div id="fill_solid_btn" class="picker_btn"><div class="picker_btn_holder"></div><div class="ico ico_colordrop"></div></div>
+					<div id="fill_solid_btn" class="picker_btn"></div>
 				</div>
 				<div class="fill_detail fill_detail_gradient">
-					<div id="fill_gradient_begin" c="255,255,255" class="picker_btn btn_inline"><div class="picker_btn_holder"></div><div class="ico ico_colordrop"></div></div>
+					<div id="fill_gradient_begin" c="255,255,255" class="picker_btn btn_inline"></div>
 					<div id="gradient_swap" class="toolbar_button btn_normal btn_inline">
 						<div class="ico gradient_swap"></div>
 					</div>
-					<div id="fill_gradient_end" c="255,255,255" class="picker_btn btn_inline"><div class="picker_btn_holder"></div><div class="ico ico_colordrop"></div></div>
+					<div id="fill_gradient_end" c="255,255,255" class="picker_btn btn_inline"></div>
 					<div id="gradient_type" class="toolbar_button active btn_normal btn_inline" style="width: 100px;margin: 0px 0px 0px 10px;">
 						<div class="text_content"></div><div class="ico ico_dropdown"></div>
 					</div>
 					<div style="clear: both"></div>
 					<div id="gradient_type_linear" class="gradient_details">
 						Angle:
-						<div old="0°" max="360" min="0" id="gradient_angle" class="spinner active" style="width: 100px; display: inline-block;"><div class="spinner_input"><input value="0°"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+						<div id="gradient_angle" class="spinner active" style="width: 100px; display: inline-block;"></div>
 					</div>
 					<div id="gradient_type_radial" class="gradient_details">
 						Radius:
-						<div old="0%" max="100" min="0" id="gradient_radius" class="spinner active" style="width: 100px; display: inline-block;"><div class="spinner_input"><input value="0%"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+						<div id="gradient_radius" class="spinner active" style="width: 100px; display: inline-block;"></div>
 					</div>
 					<div style="clear: both"></div>
 				</div>
@@ -294,10 +311,10 @@ if(!document.getElementById("support_canvas").getContext){
 				</div>
 				<div class="dock_devider"></div>
 				<div class="dock_content_title">Opacity</div>
-				<div old="0%" max="100" min="0" id="spinner_opacity" class="spinner active" style="width: 90px;"><div class="spinner_input"><input value="0%"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+				<div id="spinner_opacity" class="spinner active" style="width: 90px;"></div>
 			</div>
 		</div>
-		<div style="right: 49px; display: none;" class="dock_view dock_view_metric">
+		<div class="dock_view dock_view_metric">
 			<div class="dock_view_header">
 				Metrics
 				<div class="ico ico_dock_collapse"></div>
@@ -305,21 +322,21 @@ if(!document.getElementById("support_canvas").getContext){
 			<div class="dock_content">
 				<div class="dock_content_title">Position and Size</div>
 				<div class="dock_label">X:</div>
-				<div old="0px" min="-800" id="dock_metric_x" class="spinner active btn_inline" style="width: 65px;"><div class="spinner_input"><input value="0px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+				<div id="dock_metric_x" class="spinner active btn_inline" style="width: 65px;"></div>
 				<div class="dock_label">W:</div>
-				<div old="20px" min="20" id="dock_metric_w" class="spinner active btn_inline" style="width: 65px;"><div class="spinner_input"><input value="20px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+				<div id="dock_metric_w" class="spinner active btn_inline" style="width: 65px;"></div>
 				<div style="clear: both; height: 10px;"></div>
 				<div class="dock_label">Y:</div>
-				<div old="0px" min="-800" id="dock_metric_y" class="spinner active btn_inline" style="width: 65px;"><div class="spinner_input"><input value="0px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+				<div id="dock_metric_y" class="spinner active btn_inline" style="width: 65px;"></div>
 				<div class="dock_label">H:</div>
-				<div old="20px" min="20" id="dock_metric_h" class="spinner active btn_inline" style="width: 65px;"><div class="spinner_input"><input value="20px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+				<div id="dock_metric_h" class="spinner active btn_inline" style="width: 65px;"></div>
 				<div style="clear: both"></div>
 				<div class="dock_devider"></div>
 				<div class="dock_content_title">Orientation</div>
-				<div old="0°" max="360" min="0" id="dock_metric_angle" class="spinner active" style="width: 95px; display: inline-block;"><div class="spinner_input"><input value="0°"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
+				<div id="dock_metric_angle" class="spinner active" style="width: 95px; display: inline-block;"></div>
 			</div>
 		</div>
-		<div style="right: 49px; display: none;" class="dock_view dock_view_page">
+		<div class="dock_view dock_view_page">
 			<div class="dock_view_header">
 				Page Settings
 				<div class="ico ico_dock_collapse"></div>
@@ -333,11 +350,11 @@ if(!document.getElementById("support_canvas").getContext){
 				<div id="dock_page_padding" class="toolbar_button active btn_inline" style="width: 110px;display: inline-block;"><div class="text_content"></div><div class="ico ico_dropdown"></div></div>
 				<div style="height: 10px; clear: both"></div>
 				<div class="dock_label" style="width: 80px;">Background:</div>
-				<div id="dock_page_color" class="picker_btn btn_inline"><div class="picker_btn_holder"></div><div class="ico ico_colordrop"></div></div>
+				<div id="dock_page_color" class="picker_btn btn_inline"></div>
 				<div style="clear: both"></div>
 				<div class="dock_devider"></div>
 				<div class="dock_content_title">Grid</div>
-				<input id="dock_page_showgrid" type="checkbox"><label for="dock_page_showgrid">Show Grid</label>
+				<input id="dock_page_showgrid" type="checkbox"/><label for="dock_page_showgrid">Show Grid</label>
 				<div id="dock_gridsize_box" style="margin-top: 10px;">
 					<div class="dock_label">Grid Size:</div>
 					<div id="dock_page_gridsize" class="toolbar_button active btn_inline" style="width: 110px;display: inline-block;"><div class="text_content"></div><div class="ico ico_dropdown"></div></div>
@@ -345,7 +362,7 @@ if(!document.getElementById("support_canvas").getContext){
 				</div>
 			</div>
 		</div>
-		<div class="dock_view dock_view_attribute" style="width: 350px; right: 49px; display: none;">
+		<div class="dock_view dock_view_attribute" style="width: 350px">
 			<div class="dock_view_header">
 				Data Attribute
 				<div class="ico ico_dock_collapse"></div>
@@ -355,11 +372,11 @@ if(!document.getElementById("support_canvas").getContext){
 					<div id="attr_add_btn" class="toolbar_button active" style="width: 120px;display: inline-block;" onclick="Dock.showAttrAdd()">Add an attribute</div>
 					<div class="attr_add_items">
 						<div class="dock_label" style="width: 50px;">Name:</div>
-						<input id="attr_add_name" class="input_text" style="float: left; width: 260px;" type="text">
+						<input id="attr_add_name" type="text" class="input_text" style="float: left; width: 260px;"/>
 						<div style="height: 5px; clear: both"></div>
 						<div class="dock_label" style="width: 50px;">Type:</div>
 						<select id="attr_add_type" class="input_select" style="float: left; width: 120px;">
-							<option selected="selected" value="string">Text</option>
+							<option value="string">Text</option>
 							<option value="link">Link</option>
 							<option value="number">Number</option>
 							<option value="date">Date</option>
@@ -379,7 +396,7 @@ if(!document.getElementById("support_canvas").getContext){
 				</ul>
 			</div>
 		</div>
-		<div style="right: 49px; display: none;" class="dock_view dock_view_history">
+		<div class="dock_view dock_view_history">
 			<div class="dock_view_header">
 				Revision History
 				<div class="ico ico_dock_collapse"></div>
@@ -387,9 +404,9 @@ if(!document.getElementById("support_canvas").getContext){
 			<div class="dock_content" style="padding: 0px;">
 				<div id="history_container" style="min-height: 120px;"></div>
 				<div class="history_bar">
-					<div id="btn_history_restore" class="toolbar_button active disabled" title="Restore this revision"><div class="ico ico_restore"></div></div>
-					<div old="2s" max="30" min="1" id="spinner_play_speed" class="spinner active disabled" style="width: 50px;"><div class="spinner_input"><input value="2s"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div>
-					<div id="btn_history_play" class="toolbar_button active disabled" title="Play from this revision"><div class="ico ico_play"></div></div>
+					<div id="btn_history_restore" class="toolbar_button active disabled" title='Restore this revision'><div class="ico ico_restore"></div></div>
+					<div id="spinner_play_speed" class="spinner active disabled" style="width: 50px;"></div>
+					<div id="btn_history_play" class="toolbar_button active disabled" title='Play from this revision'><div class="ico ico_play"></div></div>
 				</div>
 			</div>
 		</div>
@@ -406,7 +423,9 @@ if(!document.getElementById("support_canvas").getContext){
 				
 				<div class="footer_devider"></div>
 				<div id="collaborators">
-					<img class="online" id="chat_user_529ebc4d0cf20042951b2f49" src="Untitled%20Diagram%20-%20ProcessOn_files/profile-full-male.png" title="Su Yuxin" title_pos="top">
+					<img id="chat_user_529ebc4d0cf20042951b2f49" src="/images/default/default/profile-full-male.png" title="Su Yuxin" title_pos="top" />
+					
+						
 					
 				</div>
 				
@@ -419,7 +438,7 @@ if(!document.getElementById("support_canvas").getContext){
 				
 				<li><a href="http://twitter.com/processon" target="_blank"><span class="ico twitter"></span>Follow Us</a></li>
 				
-				<li><a href="http://www.processon.com/support" target="_blank">Support</a></li>
+				<li><a href="/support" target="_blank">Support</a></li>
 				<li class="footer_fb" onclick="UI.showFeedBack()">Feedback</li>
 			</ul>
 			<script type="text/javascript">
@@ -433,7 +452,7 @@ if(!document.getElementById("support_canvas").getContext){
 	</div>
 </div>
 <div id="ui_container">
-	<div id="color_picker" class="menu color_picker" style="display: none;">
+	<div id='color_picker' class="menu color_picker" style="display: none;">
 		<div class="color_items"><div style="background-color:rgb(255,255,255);"></div><div style="background-color:rgb(229,229,229);"></div><div style="background-color:rgb(207,207,207);"></div><div style="background-color:rgb(184,184,184);"></div><div style="background-color:rgb(161,161,161);"></div><div style="background-color:rgb(138,138,138);"></div><div style="background-color:rgb(115,115,115);"></div><div style="background-color:rgb(92,92,92);"></div><div style="background-color:rgb(69,69,69);"></div><div style="background-color:rgb(50,50,50);"></div><div style="background-color:rgb(23,23,23);"></div><div style="background-color:rgb(0,0,0);"></div><div class="clear"></div></div>
 		<div class="color_items"><div style="background-color:rgb(255,204,204);"></div><div style="background-color:rgb(255,230,204);"></div><div style="background-color:rgb(255,255,204);"></div><div style="background-color:rgb(230,255,204);"></div><div style="background-color:rgb(204,255,204);"></div><div style="background-color:rgb(204,255,230);"></div><div style="background-color:rgb(204,255,255);"></div><div style="background-color:rgb(204,229,255);"></div><div style="background-color:rgb(204,204,255);"></div><div style="background-color:rgb(229,204,255);"></div><div style="background-color:rgb(255,204,255);"></div><div style="background-color:rgb(255,204,230);"></div><div style="background-color:rgb(255,153,153);"></div><div style="background-color:rgb(255,204,153);"></div><div style="background-color:rgb(255,255,153);"></div><div style="background-color:rgb(204,255,153);"></div><div style="background-color:rgb(153,255,153);"></div><div style="background-color:rgb(153,255,204);"></div><div style="background-color:rgb(153,255,255);"></div><div style="background-color:rgb(153,204,255);"></div><div style="background-color:rgb(153,153,255);"></div><div style="background-color:rgb(204,153,255);"></div><div style="background-color:rgb(255,153,255);"></div><div style="background-color:rgb(255,153,204);"></div><div style="background-color:rgb(255,102,102);"></div><div style="background-color:rgb(255,179,102);"></div><div style="background-color:rgb(255,255,102);"></div><div style="background-color:rgb(179,255,102);"></div><div style="background-color:rgb(102,255,102);"></div><div style="background-color:rgb(102,255,179);"></div><div style="background-color:rgb(102,255,255);"></div><div style="background-color:rgb(102,178,255);"></div><div style="background-color:rgb(102,102,255);"></div><div style="background-color:rgb(178,102,255);"></div><div style="background-color:rgb(255,102,255);"></div><div style="background-color:rgb(255,102,179);"></div><div style="background-color:rgb(255,51,51);"></div><div style="background-color:rgb(255,153,51);"></div><div style="background-color:rgb(255,255,51);"></div><div style="background-color:rgb(153,255,51);"></div><div style="background-color:rgb(51,255,51);"></div><div style="background-color:rgb(51,255,153);"></div><div style="background-color:rgb(51,255,255);"></div><div style="background-color:rgb(51,153,255);"></div><div style="background-color:rgb(51,51,255);"></div><div style="background-color:rgb(153,51,255);"></div><div style="background-color:rgb(255,51,255);"></div><div style="background-color:rgb(255,51,153);"></div><div style="background-color:rgb(255,0,0);"></div><div style="background-color:rgb(255,128,0);"></div><div style="background-color:rgb(255,255,0);"></div><div style="background-color:rgb(128,255,0);"></div><div style="background-color:rgb(0,255,0);"></div><div style="background-color:rgb(0,255,128);"></div><div style="background-color:rgb(0,255,255);"></div><div style="background-color:rgb(0,127,255);"></div><div style="background-color:rgb(0,0,255);"></div><div style="background-color:rgb(127,0,255);"></div><div style="background-color:rgb(255,0,255);"></div><div style="background-color:rgb(255,0,128);"></div><div style="background-color:rgb(204,0,0);"></div><div style="background-color:rgb(204,102,0);"></div><div style="background-color:rgb(204,204,0);"></div><div style="background-color:rgb(102,204,0);"></div><div style="background-color:rgb(0,204,0);"></div><div style="background-color:rgb(0,204,102);"></div><div style="background-color:rgb(0,204,204);"></div><div style="background-color:rgb(0,102,204);"></div><div style="background-color:rgb(0,0,204);"></div><div style="background-color:rgb(102,0,204);"></div><div style="background-color:rgb(204,0,204);"></div><div style="background-color:rgb(204,0,102);"></div><div style="background-color:rgb(153,0,0);"></div><div style="background-color:rgb(153,76,0);"></div><div style="background-color:rgb(153,153,0);"></div><div style="background-color:rgb(77,153,0);"></div><div style="background-color:rgb(0,153,0);"></div><div style="background-color:rgb(0,153,77);"></div><div style="background-color:rgb(0,153,153);"></div><div style="background-color:rgb(0,76,153);"></div><div style="background-color:rgb(0,0,153);"></div><div style="background-color:rgb(76,0,153);"></div><div style="background-color:rgb(153,0,153);"></div><div style="background-color:rgb(153,0,77);"></div><div style="background-color:rgb(102,0,0);"></div><div style="background-color:rgb(102,51,0);"></div><div style="background-color:rgb(102,102,0);"></div><div style="background-color:rgb(51,102,0);"></div><div style="background-color:rgb(0,102,0);"></div><div style="background-color:rgb(0,102,51);"></div><div style="background-color:rgb(0,102,102);"></div><div style="background-color:rgb(0,51,102);"></div><div style="background-color:rgb(0,0,102);"></div><div style="background-color:rgb(51,0,102);"></div><div style="background-color:rgb(102,0,102);"></div><div style="background-color:rgb(102,0,51);"></div><div style="background-color:rgb(51,0,0);"></div><div style="background-color:rgb(51,26,0);"></div><div style="background-color:rgb(51,51,0);"></div><div style="background-color:rgb(26,51,0);"></div><div style="background-color:rgb(0,51,0);"></div><div style="background-color:rgb(0,51,26);"></div><div style="background-color:rgb(0,51,51);"></div><div style="background-color:rgb(0,25,51);"></div><div style="background-color:rgb(0,0,51);"></div><div style="background-color:rgb(25,0,51);"></div><div style="background-color:rgb(51,0,51);"></div><div style="background-color:rgb(51,0,26);"></div><div class="clear"></div></div>
 	</div>
@@ -446,17 +465,17 @@ if(!document.getElementById("support_canvas").getContext){
 		<li ac="close">Close</li>
 	</ul>
 	<ul id="bar_list_edit" class="menu list options_menu">
-		<li class="disabled" ac="undo"><div class="ico undo"></div>Undo<div class="extend">Ctrl+Z</div></li>
-		<li class="disabled" ac="redo"><div class="ico redo"></div>Redo<div class="extend">Ctrl+Y</div></li>
+		<li ac="undo"><div class="ico undo"></div>Undo<div class="extend">Ctrl+Z</div></li>
+		<li ac="redo"><div class="ico redo"></div>Redo<div class="extend">Ctrl+Y</div></li>
 		<li class="devider"></li>
-		<li class="disabled" ac="cut"><div class="ico cut"></div>Cut<div class="extend">Ctrl+X</div></li>
-		<li class="disabled" ac="copy"><div class="ico copy"></div>Copy<div class="extend">Ctrl+C</div></li>
-		<li class="disabled" ac="paste"><div class="ico paste"></div>Paste<div class="extend">Ctrl+V</div></li>
-		<li class="disabled" ac="duplicate">Duplicate<div class="extend">Ctrl+D</div></li>
-		<li class="disabled" ac="brush"><div class="ico brush"></div>Brush<div class="extend">Ctrl+Shift+B</div></li>
+		<li ac="cut"><div class="ico cut"></div>Cut<div class="extend">Ctrl+X</div></li>
+		<li ac="copy"><div class="ico copy"></div>Copy<div class="extend">Ctrl+C</div></li>
+		<li ac="paste"><div class="ico paste"></div>Paste<div class="extend">Ctrl+V</div></li>
+		<li ac="duplicate">Duplicate<div class="extend">Ctrl+D</div></li>
+		<li ac="brush"><div class="ico brush"></div>Brush<div class="extend">Ctrl+Shift+B</div></li>
 		<li class="devider"></li>
 		<li ac="selectall">Select All<div class="extend">Ctrl+A</div></li>
-		<li class="disabled" ac="delete"><div class="ico remove"></div>Delete<div class="extend">Delete/Backspace</div></li>
+		<li ac="delete"><div class="ico remove"></div>Delete<div class="extend">Delete/Backspace</div></li>
 	</ul>
 	<ul id="bar_list_view" class="menu list options_menu">
 		<li ac="zoom" zoom="in"><div class="ico zoomin"></div>Zoom In<div class="extend">Ctrl+(&gt;)</div></li>
@@ -479,10 +498,7 @@ if(!document.getElementById("support_canvas").getContext){
 		<li id="bar_page_color">
 			<div class="ico fillcolor"></div>
 			Background Color<div class="extend ex_arrow">►</div>
-		<div style="right: -179px;" class="menu color_picker extend_menu">
-		<div class="color_items"><div style="background-color:rgb(255,255,255);"></div><div style="background-color:rgb(229,229,229);"></div><div style="background-color:rgb(207,207,207);"></div><div style="background-color:rgb(184,184,184);"></div><div style="background-color:rgb(161,161,161);"></div><div style="background-color:rgb(138,138,138);"></div><div style="background-color:rgb(115,115,115);"></div><div style="background-color:rgb(92,92,92);"></div><div style="background-color:rgb(69,69,69);"></div><div style="background-color:rgb(50,50,50);"></div><div style="background-color:rgb(23,23,23);"></div><div style="background-color:rgb(0,0,0);"></div><div class="clear"></div></div>
-		<div class="color_items"><div style="background-color:rgb(255,204,204);"></div><div style="background-color:rgb(255,230,204);"></div><div style="background-color:rgb(255,255,204);"></div><div style="background-color:rgb(230,255,204);"></div><div style="background-color:rgb(204,255,204);"></div><div style="background-color:rgb(204,255,230);"></div><div style="background-color:rgb(204,255,255);"></div><div style="background-color:rgb(204,229,255);"></div><div style="background-color:rgb(204,204,255);"></div><div style="background-color:rgb(229,204,255);"></div><div style="background-color:rgb(255,204,255);"></div><div style="background-color:rgb(255,204,230);"></div><div style="background-color:rgb(255,153,153);"></div><div style="background-color:rgb(255,204,153);"></div><div style="background-color:rgb(255,255,153);"></div><div style="background-color:rgb(204,255,153);"></div><div style="background-color:rgb(153,255,153);"></div><div style="background-color:rgb(153,255,204);"></div><div style="background-color:rgb(153,255,255);"></div><div style="background-color:rgb(153,204,255);"></div><div style="background-color:rgb(153,153,255);"></div><div style="background-color:rgb(204,153,255);"></div><div style="background-color:rgb(255,153,255);"></div><div style="background-color:rgb(255,153,204);"></div><div style="background-color:rgb(255,102,102);"></div><div style="background-color:rgb(255,179,102);"></div><div style="background-color:rgb(255,255,102);"></div><div style="background-color:rgb(179,255,102);"></div><div style="background-color:rgb(102,255,102);"></div><div style="background-color:rgb(102,255,179);"></div><div style="background-color:rgb(102,255,255);"></div><div style="background-color:rgb(102,178,255);"></div><div style="background-color:rgb(102,102,255);"></div><div style="background-color:rgb(178,102,255);"></div><div style="background-color:rgb(255,102,255);"></div><div style="background-color:rgb(255,102,179);"></div><div style="background-color:rgb(255,51,51);"></div><div style="background-color:rgb(255,153,51);"></div><div style="background-color:rgb(255,255,51);"></div><div style="background-color:rgb(153,255,51);"></div><div style="background-color:rgb(51,255,51);"></div><div style="background-color:rgb(51,255,153);"></div><div style="background-color:rgb(51,255,255);"></div><div style="background-color:rgb(51,153,255);"></div><div style="background-color:rgb(51,51,255);"></div><div style="background-color:rgb(153,51,255);"></div><div style="background-color:rgb(255,51,255);"></div><div style="background-color:rgb(255,51,153);"></div><div style="background-color:rgb(255,0,0);"></div><div style="background-color:rgb(255,128,0);"></div><div style="background-color:rgb(255,255,0);"></div><div style="background-color:rgb(128,255,0);"></div><div style="background-color:rgb(0,255,0);"></div><div style="background-color:rgb(0,255,128);"></div><div style="background-color:rgb(0,255,255);"></div><div style="background-color:rgb(0,127,255);"></div><div style="background-color:rgb(0,0,255);"></div><div style="background-color:rgb(127,0,255);"></div><div style="background-color:rgb(255,0,255);"></div><div style="background-color:rgb(255,0,128);"></div><div style="background-color:rgb(204,0,0);"></div><div style="background-color:rgb(204,102,0);"></div><div style="background-color:rgb(204,204,0);"></div><div style="background-color:rgb(102,204,0);"></div><div style="background-color:rgb(0,204,0);"></div><div style="background-color:rgb(0,204,102);"></div><div style="background-color:rgb(0,204,204);"></div><div style="background-color:rgb(0,102,204);"></div><div style="background-color:rgb(0,0,204);"></div><div style="background-color:rgb(102,0,204);"></div><div style="background-color:rgb(204,0,204);"></div><div style="background-color:rgb(204,0,102);"></div><div style="background-color:rgb(153,0,0);"></div><div style="background-color:rgb(153,76,0);"></div><div style="background-color:rgb(153,153,0);"></div><div style="background-color:rgb(77,153,0);"></div><div style="background-color:rgb(0,153,0);"></div><div style="background-color:rgb(0,153,77);"></div><div style="background-color:rgb(0,153,153);"></div><div style="background-color:rgb(0,76,153);"></div><div style="background-color:rgb(0,0,153);"></div><div style="background-color:rgb(76,0,153);"></div><div style="background-color:rgb(153,0,153);"></div><div style="background-color:rgb(153,0,77);"></div><div style="background-color:rgb(102,0,0);"></div><div style="background-color:rgb(102,51,0);"></div><div style="background-color:rgb(102,102,0);"></div><div style="background-color:rgb(51,102,0);"></div><div style="background-color:rgb(0,102,0);"></div><div style="background-color:rgb(0,102,51);"></div><div style="background-color:rgb(0,102,102);"></div><div style="background-color:rgb(0,51,102);"></div><div style="background-color:rgb(0,0,102);"></div><div style="background-color:rgb(51,0,102);"></div><div style="background-color:rgb(102,0,102);"></div><div style="background-color:rgb(102,0,51);"></div><div style="background-color:rgb(51,0,0);"></div><div style="background-color:rgb(51,26,0);"></div><div style="background-color:rgb(51,51,0);"></div><div style="background-color:rgb(26,51,0);"></div><div style="background-color:rgb(0,51,0);"></div><div style="background-color:rgb(0,51,26);"></div><div style="background-color:rgb(0,51,51);"></div><div style="background-color:rgb(0,25,51);"></div><div style="background-color:rgb(0,0,51);"></div><div style="background-color:rgb(25,0,51);"></div><div style="background-color:rgb(51,0,51);"></div><div style="background-color:rgb(51,0,26);"></div><div class="clear"></div></div>
-	</div></li>
+		</li>
 		<li>
 			Page Size<div class="extend ex_arrow">►</div>
 			<ul id="bar_list_pagesize" class="menu list extend_menu menu_ico">
@@ -491,8 +507,8 @@ if(!document.getElementById("support_canvas").getContext){
 				<li ac="set_page_size" w="750" h="1050">A5(750x1050)</li>
 				<li class="devider"></li>
 				<li class="menu_text" id="page_size_custom">Customize</li>
-				<li class="menu_text" style="line-height: 30px;"><span class="lbl">W:</span><div old="200px" min="200" id="page_size_w" class="spinner active" style="width: 75px;"><div class="spinner_input"><input value="200px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div></li>
-				<li class="menu_text" style="line-height: 30px;"><span class="lbl">H:</span><div old="200px" min="200" id="page_size_h" class="spinner active" style="width: 75px;"><div class="spinner_input"><input value="200px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div></li>
+				<li class="menu_text" style="line-height: 30px;"><span class='lbl'>W:</span><div id="page_size_w" class="spinner active" style="width: 75px;"></div></li>
+				<li class="menu_text" style="line-height: 30px;"><span class='lbl'>H:</span><div id="page_size_h" class="spinner active" style="width: 75px;"></div></li>
 			</ul>
 		</li>
 		<li>
@@ -521,12 +537,12 @@ if(!document.getElementById("support_canvas").getContext){
 		</li>
 	</ul>
 	<ul id="bar_list_arrange" class="menu list options_menu">
-		<li class="disabled" ac="front"><div class="ico ico_front"></div>Bring To Front<div class="extend">Ctrl+]</div></li>
-		<li class="disabled" ac="back"><div class="ico ico_back"></div>Send To Back<div class="extend">Ctrl+[</div></li>
-		<li class="disabled" ac="forward">Bring Forward<div class="extend">Ctrl+Shift+]</div></li>
-		<li class="disabled" ac="backward">Send Backward<div class="extend">Ctrl+Shift+[</div></li>
+		<li ac="front"><div class="ico ico_front"></div>Bring To Front<div class="extend">Ctrl+]</div></li>
+		<li ac="back"><div class="ico ico_back"></div>Send To Back<div class="extend">Ctrl+[</div></li>
+		<li ac="forward">Bring Forward<div class="extend">Ctrl+Shift+]</div></li>
+		<li ac="backward">Send Backward<div class="extend">Ctrl+Shift+[</div></li>
 		<li class="devider"></li>
-		<li class="disabled" id="bar_arrange_align">
+		<li id="bar_arrange_align">
 			Align Shapes<div class="extend ex_arrow">►</div>
 			<ul class="menu list extend_menu">
 				<li ac="align_shape" al="left">Left</li>
@@ -538,14 +554,14 @@ if(!document.getElementById("support_canvas").getContext){
 				<li ac="align_shape" al="bottom">Bottom</li>
 			</ul>
 		</li>
-		<li class="disabled" id="bar_arrange_dist">
+		<li id="bar_arrange_dist">
 			Distribute Shapes<div class="extend ex_arrow">►</div>
 			<ul class="menu list extend_menu">
 				<li ac="distribute_shape" dis="h">Horizontally</li>
 				<li ac="distribute_shape" dis="v">Vertically</li>
 			</ul>
 		</li>
-		<li class="disabled" id="bar_arrange_match">
+		<li id="bar_arrange_match">
 			Match Size<div class="extend ex_arrow">►</div>
 			<ul class="menu list extend_menu">
 				<li ac="match_size" w="auto" h="">Width</li>
@@ -555,11 +571,11 @@ if(!document.getElementById("support_canvas").getContext){
 			</ul>
 		</li>
 		<li class="devider"></li>
-		<li class="disabled" ac="lock"><div class="ico ico_lock"></div>Lock<div class="extend">Ctrl+L</div></li>
-		<li class="disabled" ac="unlock"><div class="ico ico_unlock"></div>Unlock<div class="extend">Ctrl+Shift+L</div></li>
+		<li ac="lock"><div class="ico ico_lock"></div>Lock<div class="extend">Ctrl+L</div></li>
+		<li ac="unlock"><div class="ico ico_unlock"></div>Unlock<div class="extend">Ctrl+Shift+L</div></li>
 		<li class="devider"></li>
-		<li class="disabled" ac="group">Group<div class="extend">Ctrl+G</div></li>
-		<li class="disabled" ac="ungroup">Ungroup<div class="extend">Ctrl+Shift+G</div></li>
+		<li ac="group">Group<div class="extend">Ctrl+G</div></li>
+		<li ac="ungroup">Ungroup<div class="extend">Ctrl+Shift+G</div></li>
 	</ul>
 	<ul id="bar_list_help" class="menu list options_menu noico">
 		<li ac="hotkey">Hotkey Reference</li>
@@ -634,9 +650,9 @@ if(!document.getElementById("support_canvas").getContext){
 		<li arrow="dashedCircle"><div class="ico ico_arrow rarrow_dashedcircle"></div></li>
 		<li arrow="cross"><div class="ico ico_arrow rarrow_cross"></div></li>
 	</ul>
-	<div id="hotkey_list" class="dialog">
-		<div class="dialog_header">Hotkey Reference</div>
-		<div class="dialog_content">
+	<div id='hotkey_list' class='dialog'>
+		<div class='dialog_header'>Hotkey Reference</div>
+		<div class='dialog_content'>
 			<div class="hotkey_content">
 				<span class="hotkey_line hotkey_group">General </span>
 				<span class="hotkey_line">
@@ -749,36 +765,36 @@ if(!document.getElementById("support_canvas").getContext){
 		<div class="designer_button normal hotkey_ok" onclick="$('#hotkey_list').dlg('close')">OK </div>
 	</div>
 	<!-- Feedback -->
-	<div id="send_feedback" class="dialog">
-		<div class="dialog_header">Send Feedback</div>
-		<div class="dialog_content" style="padding: 20px 40px">
+	<div id='send_feedback' class='dialog'>
+		<div class='dialog_header'>Send Feedback</div>
+		<div class='dialog_content' style="padding: 20px 40px">
 			<p style="margin-top: 0px;">
-				Use the form below to report an issue, suggest a feature, or send feedback.<br>We'll read carefully and use your feedback to help us continue to improve ProcessOn experience.<br><br>Enter your email feedback or issues here:
+				Use the form below to report an issue, suggest a feature, or send feedback.<br/>We'll read carefully and use your feedback to help us continue to improve ProcessOn experience.<br/><br/>Enter your email feedback or issues here:
 			</p>
 			<span class="feedback_lebal" style="height: 33px;line-height: 33px;">
 				<span>Email:</span>
 				<span class="feedback_error_email_format">Please enter a correct email address which you frequently used</span>
 			</span>
-			<input id="feedback_email" value="suyuxin@outlook.com" class="txt" style="width:490px;height:24px;" type="text">
+			<input id='feedback_email' type="text" value="suyuxin@outlook.com" class='txt' style='width:490px;height:24px;'/>
 			<span class="feedback_lebal" style="height: 33px;line-height: 33px;">
 				<span>Name:</span>
 			</span>
-			<input id="feedback_name" value="Su Yuxin" class="txt" style="width:490px;height:24px;" type="text">
+			<input id='feedback_name' type="text" value="Su Yuxin" class='txt' style='width:490px;height:24px;'/>
 			<span class="feedback_lebal" style="height: 33px;line-height: 33px;">
 				<span>Feedback:</span>
 				<span class="feedback_error_msg">Please enter your feedback message</span>
 			</span>
-			<textarea id="feedback_message" class="txt" style="width:490px;height:93px;"></textarea>
+			<textarea id='feedback_message' class='txt' style='width:490px;height:93px;'></textarea>
 		</div>
 		<div class="dialog_buttons" style="padding: 0px 40px 20px;">
-			<span class="send_btn designer_button" onclick="UI.sendFeedBack(this)">Send</span>
+			<span class='send_btn designer_button' onclick='UI.sendFeedBack(this)'>Send</span>
 		</div>
 	</div>
 	
 	<div id="link_dialog" class="dialog" style="min-width: 500px;">
 		<div class="dialog_header">Insert Link</div>
 		<div class="dialog_content" style="padding: 30px 20px; text-align: center;">
-			<b>Link to:&nbsp;</b><input id="linkto_addr" class="input_text" style="width: 350px;" type="text">
+			<b>Link to:&nbsp;</b><input id="linkto_addr" type="text" class="input_text" style="width: 350px;"/>
 		</div>
 		<div class="dialog_buttons">
 			<div class="designer_button" onclick="UI.setLink()">OK</div>&nbsp;
@@ -790,8 +806,8 @@ if(!document.getElementById("support_canvas").getContext){
 		<div class="dialog_header">Save As...</div>
 		<div class="dialog_content" style="padding: 30px 20px; text-align: center;">
 			<form id="saveas_form" action="/diagraming/saveas" method="post">
-			<input id="hid_saveas_id" name="id" type="hidden">
-			<b>Title:&nbsp;</b><input name="title" id="saveas_title" class="input_text" style="width: 300px;" onkeydown="if(event.keyCode == 13) return false;" type="text">
+			<input id="hid_saveas_id" type="hidden" name="id"/>
+			<b>Title:&nbsp;</b><input name="title" id="saveas_title" type="text" class="input_text" style="width: 300px;" onkeydown="if(event.keyCode == 13) return false;"/>
 			</form>
 		</div>
 		<div class="dialog_buttons">
@@ -805,8 +821,8 @@ if(!document.getElementById("support_canvas").getContext){
 		<div class="dialog_content">
 			<form id="export_form" action="/diagram_export" method="post">
 				<ul class="export-list">
-					<li class="first">
-						<input id="export_png" name="type" value="image" checked="checked" style="float: left;margin-right: 5px;" type="radio">
+					<li class="first"	>
+						<input id="export_png" type="radio" name="type" value="image" checked="checked" style="float: left;margin-right: 5px;">
 						<label for="export_png" class="export-menu" style="float:left;line-height: 18px;">
 							Image File<span class="suffix"> (*.png)</span>
 							<span class="export_des">Image file of this diagram</span>
@@ -814,7 +830,7 @@ if(!document.getElementById("support_canvas").getContext){
 						<div style="clear: both;"></div>
 					</li>
 					<li class="first">
-						<input id="export_pdf" name="type" value="pdf" style="float: left;margin-right: 5px;" type="radio">
+						<input id="export_pdf" type="radio" name="type" value="pdf" style="float: left;margin-right: 5px;">
 						<label for="export_pdf" class="export-menu" style="float:left;line-height: 18px;">
 							PDF File<span class="suffix"> (*.pdf)</span>
 							<span class="export_des">PDF file generated by diagram image</span>
@@ -822,7 +838,7 @@ if(!document.getElementById("support_canvas").getContext){
 						<div style="clear: both;"></div>
 					</li>
 					<li class="first">
-						<input id="export_pos" name="type" value="pos" style="float: left;margin-right: 5px;" type="radio">
+						<input id="export_pos" type="radio" name="type" value="pos" style="float: left;margin-right: 5px;">
 						<label for="export_pos" class="export-menu" style="float:left;line-height: 18px;">
 							POS File<span class="suffix"> (*.pos)</span>
 							<span class="export_des">With image and diagram structure definition</span>
@@ -830,10 +846,10 @@ if(!document.getElementById("support_canvas").getContext){
 						<div style="clear: both;"></div>
 					</li>
 				</ul>
-				<input id="export_definition" name="definition" type="hidden">
-				<input id="export_title" name="title" type="hidden">
-				<input name="chartId" value="52a2d0dd0cf231dc109a9a75" type="hidden">
-				<input name="ignore" value="definition" type="hidden">
+				<input id="export_definition" type="hidden" name="definition"/>
+				<input id="export_title" type="hidden" name="title"/>
+				<input type="hidden" name="chartId" value="52a2d0dd0cf231dc109a9a75"/>
+				<input type="hidden" name="ignore" value="definition"/>
 			</form>
 		</div>
 		<div class="dialog_buttons">
@@ -905,8 +921,8 @@ if(!document.getElementById("support_canvas").getContext){
 		<li ac="set_page_size" w="750" h="1050">A5(750x1050)</li>
 		<li class="devider"></li>
 		<li class="menu_text" id="dock_size_custom">Customize</li>
-		<li class="menu_text" style="line-height: 30px;"><span class="lbl">W:</span><div old="200px" min="200" id="dock_size_w" class="spinner active" style="width: 75px;"><div class="spinner_input"><input value="200px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div></li>
-		<li class="menu_text" style="line-height: 30px;"><span class="lbl">H:</span><div old="200px" min="200" id="dock_size_h" class="spinner active" style="width: 75px;"><div class="spinner_input"><input value="200px"></div><div class="buttons"><div class="spinner_up"></div><div class="spinner_down"></div></div></div></li>
+		<li class="menu_text" style="line-height: 30px;"><span class='lbl'>W:</span><div id="dock_size_w" class="spinner active" style="width: 75px;"></div></li>
+		<li class="menu_text" style="line-height: 30px;"><span class='lbl'>H:</span><div id="dock_size_h" class="spinner active" style="width: 75px;"></div></li>
 	</ul>
 	<ul id="page_padding_list" class="menu list dock_page_menu menu_ico" style="display: none;">
 		<li p="0">0px</li>
@@ -963,10 +979,10 @@ if(!document.getElementById("support_canvas").getContext){
 					<span id="add_prompt3" class="_fail alert" style="margin-left: 150px;">Has been invited!</span>
 					<span id="add_prompt4" class="alert success" style="margin-left: 150px;">Send success.</span>
 				</div>
-				<div class="add_new_invit" style="margin-bottom: 15px;">
-					<input id="input_add_colla" class="txt" placeholder="Enter a people's email or name" type="text">
-					<input id="add_userid" value="" type="hidden">
-					<input id="add_type" value="" type="hidden">
+				<div class="add_new_invit"  style="margin-bottom: 15px;">
+					<input id="input_add_colla" type="text" class="txt" placeholder="Enter a people's email or name"/>
+					<input id="add_userid" type="hidden" value="" />
+					<input id="add_type" type="hidden" value="" />
 					<div class="select_add_role">
 						<select id="invit_role">
 							<option value="editor" selected="selected">Editor</option>
@@ -985,11 +1001,11 @@ if(!document.getElementById("support_canvas").getContext){
 		</div>
 	</div>
 	
-	<div id="confirm_dlg">
+	<div id='confirm_dlg'>
 		<div class="confirm_header">Tooltip: </div>
 		<div class="confirm_content">
 			<p>Please select a people from the list.</p>
-			<div class="designer_button" onclick="$('#confirm_dlg').hide();">OK </div>
+			<div class='designer_button' onclick="$('#confirm_dlg').hide();">OK </div>
 			<div style="clear: both;"></div>
 		</div>
 	</div>
@@ -1005,10 +1021,10 @@ if(!document.getElementById("support_canvas").getContext){
 			</ul>
 			<div class="image_content">
 				<div id="image_select_upload" class="image_list">
-					<form id="frm_upload_image" action="/user_image/upload" method="post" enctype="multipart/form-data">
+					<form id="frm_upload_image" action="/user_image/upload" method=post enctype="multipart/form-data">
 						<div id="btn_img_upload" class="toolbar_button active">
 							<div class="ico"></div>Upload an Image
-							<input id="input_upload_image" name="image" type="file">
+							<input id="input_upload_image" name="image" type="file"/>
 						</div>
 						<span id="upload_img_res"></span>
 						<div style="clear: both;"></div>
@@ -1016,18 +1032,18 @@ if(!document.getElementById("support_canvas").getContext){
 					<div id="user_image_items" class="image_items"></div>
 				</div>
 				<div id="image_select_url" class="image_list" style="display: none">
-					Paste an image URL here:&nbsp;<input id="input_img_url" class="input_text" style="width: 380px;" type="text">
+					Paste an image URL here:&nbsp;<input id="input_img_url" type="text" class="input_text" style="width: 380px;"/>
 					<div id="img_url_area"></div>
 				</div>
 				<div id="image_select_search" class="image_list" style="display: none">
-					<input id="input_img_search" class="input_text" style="width: 380px;" type="text">
+					<input id="input_img_search" type="text" class="input_text" style="width: 380px;"/>
 					<div id="btn_img_search" class="toolbar_button active" style="display: inline-block;width: 70px;">Search</div>
 					<div style="padding: 15px 0px 0px;">Type your search in the box above to find images using Google Search.</div>
 					<div id="google_image_items" class="image_items"></div>
 				</div>
 				<div class="image_btns">
-					<div id="set_image_submit" class="designer_button">OK</div>
-					<div id="set_image_cancel" class="designer_button normal">Cancel</div>
+					<div id="set_image_submit" class='designer_button'>OK</div>
+					<div id="set_image_cancel" class='designer_button normal'>Cancel</div>
 					<span id="set_image_text"></span>
 				</div>
 			</div>
@@ -1044,7 +1060,7 @@ if(!document.getElementById("support_canvas").getContext){
 			<div class="dock_devider" style="margin-top: 0px;"></div>
 			<div class="chatting_bottom">
 				<textarea id="chatting_edit" class="txt" style="width: 228px;"></textarea>
-				<input class="designer_button" value="Send" onclick="CLB.sendChatMsg()" type="button">
+				<input type="button" class="designer_button" value="Send" onclick="CLB.sendChatMsg()">
 			</div>
 		</div>
 	</div>
@@ -1053,39 +1069,39 @@ if(!document.getElementById("support_canvas").getContext){
 			Sorry, you have disconnected from the server, please refresh the page to retry.
 		</div>
 		<div class="dialog_buttons">
-			<a class="designer_button" href="http://www.processon.com/diagraming/52a2d0dd0cf231dc109a9a75">Retry</a>&nbsp;
-			<a class="designer_button normal" href="http://www.processon.com/diagraming/back?id=52a2d0dd0cf231dc109a9a75">Close</a>
+			<a class="designer_button" href="/diagraming/52a2d0dd0cf231dc109a9a75">Retry</a>&nbsp;
+			<a class="designer_button normal" href="/diagraming/back?id=52a2d0dd0cf231dc109a9a75">Close</a>
 		</div>
 	</div>
 	<div id="shapes_dialog" class="dialog" style="width: 400px;">
 		<div class="dialog_header">Shapes Management</div>
 		<div class="dialog_content" style="padding: 0px; max-height: 372px; overflow: auto;">
 			<ul id="shape_manage_list">
-				<li><div><input value="basic" type="checkbox">Basic Shape</div></li>
-				<li><div><input value="flow" type="checkbox">Flowchart</div></li>
-				<li><div><input value="bpmn" type="checkbox">BPMN Shapes</div></li>
-				<li><div><input value="evc" type="checkbox">EVC Shapes</div></li>
-				<li><div><input value="epc" type="checkbox">EPC Shapes</div></li>
-				<li><div><input value="lane" type="checkbox">Pool/Lane</div></li>
-				<li><div><input value="er" type="checkbox">Entity Relationship</div></li>
-				<li><div><input class="cate_parent" value="uml_common,uml_usecase,uml_sequence,uml_class,uml_stateactivity,uml_deployment,uml_component" type="checkbox">UML Shapes</div></li>
-				<li class="child"><div><input value="uml_common" type="checkbox">UML Common</div></li>
-				<li class="child"><div><input value="uml_usecase" type="checkbox">UML Use Case</div></li>
-				<li class="child"><div><input value="uml_sequence" type="checkbox">UML Sequence</div></li>
-				<li class="child"><div><input value="uml_class" type="checkbox">UML Class</div></li>
-				<li class="child"><div><input value="uml_stateactivity" type="checkbox">UML State/Activity</div></li>
-				<li class="child"><div><input value="uml_deployment" type="checkbox">UML Deployment</div></li>
-				<li class="child"><div><input value="uml_component" type="checkbox">UML Component</div></li>
-				<li><div><input class="cate_parent" value="ui,ui_input" type="checkbox">UI Mockups</div></li>
-				<li class="child"><div><input value="ui" type="checkbox">UI Elements</div></li>
-				<li class="child"><div><input value="ui_input" type="checkbox">UI Input</div></li>
-				<li><div><input class="cate_parent" value="ios_devices,ios_elements,ios_controls,ios_icons" type="checkbox">iOS Mockups</div></li>
-				<li class="child"><div><input value="ios_devices" type="checkbox">iOS Devices</div></li>
-				<li class="child"><div><input value="ios_elements" type="checkbox">iOS Elements</div></li>
-				<li class="child"><div><input value="ios_controls" type="checkbox">iOS Controls</div></li>
-				<li class="child"><div><input value="ios_icons" type="checkbox">iOS Icons</div></li>
-				<li><div><input value="org" type="checkbox">Organization Shapes</div></li>
-				<li><div><input value="venn" type="checkbox">Venn Shapes</div></li>
+				<li><div><input type="checkbox" value="basic"/>Basic Shape</div></li>
+				<li><div><input type="checkbox" value="flow"/>Flowchart</div></li>
+				<li><div><input type="checkbox" value="bpmn"/>BPMN Shapes</div></li>
+				<li><div><input type="checkbox" value="evc"/>EVC Shapes</div></li>
+				<li><div><input type="checkbox" value="epc"/>EPC Shapes</div></li>
+				<li><div><input type="checkbox" value="lane"/>Pool/Lane</div></li>
+				<li><div><input type="checkbox" value="er"/>Entity Relationship</div></li>
+				<li><div><input type="checkbox" class="cate_parent" value="uml_common,uml_usecase,uml_sequence,uml_class,uml_stateactivity,uml_deployment,uml_component"/>UML Shapes</div></li>
+				<li class="child"><div><input type="checkbox" value="uml_common"/>UML Common</div></li>
+				<li class="child"><div><input type="checkbox" value="uml_usecase"/>UML Use Case</div></li>
+				<li class="child"><div><input type="checkbox" value="uml_sequence"/>UML Sequence</div></li>
+				<li class="child"><div><input type="checkbox" value="uml_class"/>UML Class</div></li>
+				<li class="child"><div><input type="checkbox" value="uml_stateactivity"/>UML State/Activity</div></li>
+				<li class="child"><div><input type="checkbox" value="uml_deployment"/>UML Deployment</div></li>
+				<li class="child"><div><input type="checkbox" value="uml_component"/>UML Component</div></li>
+				<li><div><input type="checkbox" class="cate_parent" value="ui,ui_input"/>UI Mockups</div></li>
+				<li class="child"><div><input type="checkbox" value="ui"/>UI Elements</div></li>
+				<li class="child"><div><input type="checkbox" value="ui_input"/>UI Input</div></li>
+				<li><div><input type="checkbox" class="cate_parent" value="ios_devices,ios_elements,ios_controls,ios_icons"/>iOS Mockups</div></li>
+				<li class="child"><div><input type="checkbox" value="ios_devices"/>iOS Devices</div></li>
+				<li class="child"><div><input type="checkbox" value="ios_elements"/>iOS Elements</div></li>
+				<li class="child"><div><input type="checkbox" value="ios_controls"/>iOS Controls</div></li>
+				<li class="child"><div><input type="checkbox" value="ios_icons"/>iOS Icons</div></li>
+				<li><div><input type="checkbox" value="org"/>Organization Shapes</div></li>
+				<li><div><input type="checkbox" value="venn"/>Venn Shapes</div></li>
 			</ul>
 		</div>
 		<div class="dialog_buttons" style="padding: 20px;">
@@ -1112,11 +1128,10 @@ if(!document.getElementById("support_canvas").getContext){
 	
 	
 		<div class="user" onmousedown="UI.showUserMenu(event)">
-			<img id="chat_user_529ebc4d0cf20042951b2f49" src="Untitled%20Diagram%20-%20ProcessOn_files/profile-full-male.png">Su Yuxin
+			<img id="chat_user_529ebc4d0cf20042951b2f49" src="/images/default/default/profile-full-male.png"/>Su Yuxin
 			<div class="ico ico_accordion"></div>
 		</div>
 	
 </div>
-
-
-<div style="left: 513.5px; top: 102px; display: none;" id="hover_tip"><div class="tip_arrow"></div><div class="tip_content radius3">Line dash</div></div></body></html>
+</body>
+</html>
