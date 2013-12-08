@@ -3982,7 +3982,7 @@ var Designer = {
 				var name = "" + shape.id + i;
 				MathJax.Hub.Queue(["Typeset",MathJax.Hub,name]);
 				textarea.scrollTop(99999);
-				var textH = textarea.scrollTop();
+				var textH = textarea.scrollTop() + 5;
 				var top = 0;
 				if(fontStyle.vAlign == "middle"){
 					top = (pos.y + pos.h/2 - textH/2);
