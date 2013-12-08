@@ -17,8 +17,8 @@ $(function(){
 		return;
 	}
 	UI.init();
-	Dock.init();
-	Navigator.init();
+	//Dock.init();
+	//Navigator.init();
 	if(Designer.status == "demo"){
 		UI.gettingStart();
 	}
@@ -34,7 +34,7 @@ var Designer = {
 		panelItemWidth: 30,
 		panelItemHeight: 30,
 		//画布相对于画布容器的margin值
-		pageMargin: 1000,
+		pageMargin: 0,
 		//锚点尺寸
 		anchorSize: 8,
 		//旋转点尺寸
@@ -66,11 +66,8 @@ var Designer = {
 		initLayout: function(){
 			//Init designer layout.
 			$(window).bind("resize.designer", function(){
-				var height = $(window).height() - $("#designer_header").outerHeight() - $("#designer_footer").outerHeight();
-				$(".layout").height(height);
-				if($("#demo_signup").length){
-					$("#designer_layout").height(height - $("#demo_signup").outerHeight());
-				}
+				var height = $(window).height() - $("#designer_header").outerHeight();
+				$(".layout").height(height + 100);
 			});
 			$(window).trigger("resize.designer");
 		},
@@ -1794,8 +1791,8 @@ var Designer = {
 				textPos = {
 					x: blockCenter.x - textPos.h/2,
 					y: blockCenter.y - textPos.w/2,
-					w: textPos.h,
-					h: textPos.w
+					w: textPos.w,
+					h: textPos.h
 				};
 			}
 			//给输入框设置一些基本样式
@@ -1881,7 +1878,7 @@ var Designer = {
 				var degStr = "rotate(" + deg + "deg) scale("+Designer.config.scale+")";
 				textarea.css({
 					width: textPos.w,
-					height: height,
+					height: textPos.h, //original item is "height" --suyuxin
 					"padding-top": padding,
 					left: textCenter.x.toScale() - textPos.w/2 - 2,
 					top: textCenter.y.toScale() - areaH/2 - 2,

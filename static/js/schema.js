@@ -9,7 +9,7 @@ var Schema = {
 		backgroundColor: "255,255,255",
 		width: 1050,
 		height: 1500,
-		padding: 60,
+		padding: 10,
 		showGrid: true,
 		gridSize: 15
 	},

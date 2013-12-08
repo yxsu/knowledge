@@ -32,6 +32,7 @@ Schema.addShape({
 		w: 100,
 		h: 70
 	},
+	textBlock: [{position: {x: "0", y: "0", w: "w", h: "h"}}],
 	path: [
 		{
 			actions: {ref: "rectangle"}
