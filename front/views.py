@@ -1,5 +1,6 @@
 # Create your views here.
 from django.http import HttpResponse
+from django.http import Http404
 from django.http import HttpRequest
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
@@ -7,6 +8,7 @@ from oauth.models import AuthUser
 from oauth.views import get_current_client
 from evernote.sync import *
 from evernote import core
+from evernote import models
 import logging
 
 def index(request):
@@ -29,22 +31,15 @@ def show_note(request, note_guid):
 		elif 'updateShapes' in request.POST:
 			core.updateShapes(request.POST['note_guid'], 
 					request.POST['existedShapes'], request.POST['updateShapes'])
-
 		return HttpResponse('Save Sucessfully!')
 	elif request.method == 'GET':
 		#read note content here
-		note_title = "New Note"
-		notebook_name = "default"
-		notebook_guid = "default"
-		return render_to_response('note.html', locals())
+		note = models.Note.objects.get(guid=note_guid)
+		return render_to_response('note.html', {'note' : note})
 	else:
 		return Http404()
 
 def new_note(request):
-		
 		#compute the size of temp note
-		note_guid = "temp_1"
-		note_title = "New Note"
-		notebook_name = "default"
-		notebook_guid = "default"
+		note_guid = core.createNewNote(note_title='New Note', notebook_guid='default')
 		return redirect('/note/' + note_guid)

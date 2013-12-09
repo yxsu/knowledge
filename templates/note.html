@@ -48,11 +48,11 @@ if(isIE6){
 
 <script type="text/javascript">
 var chartId = "529ec03b0cf20042951b4052";
-var note_guid = "{{note_guid}}";
-var notebook_name = "{{notebook_name}}";
-var notebook_guid = "{{notebook_guid}}";
+var note_guid = "{{note.guid}}";
+var notebook_name = "{{note.notebook.name}}";
+var notebook_guid = "{{note.notebook.guid}}";
 
-	var definition = {"page":{"showGrid":true,"padding":0,"width":1500,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements":{}}
+	var definition = {"page":{"showGrid":true,"padding":0,"width":1500,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements":{   }}
 
 var role = "owner";
 var userId = "529ebc4d0cf20042951b2f49";
@@ -76,7 +76,7 @@ if(!document.getElementById("support_canvas").getContext){
 <div id="designer_header">
 	<div class="row row1">
 		<div id="title_container">
-			<span class="diagram_title">{{note_title}}</span>
+			<span class="diagram_title">{{note.title}}</span>
 		</div>
 	</div>
 	<div class="designer_button" id="sync" onclick="UI.sync()">Sync</div>
