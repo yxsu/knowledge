@@ -1,6 +1,7 @@
 <html>
 <head>
 {% load staticfiles %}	
+{% csrf_token %}
 
 <title>Knowledge -- powered by suyuxin</title>
 	
@@ -10,6 +11,7 @@
 
 <script src="{% static "js/ga.js" %}" async="" type="text/javascript"></script>
 <script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
+<script type="text/javascript" src="{% static "js/django_ajax_bug.js" %}"></script>
 <script src="{% static "js/util.js" %}" type="text/javascript" charset="UTF-8"></script>
 <script type="text/javascript">
 //Google Anlytics
@@ -46,6 +48,9 @@ if(isIE6){
 
 <script type="text/javascript">
 var chartId = "529ec03b0cf20042951b4052";
+var note_guid = "{{note_guid}}";
+var notebook_name = "{{notebook_name}}";
+var notebook_guid = "{{notebook_guid}}";
 
 	var definition = {"page":{"showGrid":true,"padding":0,"width":1500,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements":{}}
 
@@ -71,9 +76,10 @@ if(!document.getElementById("support_canvas").getContext){
 <div id="designer_header">
 	<div class="row row1">
 		<div id="title_container">
-			<span class="diagram_title">Untitled Diagram</span>
+			<span class="diagram_title">{{note_title}}</span>
 		</div>
 	</div>
+	<div class="designer_button" id="sync" onclick="UI.sync()">Sync</div>
 </div>
 <div id="designer">
 	<div style="height: 535px;" id="shape_panel" class="layout"><div class="panel_container"><h3 class="panel_title"><div class="ico ico_accordion"></div>Flowchart</h3><div id="panel_flow" class="content"><div class="panel_box" shapename="process"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="decision"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="terminator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="document"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="data"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="predefinedProcess"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="storedData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="internalStorage"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="sequentialData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="directData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="manualInput"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="card"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="paperTape"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="display"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="manualOperation"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="preparation"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="parallelMode"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="loopLimit"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="onPageReference"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="offPageReference"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="annotation"><canvas class="panel_item" width="30" height="30"></canvas></div></div></div><div class="panel_container"><h3 class="panel_title"><div class="ico ico_accordion"></div>Pool/Lane</h3><div id="panel_lane" class="content"><div class="panel_box" shapename="verticalPool"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="verticalLane"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalSeparator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="verticalSeparator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalPool"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalLane"><canvas class="panel_item" width="30" height="30"></canvas></div></div></div></div>

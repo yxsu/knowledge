@@ -2292,7 +2292,7 @@ var Designer = {
 		 */
 		canvasDraggable: function(){
 			var container = $("#canvas_container");
-			container.css("cursor", "url(/themes/default/images/diagraming/cursor_hand.png) 8 8, auto");
+			container.css("cursor", "url(/static/images/cursor_hand.png) 8 8, auto");
 			if(this.canvasDragTimeout){
 				clearTimeout(this.canvasDragTimeout);
 			}
@@ -5105,8 +5105,26 @@ var Model = {
 			}
 		}
 		this.build();
-		var msgContent = {shapes: oriShapes, updates: updateShapes};
-		MessageSource.send("update", msgContent);
+		//save to server
+		$.ajax({
+			url: '/note/'+note_guid + '/',
+			type: 'POST',
+			data: {
+				note_guid: "temp_1",
+				existedShapes: JSON.stringify(oriShapes),
+				updateShapes: JSON.stringify(updateShapes)
+			}
+		})
+		.done(function(data) {
+			console.log("success");
+		})
+		.fail(function(data) {
+			console.log("error");
+			console.log(data)
+		})
+		.always(function(data) {
+			console.log("complete");
+		});
 	},
 	/**
 	 * 删除形状

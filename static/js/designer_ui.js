@@ -24,17 +24,18 @@ var UI = {
 		function changeTitle(){
 			var newTitle = $.trim($("#title_container").children("input").val());
 			var oldTitle = $(".diagram_title").text();
-			/*
-			if(newTitle != oldTitle && chartId != ""){
-				var msgObj = {
-					action: "changeTitle",
-					title: newTitle
-				};
-				CLB.send(msgObj);
+			if(newTitle != oldTitle) {
+				$.ajax({
+					url: '/note/' + note_guid + '/',
+					type: 'POST',
+					data: {
+						note_guid: note_guid,
+						new_title: newTitle
+					},
+				});
 			}
-			*/
 			var title = newTitle != "" ? newTitle : oldTitle;
-			$("title").text(title + " - ProcessOn");
+			$("title").text(title + " - Knowledge");
 			$(".diagram_title").text(title).show();
 			$("#title_container").children("input").remove();
 		}
@@ -687,6 +688,12 @@ var UI = {
 		}else{
 			arrangeMenu.children("li[ac=ungroup]").menuitem("enable");
 		}
+	},
+	/**
+	 * save note to yinxiang
+	 */
+	sync: function(){
+		console.log("clicked");
 	},
 	/**
 	 * 打开插入链接
@@ -2950,11 +2957,13 @@ var Dock = {
  * 鹰眼导航
  * @type {}
  */
+
 var Navigator = {
 	/**
 	 * 初始化
 	 */
 	init: function(){
+		/*
 		$("#designer_layout").bind("scroll", function(){
 			Navigator.setView();
 		});
@@ -3022,12 +3031,13 @@ var Navigator = {
 			layout.scrollLeft(canvasX + margin - layout.width()/2);
 			layout.scrollTop(canvasY + margin - layout.height()/2);
 		});
-		this.setView();
+		this.setView();*/
 	},
 	/**
 	 * 绘制鹰眼视图
 	 */
 	draw: function(){
+		/*
 		if(this.drawNavigationTimeout){
 			window.clearTimeout(this.drawNavigationTimeout);
 		}
@@ -3081,12 +3091,13 @@ var Navigator = {
 	 		ctx.restore();
 	 		Navigator.setView();
 	 		this.drawNavigationTimeout = null;
-		}, 100);
+		}, 100); */
 	},
 	/**
 	 * 设置鹰眼视图
 	 */
 	setView: function(){
+		/*
  		var navigator = $("#navigation_eye");
  		//设计器可见视图
  		var layout = $("#designer_layout");
@@ -3152,6 +3163,7 @@ var Navigator = {
 	 			height: navViewH
 	 		}).show();
 		}
+		*/
 	}
 };
 /**

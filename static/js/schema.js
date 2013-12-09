@@ -55,7 +55,7 @@ var Schema = {
 			type: "solid", //填充类型：none, solid, gradient, image
 			color: "255,255,255"
 			//无背景
-//				type: none,
+//				type: none
 			//线性渐变的配置
 //				type: "gradient",
 //				gradientType: "linear",

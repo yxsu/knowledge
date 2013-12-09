@@ -2,7 +2,6 @@ from datetime import datetime
 from evernote.models import *
 from oauth.views import get_current_client
 
-
 def updateNotebookList():
     note_store = get_current_client().get_note_store()
     local_guid_set = {notebook.guid for notebook in Notebook.objects.all()}
