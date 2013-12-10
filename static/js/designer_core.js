@@ -5110,16 +5110,15 @@ var Model = {
 			url: '/note/'+note_guid + '/',
 			type: 'POST',
 			data: {
-				note_guid: "temp_1",
-				existedShapes: JSON.stringify(oriShapes),
+				note_guid: note_guid,
 				updateShapes: JSON.stringify(updateShapes)
 			}
 		})
 		.done(function(data) {
-			console.log("success");
+			console.log("update shape: success");
 		})
 		.fail(function(data) {
-			console.log("error");
+			console.log("update shape: error");
 			console.log(data)
 		})
 		.always(function(data) {
@@ -5207,9 +5206,24 @@ var Model = {
 			}
 		}
 		this.build();
-		//发送消息
-		MessageSource.beginBatch();
-		MessageSource.send("remove", removed);
+		//save to server
+		$.ajax({
+			url: '/note/' + note_guid + '/',
+			type: 'POST',
+			data: {
+				note_guid: note_guid,
+				removedShapes: JSON.stringify(removed)
+			},
+		})
+		.done(function() {
+			console.log("remove shape: success");
+		})
+		.fail(function() {
+			console.log("remove shape: error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
 		//抛出事件
 		if(removeChildren){
 			var related = Designer.events.push("removed", {shapes: shapes, changedIds: changedIds, range: shapeRange});
@@ -5220,7 +5234,6 @@ var Model = {
 		if(changed.length > 0){
 			this.updateMulti(changed);
 		}
-		MessageSource.commit();
 		return true;
 	},
 	/**

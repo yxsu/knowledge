@@ -3,7 +3,7 @@ from evernote import models
 from datetime import datetime
 import logging
 
-def updateShapes(note_guid, original_shapes, updated_shapes):
+def updateShapes(note_guid, updated_shapes):
 	note = models.Note.objects.get(guid=note_guid)
 	#get previous object lists
 	if note.content == None or note.content == '':
@@ -15,12 +15,18 @@ def updateShapes(note_guid, original_shapes, updated_shapes):
 		objects[shape['id']] = shape
 
 	note.content = json.dumps(objects)
-	with open('content.txt', 'w') as f:
-		f.writelines(note.content)
+	note.save()
+
+def removeShapes(note_guid, removedShapes):
+	note = models.Note.objects.get(guid=note_guid)
+	objects = json.loads(note.content)
+	for shape in json.loads(removedShapes):
+		del objects[shape['id']]
+	note.content = json.dumps(objects)
 	note.save()
 
 def updateNoteTitle(note_guid, new_title):
-	note = models.Note.objects.get(guid=note_buid)
+	note = models.Note.objects.get(guid=note_guid)
 	note.title = new_title
 	note.save()
 

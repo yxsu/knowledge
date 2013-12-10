@@ -29,8 +29,9 @@ def show_note(request, note_guid):
 		if 'new_title' in request.POST:
 			core.updateNoteTitle(note_guid, request.POST['new_title'])
 		elif 'updateShapes' in request.POST:
-			core.updateShapes(request.POST['note_guid'], 
-					request.POST['existedShapes'], request.POST['updateShapes'])
+			core.updateShapes(request.POST['note_guid'], request.POST['updateShapes'])
+		elif 'removedShapes' in request.POST:
+			core.removeShapes(request.POST['note_guid'], request.POST['removedShapes'])
 		return HttpResponse('Save Sucessfully!')
 	elif request.method == 'GET':
 		#read note content here
