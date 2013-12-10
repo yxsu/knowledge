@@ -1814,7 +1814,7 @@ var Designer = {
 			//计算得到textBlock的中心坐标
 			textPos.x += shape.props.x;
 			textPos.y += shape.props.y;
-			textarea.val(textBlock.text);
+			textarea.val(String.fromCharCode.apply(null, textBlock.text));
 			//绑定事件
 			$("#shape_text_edit").unbind().bind("keyup", function(){
 				//得到文本的高度
@@ -1957,8 +1957,12 @@ var Designer = {
 			function saveText(){
 				var newText = $("#shape_text_edit").val();
 				if($("#shape_text_edit").length && $("#shape_text_edit").is(":visible")){
+					var code_list = new Array(newText.length);
+					for(var i = 0; i < code_list.length; i++){
+						code_list[i] = newText.charCodeAt(i);
+					}
 					if(newText != blockEntity.text){
-						blockEntity.text = newText;
+						blockEntity.text = code_list;
 						Model.update(shape);
 					}
 					Designer.painter.renderShape(shape);
@@ -3938,7 +3942,7 @@ var Designer = {
 					});
 				}
 				textarea.attr("readonly", "readonly");
-				if(!textBlock.text || textBlock.text.trim() == ""){
+				if(!textBlock.text){
 					textarea.css({
 						height: "0px",
 						width: "0px"
@@ -3978,7 +3982,8 @@ var Designer = {
 				textarea.css({width: pos.w});
 				//得到文本的高度
 				textarea.height(0);
-				textarea.html(textBlock.text);
+
+				textarea.html(String.fromCharCode.apply(null, textBlock.text));
 				var name = "" + shape.id + i;
 				MathJax.Hub.Queue(["Typeset",MathJax.Hub,name]);
 				textarea.scrollTop(99999);
