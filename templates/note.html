@@ -9,9 +9,9 @@
 
 <link href="{% static "css/global.css" %}" ref="stylesheet">
 
+<script type="text/javascript" src="{% static "js/plugins/json2.js" %}"></script>
 <script src="{% static "js/ga.js" %}" async="" type="text/javascript"></script>
-<script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
-<script type="text/javascript" src="{% static "js/django_ajax_bug.js" %}"></script>
+<script type="text/javascript" src="{% static "js/plugins/jquery.js" %}"></script>
 <script src="{% static "js/util.js" %}" type="text/javascript" charset="UTF-8"></script>
 <script type="text/javascript">
 //Google Anlytics
@@ -51,8 +51,9 @@ var chartId = "529ec03b0cf20042951b4052";
 var note_guid = "{{note.guid}}";
 var notebook_name = "{{note.notebook.name}}";
 var notebook_guid = "{{note.notebook.guid}}";
-
-	var definition = {"page":{"showGrid":true,"padding":0,"width":1500,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements":{   }}
+var note_content = String('{{note.content}}');
+note_content = note_content.replace(/&quot;/g, '"').replace(/\\/g, '\\\\');
+var definition = {"page":{"showGrid":true,"padding":0,"width":1500,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements": JSON.parse(note_content) }
 
 var role = "owner";
 var userId = "529ebc4d0cf20042951b2f49";

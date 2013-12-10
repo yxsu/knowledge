@@ -6,21 +6,18 @@ import logging
 def updateShapes(note_guid, original_shapes, updated_shapes):
 	note = models.Note.objects.get(guid=note_guid)
 	#get previous object lists
-	objects = list()
-	if note.content != "":
+	if note.content == None or note.content == '':
+		objects = dict()
+	else:
 		objects = json.loads(note.content)
 
-	new = json.loads(updated_shapes)
-	is_new = True
-	for iter in objects:
-		if iter['id'] == new['id']:
-			iter = new
-			is_new = False
-	if is_new:
-		objects.append(new)
+	for shape in json.loads(updated_shapes):
+		objects[shape['id']] = shape
+
 	note.content = json.dumps(objects)
+	with open('content.txt', 'w') as f:
+		f.writelines(note.content)
 	note.save()
-	logging.error(note.content)
 
 def updateNoteTitle(note_guid, new_title):
 	note = models.Note.objects.get(guid=note_buid)

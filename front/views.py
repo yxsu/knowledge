@@ -35,7 +35,7 @@ def show_note(request, note_guid):
 	elif request.method == 'GET':
 		#read note content here
 		note = models.Note.objects.get(guid=note_guid)
-		return render_to_response('note.html', {'note' : note})
+		return render_to_response('note.html', {'note': note})
 	else:
 		return Http404()
 
