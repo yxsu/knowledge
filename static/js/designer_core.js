@@ -764,6 +764,7 @@ var Designer = {
 			menu.children().hide();
 			menu.children("li[ac=selectall]").show();
 			menu.children(".devi_selectall").show();
+			menu.children("li[ac=drawshape]").show();
 			menu.children("li[ac=drawline]").show();
 			var clipLen = Designer.clipboard.elements.length;
 			if(currentFocus == null){
@@ -872,6 +873,8 @@ var Designer = {
 				Designer.op.changeState("creating_free_linker");
 			}else if(action == "changelink"){
 				UI.showInsertLink();
+			}else if(action == "drawshape"){
+				Designer.op.shapeDashboard(this.menuPos.x, this.menuPos.y);
 			}
 		}
 	},
@@ -2979,6 +2982,99 @@ var Designer = {
 			$("#designer_op_snapline_attach").hide();
 		},
 		/**
+		 * open shape dashboard, it is similar to linkDashboard
+		 * @return {[type]} [description]
+		 */
+		shapeDashboard: function(x , y){
+			var category = "flow";
+
+			if($("#panel_" + category).length != 0){
+				//如果此分类在当前形状面板中，则可以带出此分类的画板
+				var board = $("#shape_dashboard_" + category);
+				if(board.length == 0){
+					//此分类的画板不存在，则初始化
+					board = $("<div id='shape_dashboard_"+category+"' class='shape_dashboard menu'></div>").appendTo("#designer_canvas");
+					/**
+					 * 添加图形DOM元素
+					 */
+					function appendPanelItem(shape, group){
+						var html = "<div class='dashboard_box' shapeName='" + shape.name + "'><canvas title='"+shape.title+"' title_pos='right' class='panel_item' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas></div>";
+						var panelBox = $(html).appendTo(board);
+						if(group){
+							panelBox.append("<div class='group_icon link_shape_icon' group='"+group+"'></div>");
+						}
+						var canvas = panelBox.children()[0];
+						//绘制图形
+						Designer.painter.drawPanelItem(canvas, shape.name);
+					}
+					for(var key in Schema.shapes){
+						var shape = Schema.shapes[key];
+						if(shape.category == category){
+							var attribute = shape.attribute;
+							if(attribute.visible){
+								//图形是可见的，并且是可以连线的
+								if(!shape.groupName){
+									appendPanelItem(shape);
+								}else{
+									var groupShapes = SchemaGroup.getGroup(shape.groupName);
+									if(groupShapes[0] == shape.name){
+										appendPanelItem(shape, shape.groupName);
+									}
+								}
+							}
+						}
+					}
+					board.bind("mousemove", function(e){
+						e.stopPropagation();
+					}).bind("mousedown", function(e){
+						e.stopPropagation();
+					});
+				}
+				board.css({
+					left: x.toScale(),
+					top: y.toScale(),
+					"z-index": Model.orderList.length
+				}).show();
+				board.find(".link_shape_icon").unbind().bind("mousedown", function(e){
+					e.stopPropagation();
+					var group = $(this).attr("group");
+					var pos = $(this).parent().position();
+					var boardPos = board.position();
+					var left = pos.left + boardPos.left + $(this).parent().outerWidth() - 10;
+					var top = pos.top + boardPos.top + $(this).parent().outerHeight();
+					Designer.op.groupDashboard(group, left, top, function(name){
+						linkShape(name);
+						board.hide();
+						$(document).unbind("mousedown.dashboard");
+					});
+				}).bind("click", function(e){
+					e.stopPropagation(); 
+				});
+				board.children(".dashboard_box").unbind().bind("click", function(){
+					board.hide();
+					$(document).unbind("mousedown.dashboard");
+					var current = $(this);
+					var name = current.attr("shapeName");
+					var newShape = Model.create(name, x, y);
+					Designer.painter.renderShape(newShape);
+					MessageSource.beginBatch();
+					//发送形状创建事件
+					if(newShape.onCreated){
+						newShape.onCreated();
+					}
+					Designer.events.push("created", newShape);
+					Model.add(newShape);
+					Utils.unselect();
+					Utils.selectShape(newShape.id);
+					Designer.op.editShapeText(newShape);
+				});
+				$(document).bind("mousedown.dashboard", function(){
+					board.hide();
+					$(document).unbind("mousedown.dashboard");
+				});
+			}
+		},
+		/**
 		 * 打开连接图形的画板
 		 * @param {} x X坐标
 		 * @param {} y Y坐标
@@ -3047,7 +3143,7 @@ var Designer = {
 						$(document).unbind("mousedown.dashboard");
 					});
 				}).bind("click", function(e){
-					e.stopPropagation();
+					e.stopPropagation(); 
 				});
 				board.children(".dashboard_box").unbind().bind("click", function(){
 					board.hide();
