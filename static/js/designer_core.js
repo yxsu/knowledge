@@ -5174,9 +5174,24 @@ var Model = {
 			this.persistence.elements[shape.id] = Utils.copy(shape);
 		}
 		this.build();
-		if(popMsg){
-			MessageSource.send("create", addShapes);
-		}
+		//save to server
+		$.ajax({
+			url: '/note/' + note_guid + '/',
+			type: 'POST',
+			data: {
+				note_guid: note_guid,
+				updateShapes: JSON.stringify(addShapes)
+			},
+		})
+		.done(function() {
+			console.log("add shape success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
 	},
 	/**
 	 * 更新形状定义
