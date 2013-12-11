@@ -4078,9 +4078,9 @@ var Designer = {
 				textarea.css({width: pos.w});
 				//得到文本的高度
 				textarea.height(0);
-
 				textarea.html(String.fromCharCode.apply(null, textBlock.text));
 				var name = "" + shape.id + i;
+				//render the latex code
 				MathJax.Hub.Queue(["Typeset",MathJax.Hub,name]);
 				textarea.scrollTop(99999);
 				var textH = textarea.scrollTop() + 5;
@@ -4118,6 +4118,28 @@ var Designer = {
 					"-o-transform": degStr,
 					"-moz-transform": degStr,
 					"transform": degStr
+				});
+				//recompute the height of textarea
+				MathJax.Hub.Queue(function() {
+					var pos = textBlock.position;
+					var textarea = $("#" + name);
+					textarea.height(0);
+					textarea.scrollTop(99999);
+					var textH = textarea.scrollTop() + 5;
+					var top = 0;
+					top = (pos.y + pos.h/2 - textH/2);
+					var textCenter = {
+						x: pos.x + pos.w/2,
+						y: top + textH/2
+					};
+					var tWidth = pos.w;
+					var tHeight = textH;
+					textarea.css({
+						width: tWidth,
+						height: tHeight,
+						left: (textCenter.x + (shape.props.x - shapeBox.x) + 10).toScale() - pos.w/2,
+						top: (textCenter.y + (shape.props.y - shapeBox.y) + 10).toScale() - textH/2,
+					});
 				});
 			}
 		},
