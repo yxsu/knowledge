@@ -35,12 +35,14 @@ def show_note(request, note_guid):
 		return HttpResponse('Save Sucessfully!')
 	elif request.method == 'GET':
 		#read note content here
-		note = models.Note.objects.get(guid=note_guid)
-		return render_to_response('note.html', {'note': note})
+		note = core.showNoteSchema(note_guid)
+		note_list = core.showNotesInSameNotebook(note_guid)
+		return render_to_response('note.html', 
+				{'note': note, 'note_list': note_list})
 	else:
 		return Http404()
 
 def new_note(request):
 		#compute the size of temp note
 		note_guid = core.createNewNote(note_title='New Note', notebook_guid='default')
-		return redirect('/note/' + note_guid)
+		return redirect('/note/show' + note_guid)

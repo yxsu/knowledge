@@ -2925,6 +2925,7 @@ var Dock = {
 		if(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement){
 			//如果进入全屏状态
 			$("#shape_panel").addClass("readonly");
+			$("#note_list").addClass("readonly");
 			$("#designer_viewport").addClass("readonly");
 			$(window).unbind("resize.designer");
 			$("#designer_layout").height(window.screen.height);
@@ -2938,6 +2939,7 @@ var Dock = {
 			Designer.op.canvasFreeDraggable();
 		}else{
 			$("#shape_panel").removeClass("readonly");
+			$("#note_list").removeClass("readonly");
 			$("#designer_viewport").removeClass("readonly");
 			Designer.initialize.initLayout();
 			Designer.hotkey.init();

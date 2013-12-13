@@ -46,3 +46,11 @@ def getNewGuidOfTempNote():
 		if i not in index_set:
 			candidate_index = i
 	return 'temp_' + str(candidate_index)
+
+def showNoteSchema(note_guid):
+	return models.Note.objects.get(guid=note_guid)
+
+def showNotesInSameNotebook(note_guid):
+	notebook = models.Note.objects.get(guid=note_guid).notebook
+	return models.Note.objects.filter(notebook=notebook)
+

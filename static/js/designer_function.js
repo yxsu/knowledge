@@ -783,6 +783,7 @@ Designer.addFunction("setReadonly", function(readonly){
 		$(".menubar").hide();
 		$(".toolbar").hide();
 		//隐藏图形面板
+		$("#note_list").addClass("readonly");
 		$("#shape_panel").addClass("readonly");
 		$("#designer_viewport").addClass("readonly");
 		//取消快捷键

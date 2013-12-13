@@ -67,7 +67,18 @@ var Designer = {
 			//Init designer layout.
 			$(window).bind("resize.designer", function(){
 				var height = $(window).height() - $("#designer_header").outerHeight();
-				$(".layout").height(height + 100);
+				var width_left_bar = 200;
+				console.log($("#designer_header").outerHeight());
+				$("#designer").height(height);
+				$("#note_list").height(height).width(width_left_bar);
+				var attr = {
+					top: 0,
+					left: width_left_bar,
+					width: $(window).width() - width_left_bar,
+					height: height
+				};
+				$("#designer_viewport").css(attr);
+
 			});
 			$(window).trigger("resize.designer");
 		},
@@ -168,8 +179,8 @@ var Designer = {
 			});
 			if(!this.initialized){
 				//如果没有初始化完毕，即第一次初始化，调整滚动条
-				$("#designer_layout").scrollTop(Designer.config.pageMargin - 10);
-				$("#designer_layout").scrollLeft(Designer.config.pageMargin - 10);
+				$("#designer_viewport").scrollTop(Designer.config.pageMargin - 10);
+				$("#designer_viewport").scrollLeft(Designer.config.pageMargin - 10);
 			}
 			var domShowGrid = $("#bar_list_page").children("li[ac=set_page_showgrid]");
 			domShowGrid.menuitem("unselect");
@@ -886,6 +897,7 @@ var Designer = {
 		this.initialize.initModel();
 		this.initialize.initCanvas();
 		this.initialize.initShapes();
+		$("#shape_panel").hide();
 		this.hotkey.init();
 		this.contextMenu.init();
 		//初始化图形操作
@@ -988,7 +1000,7 @@ var Designer = {
 				.unbind("dblclick.edit_linker");
 			$("#canvas_container").unbind("mousedown.link").unbind("mousedown.create_text")
 				.unbind("mousedown.drag_canvas");
-			$("#designer_layout").unbind("mousedown.multiselect");
+			$("#designer_viewport").unbind("mousedown.multiselect");
 			Utils.hideAnchors();
 			$("#link_spot").hide();
 		},
@@ -1671,7 +1683,7 @@ var Designer = {
 		 */
 		shapeMultiSelectable: function(){
 			var canvas = $("#designer_canvas");
-			var layout = $("#designer_layout");
+			var layout = $("#designer_viewport");
 			layout.unbind("mousedown.multiselect").bind("mousedown.multiselect", function(downE){
 				var selector = null;
 				if(!downE.ctrlKey){
@@ -2310,13 +2322,13 @@ var Designer = {
 				$(document).unbind("mouseup.drag_canvas");
 			}, 500);
 			container.unbind("mousedown.drag_canvas").bind("mousedown.drag_canvas", function(downE){
-				var beginTop = $("#designer_layout").scrollTop();
-				var beginLeft = $("#designer_layout").scrollLeft();
+				var beginTop = $("#designer_viewport").scrollTop();
+				var beginLeft = $("#designer_viewport").scrollLeft();
 				container.bind("mousemove.drag_canvas", function(moveE){
 					var offsetX = moveE.pageX - downE.pageX;
 					var offsetY = moveE.pageY - downE.pageY;
-					$("#designer_layout").scrollLeft(beginLeft - offsetX);
-					$("#designer_layout").scrollTop(beginTop - offsetY);
+					$("#designer_viewport").scrollLeft(beginLeft - offsetX);
+					$("#designer_viewport").scrollTop(beginTop - offsetY);
 				});
 				$(document).unbind("mouseup.drag_canvas").bind("mouseup.drag_canvas", function(upE){
 					container.unbind("mousemove.drag_canvas");
@@ -2340,13 +2352,13 @@ var Designer = {
 			var container = $("#canvas_container");
 			container.css("cursor", "url(/themes/default/images/diagraming/cursor_hand.png) 8 8, auto");
 			container.unbind("mousedown.drag_canvas").bind("mousedown.drag_canvas", function(downE){
-				var beginTop = $("#designer_layout").scrollTop();
-				var beginLeft = $("#designer_layout").scrollLeft();
+				var beginTop = $("#designer_viewport").scrollTop();
+				var beginLeft = $("#designer_viewport").scrollLeft();
 				container.bind("mousemove.drag_canvas", function(moveE){
 					var offsetX = moveE.pageX - downE.pageX;
 					var offsetY = moveE.pageY - downE.pageY;
-					$("#designer_layout").scrollLeft(beginLeft - offsetX);
-					$("#designer_layout").scrollTop(beginTop - offsetY);
+					$("#designer_viewport").scrollLeft(beginLeft - offsetX);
+					$("#designer_viewport").scrollTop(beginTop - offsetY);
 				});
 				$(document).unbind("mouseup.drag_canvas").bind("mouseup.drag_canvas", function(upE){
 					container.unbind("mousemove.drag_canvas");

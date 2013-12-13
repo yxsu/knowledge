@@ -140,8 +140,10 @@ html,body{
 	position: absolute;
 }
 #designer_viewport{
-	position: relative;
-	margin-left: 163px;
+	overflow: scroll;
+	z-index: 0;
+	position: absolute;
+	margin-left: 0px;
 }
 #demo_signup{
 	background: #b2b2b2;

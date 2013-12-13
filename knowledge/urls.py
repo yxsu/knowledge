@@ -18,7 +18,7 @@ urlpatterns = patterns('front.views',
     url(r'^$', 'index'),
     url(r'^notebook/$', 'list_notebook'),
     url(r'^note/new/$', 'new_note'),
-    url(r'^note/([\w_]{6,10})/$', 'show_note'),
+    url(r'^note/show/([\w_]{6,10})/$', 'show_note'),
                        
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

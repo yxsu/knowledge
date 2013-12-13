@@ -68,11 +68,14 @@ if(!document.getElementById("support_canvas").getContext){
 	<div class="designer_button" id="sync" onclick="UI.sync()">Sync</div>
 </div>
 <div id="designer">
-	<div style="height: 535px;" id="shape_panel" class="layout"><div class="panel_container"><h3 class="panel_title"><div class="ico ico_accordion"></div>Flowchart</h3><div id="panel_flow" class="content"><div class="panel_box" shapename="process"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="decision"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="terminator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="document"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="data"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="predefinedProcess"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="storedData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="internalStorage"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="sequentialData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="directData"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="manualInput"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="card"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="paperTape"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="display"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="manualOperation"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="preparation"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="parallelMode"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="loopLimit"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="onPageReference"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="offPageReference"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="annotation"><canvas class="panel_item" width="30" height="30"></canvas></div></div></div><div class="panel_container"><h3 class="panel_title"><div class="ico ico_accordion"></div>Pool/Lane</h3><div id="panel_lane" class="content"><div class="panel_box" shapename="verticalPool"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="verticalLane"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalSeparator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="verticalSeparator"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalPool"><canvas class="panel_item" width="30" height="30"></canvas></div><div class="panel_box" shapename="horizontalLane"><canvas class="panel_item" width="30" height="30"></canvas></div></div></div></div>
+	<div style="height: 535px;" id="note_list">
+		{% for iter in note_list %}
+		<h4 class="panel_title"><div class="ico ico_accordion"></div><a href="/note/show/{{iter.guid}}"> {{iter.title}} </a></h4>
+		{% endfor %}
+	</div>
+	
 	<div id="designer_viewport">
-		
-		<div style="height: 535px;" id="designer_layout" class="layout">
-			<div style="width: 1050px; height: 1500px; padding: 1000px; cursor: default;" id="canvas_container">
+			<div style="width: 1050px; height: 1500px; padding: 100px; cursor: default;" id="canvas_container">
 				<div style="background-color: rgb(242, 242, 242);" id="designer_canvas">
 					<canvas height="1500" width="1050" id="designer_grids"></canvas>
 					<ul id="designer_contextmenu" class="menu list options_menu">
@@ -113,9 +116,9 @@ if(!document.getElementById("support_canvas").getContext){
 			</div>
 			<div id="shape_img_container"></div>
 			<div id="layout_block"></div>
-		</div>
 		<div id="shape_thumb" class="menu"><canvas width="160px"></canvas><div></div></div>
-		
+	</div>
+	<div style="height: 535px;" id="shape_panel" class="layout">
 	</div>
 </div>
 
