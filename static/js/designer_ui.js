@@ -26,12 +26,14 @@ var UI = {
 			var oldTitle = $(".diagram_title").text();
 			if(newTitle != oldTitle) {
 				$.ajax({
-					url: '/note/' + note_guid + '/',
+					url: '/note/show/' + note_guid + '/',
 					type: 'POST',
 					data: {
 						note_guid: note_guid,
 						new_title: newTitle
 					},
+				}).done(function() {
+					$("a[href='/note/show/"+note_guid+"']").html(newTitle);
 				});
 			}
 			var title = newTitle != "" ? newTitle : oldTitle;

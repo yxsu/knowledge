@@ -68,7 +68,6 @@ var Designer = {
 			$(window).bind("resize.designer", function(){
 				var height = $(window).height() - $("#designer_header").outerHeight();
 				var width_left_bar = 200;
-				console.log($("#designer_header").outerHeight());
 				$("#designer").height(height);
 				$("#note_list").height(height).width(width_left_bar);
 				var attr = {
@@ -1829,6 +1828,10 @@ var Designer = {
 			//计算得到textBlock的中心坐标
 			textPos.x += shape.props.x;
 			textPos.y += shape.props.y;
+			console.log(typeof(textBlock.text));
+			if(typeof(textBlock.text) == 'undefined' || typeof(textBlock.text) == 'string'){
+				textBlock.text = new Array(0);
+			}
 			textarea.val(String.fromCharCode.apply(null, textBlock.text));
 			//绑定事件
 			$("#shape_text_edit").unbind().bind("keyup", function(){
@@ -4090,6 +4093,10 @@ var Designer = {
 				textarea.css({width: pos.w});
 				//得到文本的高度
 				textarea.height(0);
+				console.log(typeof(textBlock.text));
+				if(typeof(textBlock.text) == 'undefined' || typeof(textBlock.text) == 'string'){
+					textBlock.text = new Array(0);
+				}
 				textarea.html(String.fromCharCode.apply(null, textBlock.text));
 				var name = "" + shape.id + i;
 				//render the latex code
@@ -5210,7 +5217,7 @@ var Model = {
 		this.build();
 		//save to server
 		$.ajax({
-			url: '/note/' + note_guid + '/',
+			url: '/note/show/' + note_guid + '/',
 			type: 'POST',
 			data: {
 				note_guid: note_guid,
@@ -5257,7 +5264,7 @@ var Model = {
 		this.build();
 		//save to server
 		$.ajax({
-			url: '/note/'+note_guid + '/',
+			url: '/note/show/'+note_guid + '/',
 			type: 'POST',
 			data: {
 				note_guid: note_guid,
@@ -5358,7 +5365,7 @@ var Model = {
 		this.build();
 		//save to server
 		$.ajax({
-			url: '/note/' + note_guid + '/',
+			url: '/note/show/' + note_guid + '/',
 			type: 'POST',
 			data: {
 				note_guid: note_guid,
