@@ -34,11 +34,11 @@ def show_note(request, note_guid):
 			core.removeShapes(request.POST['note_guid'], request.POST['removedShapes'])
 		return HttpResponse('Save Sucessfully!')
 	elif request.method == 'GET':
-		#read note content here
-		note = core.showNoteSchema(note_guid)
 		note_list = core.showNotesInSameNotebook(note_guid)
 		return render_to_response('note.html', 
-				{'note': note, 'note_list': note_list})
+				{'title': core.showNoteTitle(note_guid), 
+				'schema': core.getSchema(note_guid), 
+				'note_guid': note_guid, 'note_list': note_list})
 	else:
 		return Http404()
 

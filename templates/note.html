@@ -28,10 +28,8 @@
 
 <script type="text/javascript">
 var chartId = "529ec03b0cf20042951b4052";
-var note_guid = "{{note.guid}}";
-var notebook_name = "{{note.notebook.name}}";
-var notebook_guid = "{{note.notebook.guid}}";
-var note_content = String('{{note.content}}');
+var note_guid = "{{note_guid}}";
+var note_content = String('{{schema}}');
 note_content = note_content.replace(/&quot;/g, '"');
 var definition;
 if(note_content == ""){
@@ -62,12 +60,12 @@ if(!document.getElementById("support_canvas").getContext){
 <div id="designer_header">
 	<div class="row row1">
 		<div id="title_container">
-			<span class="diagram_title">{{note.title}}</span>
+			<span class="diagram_title">{{title}}</span>
 		</div>
 	</div>
-	<div class="designer_button" id="sync" onclick="UI.sync()">Sync</div>
 </div>
 <div id="designer">
+	<div class="designer_button" id="sync" onclick="UI.sync()">Sync</div>
 	<div style="height: 535px;" id="note_list">
 		{% for iter in note_list %}
 		<h4 class="panel_title"><div class="ico ico_accordion"></div><a href="/note/show/{{iter.guid}}"> {{iter.title}} </a></h4>

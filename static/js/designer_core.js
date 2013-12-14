@@ -1828,7 +1828,6 @@ var Designer = {
 			//计算得到textBlock的中心坐标
 			textPos.x += shape.props.x;
 			textPos.y += shape.props.y;
-			console.log(typeof(textBlock.text));
 			if(typeof(textBlock.text) == 'undefined' || typeof(textBlock.text) == 'string'){
 				textBlock.text = new Array(0);
 			}
@@ -4093,7 +4092,6 @@ var Designer = {
 				textarea.css({width: pos.w});
 				//得到文本的高度
 				textarea.height(0);
-				console.log(typeof(textBlock.text));
 				if(typeof(textBlock.text) == 'undefined' || typeof(textBlock.text) == 'string'){
 					textBlock.text = new Array(0);
 				}
