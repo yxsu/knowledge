@@ -104,7 +104,7 @@ var Schema = {
 		textBlock: [
 			{
 				position: {x: 10, y: 0, w: "w-20", h: "h"},
-				text: ""
+				text: new Array(0)
 			}
 		],
 		anchors: [{x: "w/2", y: "0"}, {x: "w/2", y: "h"}, {x: "0", y: "h/2"}, {x: "w", y: "h/2"}]
@@ -112,7 +112,7 @@ var Schema = {
 	linkerDefaults: {
 		id: "",
 		name: "linker",
-		text: "",
+		text: new Array(0),
 		group: "",
 		linkerType: "broken",
 		points: [],
@@ -190,7 +190,7 @@ var Schema = {
 				}else{
 					result[key] = [{
 						position: this.extend({}, this.shapeDefaults.textBlock[0].position),
-						text: ""
+						text: new Array(0)
 					}];
 				}
 			}else{

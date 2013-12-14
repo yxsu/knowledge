@@ -1979,10 +1979,8 @@ var Designer = {
 					for(var i = 0; i < code_list.length; i++){
 						code_list[i] = newText.charCodeAt(i);
 					}
-					if(newText != blockEntity.text){
-						blockEntity.text = code_list;
-						Model.update(shape);
-					}
+					blockEntity.text = code_list;
+					Model.update(shape);
 					Designer.painter.renderShape(shape);
 					$("#shape_text_edit").remove();
 				}
@@ -2120,7 +2118,7 @@ var Designer = {
 				"transform": scale
 			});
 			//修改坐标
-			textarea.val(linker.text).show().select();
+			textarea.val(String.fromCharCode.apply(null, linker.text)).show().select();
 			textarea.unbind().bind("keyup", function(){
 				var newText = $(this).val();
 				var text = newText.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br/>");
@@ -2190,10 +2188,12 @@ var Designer = {
 				var textarea = $("#linker_text_edit");
 				if(textarea.length && textarea.is(":visible")){
 					var newText = textarea.val();
-					if(newText != linker.text){
-						linker.text = newText;
-						Model.update(linker);
+					var code_list = new Array(newText.length);
+					for(var i = 0; i < code_list.length; i++){
+						code_list[i] = newText.charCodeAt(i);
 					}
+					linker.text = code_list;
+					Model.update(linker);
 					Designer.painter.renderLinker(linker);
 					textarea.remove();
 				}
@@ -4692,7 +4692,7 @@ var Designer = {
 			var linkerContainer = $("#" + linker.id);
 			var canvas = linkerContainer.find(".text_canvas");
 			if(canvas.length == 0){
-				canvas = $("<div class='text_canvas linker_text'></div>").appendTo(linkerContainer);
+				canvas = $("<div class='text_canvas linker_text' id='"+linker.id+"_text'></div>").appendTo(linkerContainer);
 			}
 			var fontStyle = linker.fontStyle;
 			var scale = "scale("+Designer.config.scale+")";
@@ -4712,14 +4712,16 @@ var Designer = {
 				"transform": scale
 			};
 			canvas.css(style);
-			if(linker.text == null || linker.text == ""){
+			if(linker.text == null || linker.text.length == 0){
 				canvas.hide();
 				return;
 			}
 			//设置位置
 			canvas.show();
-			var text = linker.text.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br/>");
+			var text = String.fromCharCode.apply(null, linker.text).replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br/>");
 			canvas.html(text + "<br/>");
+			//render formula
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,linker.id + "_text"]);
 			var midpoint = this.getLinkerMidpoint(linker);
 			var containerPos = linkerContainer.position();
 			canvas.css({
