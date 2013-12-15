@@ -17,6 +17,7 @@ urlpatterns = patterns('front.views',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'index'),
     url(r'^notebook/$', 'list_notebook'),
+    url(r'^notebook/([\w-]+)/$', 'operate_notebook'),
     url(r'^note/new/$', 'new_note'),
     url(r'^note/show/([\w_]{6,10})/$', 'show_note'),
                        

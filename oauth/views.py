@@ -7,7 +7,6 @@ from datetime import datetime
 EN_CONSUMER_KEY = 'suyuxin-9809'
 EN_CONSUMER_SECRET = 'f2541e0d8ea719ff'
 
-
 def get_current_client():
     """for internal use
     """

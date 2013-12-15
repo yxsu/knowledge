@@ -4,15 +4,33 @@
 	<title>Knowledge -- powered by suyuxin</title>
 	<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" media="screen">
 	<link href="{% static "css/notebook_list.css" %}" ref="stylesheet">
-	<script src="{% static "js/plugins/jquery-2.0.3.min.js" %}"></script>
+	<script src="{% static "js/plugins/jquery.js" %}"></script>
 	<script src="{% static "js/plugins/bootstrap.min.js" %}"></script>
+	<script src="{% static "js/notebook.js" %}"></script>
 </head>
 <body>
-	<span class="label label-info">Notebook list:</span>
-	<ul class="list-group">
-		{% for notebook in notebook_list %}
-		<a href="/notebook/{{notebook.guid}}" class="list-group-item">{{notebook.name}}</a>
-		{% endfor %}
-	</ul>
+	<div class="page-header">
+		<button class="btn" onclick="Sync">Sync</button>
+		<button class="btn">Other</button>
+	</div>
+	<div class="container-fluid">
+		<div class="col-md-3" id="notebook_list">
+			<span class="row label label-info">Notebook list:</span>
+				{% for notebook in notebook_list %}
+				<button class="row btn" onclick="listNotes('{{notebook.guid}}');">
+					<a class="list-group-item">{{notebook.name}}</a>
+				</button>
+				{% endfor %}
+		</div>
+		<div class="col-md-3" id="note_list">
+			<div class="row">test 1
+			</div>
+			<div class="row">test 2
+			</div>
+		</div>
+		<div class="col-md-6" id="note_preview">
+
+		</div>
+	</div>
 </body>
 </html>

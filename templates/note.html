@@ -58,6 +58,7 @@ if(!document.getElementById("support_canvas").getContext){
 }
 </script>
 <div id="designer_header">
+	<a class="btn_back" href="/notebook/" title='Back'><span class="ico ico_goback"></span></a>
 	<div class="row row1">
 		<div id="title_container">
 			<span class="diagram_title">{{title}}</span>
@@ -65,7 +66,6 @@ if(!document.getElementById("support_canvas").getContext){
 	</div>
 </div>
 <div id="designer">
-	<div class="designer_button" id="sync" onclick="UI.sync()">Sync</div>
 	<div style="height: 535px;" id="note_list">
 		{% for iter in note_list %}
 		<h4 class="panel_title"><div class="ico ico_accordion"></div><a href="/note/show/{{iter.guid}}"> {{iter.title}} </a></h4>
