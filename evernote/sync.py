@@ -62,21 +62,34 @@ def syncNotes():
 
 def uploadNoteToServer(last_status, server_status):
     local_notes = Note.objects.filter(update_sequence_num=sys.maxint)
-    
+     for note in local_notes:
+        new_note = Types.Note(guid=note.guid)
+        new_note.title = note.title
+        new_note.resources = [note.getSchemaResource()]
+        new_note.content = note.content
+        new_note.notebookGuid = note.notebook.guid
+        updated_note = note_store.updateNote(new_note)
+        #save in local database
+        note.updateContent(updated_note)
 
 def downloadFromServer(last_status, server_status):
     chunk_filter = StoreTypes.SyncChunkFilter(includeNotes=True, includeNoteResources=True)
     #first chunk
     chunk = note_store.getFilteredSyncChunk(last_status.updateCount, 100, chunk_filter)
     for note in chunk.notes:
-        updateNote(note)
+        updateNote()
     while chunk.chunkHighUSN < chunk.updateCount:
         chunk = note_store.getFilteredSyncChunk(chunk.chunkHighUSN, 100, chunk_filter)
         for note in chunk.notes:
-            updateNote(note_store.getNote(note.guid, True, False, False, False))
+            updateNote()
 
 def updateNote(note):
+    if type(note.deleted) == int:
+        return
     local_note = Note.objects.get(guid=note.guid)
+    if local_note and local_note.update_sequence_num == sys.maxint:#dirty flag
+        return
+    note_store.getNote(note.guid, True, False, False, False)
     if local_note:
         local_note.updateContent(note)
     else:

@@ -66,7 +66,7 @@ class Note(models.Model):
 
 
     def save(self, *args, **kwargs):
-        if note self.id:
+        if not self.id:
             self.created = datetime.today().replace(microsecond=0)
         self.updated = datetime.today().replace(microsecond=0)
         return super(Note, self).save(*args, **kwargs)
@@ -84,6 +84,8 @@ class Note(models.Model):
             os.mkdir(base_path+str(self.guid))
         with open(base_path+str(self.guid)+'/knowledge.json', 'w') as f:
             f.write(content)
+        #set dirty flag
+        self.update_sequence_num = sys.maxint
         #update hash hex of note
         md5 = hashlib.md5()
         md5.update(content)

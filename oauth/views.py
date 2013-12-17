@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.shortcuts import redirect
 from oauth.models import AuthUser
 from datetime import datetime
+import logging
 EN_CONSUMER_KEY = 'suyuxin-9809'
 EN_CONSUMER_SECRET = 'f2541e0d8ea719ff'
 
@@ -11,6 +12,7 @@ def get_current_client():
     """for internal use
     """
     token = AuthUser.objects.order_by('-time')[0].access_token
+    logging.error(token)
     return get_evernote_client(token)
 
 
