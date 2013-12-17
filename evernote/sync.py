@@ -8,9 +8,11 @@ from evernote import core
 import binascii
 import pickle
 import logging
+import sys
+
+note_store = get_current_client().get_note_store()
 
 def updateNotebookList():
-    note_store = get_current_client().get_note_store()
     local_guid_set = {notebook.guid for notebook in Notebook.objects.all()}
     for notebook in note_store.listNotebooks():
         if notebook.guid in local_guid_set:
@@ -26,7 +28,6 @@ def listNotebooks():
     return Notebook.objects.order_by('name') 
 
 def listUpdateStateOfNotes(notebook_guid):
-    note_store = get_current_client().get_note_store()
     notebook_filter = StoreTypes.NoteFilter(notebookGuid=notebook_guid)
     spec = StoreTypes.NotesMetadataResultSpec(
         includeContentLength=True, includeUpdated=True,
@@ -54,13 +55,16 @@ def syncNotes():
     if server_status.updateCount > last_status.updateCount:
         downloadFromServer(last_status, server_status)
     #update content from client to server
-    uploadTempNotes()
-    uploadToServer(last_status, server_status)
+    uploadTempNotes() 
+    uploadNoteToServer(last_status, server_status)
     #save sync state
     pickle.dump(server_status, open('database/sync_state.dat', 'w'))
 
+def uploadNoteToServer(last_status, server_status):
+    local_notes = Note.objects.filter(update_sequence_num=sys.maxint)
+    
+
 def downloadFromServer(last_status, server_status):
-    note_store = get_current_client().get_note_store()
     chunk_filter = StoreTypes.SyncChunkFilter(includeNotes=True, includeNoteResources=True)
     #first chunk
     chunk = note_store.getFilteredSyncChunk(last_status.updateCount, 100, chunk_filter)
@@ -69,13 +73,27 @@ def downloadFromServer(last_status, server_status):
     while chunk.chunkHighUSN < chunk.updateCount:
         chunk = note_store.getFilteredSyncChunk(chunk.chunkHighUSN, 100, chunk_filter)
         for note in chunk.notes:
-            updateNote(note)
+            updateNote(note_store.getNote(note.guid, True, False, False, False))
 
-def updateNote(note)
-    pass
+def updateNote(note):
+    local_note = Note.objects.get(guid=note.guid)
+    if local_note:
+        local_note.updateContent(note)
+    else:
+        local_note = Note()
+        local_note.updateContent(note)
+    #save knowledge.json
+    for res in note.resources:
+        if res.mime == 'text/json':
+            updateNoteResources(res)
 
-def updateNoteResources(note_guid):
-    pass
+
+def updateNoteResources(resource):
+    if not os.path.exists(base_path + '/' + resource.noteGuid):
+        os.mkdir(base_path+'/' + resource.noteGuid)
+    with open(base_path +'/' + resource.noteGuid + '/knowledge.json', 'w') as f:
+        f.write(note_store.getResourceData(resource.guid))
+
 
 def uploadTempNotes():
     note_store = get_current_client().get_note_store()
