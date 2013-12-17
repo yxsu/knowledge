@@ -18,3 +18,24 @@ function listNotes(notebook_guid){
 	});
 	
 }
+
+function Sync(){
+	console.log("run sync...")
+	$('#sync').hide();
+	$.ajax({
+		url: '/sync/',
+		type: 'POST',
+		data: {param1: 'value1'},
+	})
+	.done(function() {
+		console.log("success");
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+		$('#sync').show();
+	});
+	
+}

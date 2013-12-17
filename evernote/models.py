@@ -1,6 +1,7 @@
 from django.db import models
 from evernote.edam.limits import constants
 from datetime import datetime
+import logging
 
 base_path = 'database/resources/'
 
@@ -52,25 +53,18 @@ class Note(models.Model):
     def updateContent(self, note):
         self.guid = note.guid
         self.title = note.title
-        self.content = note.title
-        self.content_hash = note.contentHash
+        self.content = note.content
         self.content_length = note.contentLength
-        self.created = note.created
-        self.updated = note.updated
-        self.deleted = note.deleted
+        self.created = datetime.utcfromtimestamp(note.created/1000)
+        self.updated = datetime.utcfromtimestamp(note.updated/1000)
+        if type(note.deleted) != int:
+            note.deleted = 0
+        self.deleted = datetime.utcfromtimestamp(note.deleted/1000)
         self.active = note.active
         self.update_sequence_num = note.updateSequenceNum
         self.notebook = Notebook.objects.get(guid=note.notebookGuid)
         #lack of tags
         self.save()
-
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = datetime.today().replace(microsecond=0)
-        self.updated = datetime.today().replace(microsecond=0)
-        return super(Note, self).save(*args, **kwargs)
-
 
     def getSchema(self):
         file_name = base_path + str(self.guid) +'/knowledge.json'

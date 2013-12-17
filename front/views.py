@@ -48,7 +48,14 @@ def new_note(request):
 
 def operate_notebook(request, notebook_guid):
 	if request.method == 'POST':
-		sync.listUpdateStateOfNotes(notebook_guid)
+		#sync.listUpdateStateOfNotes(notebook_guid)
 		return  HttpResponse("Sucessfully")
+	else:
+		return Http404()
+
+def syncNotes(request):
+	if request.method == 'POST':
+		sync.syncNotes()
+		return HttpResponse("Sucessfully")
 	else:
 		return Http404()

@@ -9,6 +9,7 @@ import binascii
 import pickle
 import logging
 import sys
+import os
 
 note_store = get_current_client().get_note_store()
 
@@ -62,7 +63,7 @@ def syncNotes():
 
 def uploadNoteToServer(last_status, server_status):
     local_notes = Note.objects.filter(update_sequence_num=sys.maxint)
-     for note in local_notes:
+    for note in local_notes:
         new_note = Types.Note(guid=note.guid)
         new_note.title = note.title
         new_note.resources = [note.getSchemaResource()]
@@ -77,28 +78,32 @@ def downloadFromServer(last_status, server_status):
     #first chunk
     chunk = note_store.getFilteredSyncChunk(last_status.updateCount, 100, chunk_filter)
     for note in chunk.notes:
-        updateNote()
+        updateNote(note)
     while chunk.chunkHighUSN < chunk.updateCount:
         chunk = note_store.getFilteredSyncChunk(chunk.chunkHighUSN, 100, chunk_filter)
         for note in chunk.notes:
-            updateNote()
+            updateNote(note)
 
 def updateNote(note):
     if type(note.deleted) == int:
         return
-    local_note = Note.objects.get(guid=note.guid)
-    if local_note and local_note.update_sequence_num == sys.maxint:#dirty flag
-        return
-    note_store.getNote(note.guid, True, False, False, False)
-    if local_note:
-        local_note.updateContent(note)
+    if Note.objects.filter(guid=note.guid).exists():
+        local_note = Note.objects.get(guid=note.guid)
+        if local_note.update_sequence_num == sys.maxint:#dirty flag
+            return
+        if local_note.update_sequence_num + 1 < note.updateSequenceNum:
+            note.content = note_store.getNoteContent(note.guid)
+            local_note.updateContent(note)
     else:
         local_note = Note()
+        note.content = note_store.getNoteContent(note.guid)
         local_note.updateContent(note)
+    logging.error('update : '+note.title)
     #save knowledge.json
-    for res in note.resources:
-        if res.mime == 'text/json':
-            updateNoteResources(res)
+    if note.resources:
+        for res in note.resources:
+            if res.mime == 'text/json':
+                updateNoteResources(res)
 
 
 def updateNoteResources(resource):
@@ -121,6 +126,7 @@ def uploadTempNotes():
         #change directory of knowledge.json
         os.rename(models.base_path+note.guid, models.base_path+created_note.guid)
         #save in local database
+        logging.error('upload : '+note.title)
         note.updateContent(created_note)
 
 
