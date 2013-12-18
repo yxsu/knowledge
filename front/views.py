@@ -6,10 +6,11 @@ from django.shortcuts import render_to_response
 from django.shortcuts import redirect
 from oauth.models import AuthUser
 from oauth.views import get_current_client
-from evernote.sync import *
 from evernote import core
 from evernote import sync
 from evernote import models
+from evernote.edam.error import ttypes as Errors
+import datetime
 import logging
 
 def index(request):
@@ -19,7 +20,7 @@ def index(request):
         return redirect('/auth/')
 
 def list_notebook(request):
-    notebook_list = listNotebooks()
+    notebook_list = core.listNotebooks()
     return render_to_response('list_notebook.html',
                               {'notebook_list': notebook_list})
 
@@ -48,14 +49,40 @@ def new_note(request):
 
 def operate_notebook(request, notebook_guid):
 	if request.method == 'POST':
-		#sync.listUpdateStateOfNotes(notebook_guid)
 		return  HttpResponse("Sucessfully")
 	else:
-		return Http404()
+		#GET
+		if 'note_guid' in request.GET:
+			content = core.getNoteContent(request.GET['note_guid'])
+			return HttpResponse(content)
+		else:
+			#list notes in the same notebook
+			return listNotesInSameNotebook(notebook_guid)
+
+def listNotesInSameNotebook(notebook_guid):
+	notes = core.listNotes(notebook_guid)
+	if len(notes) == 0:
+		return HttpResponse('<div class="row">No note!</div>')
+	else:
+		response = ''
+		for note in notes:
+			response += '<button class=row btn style="width:100%"'
+			response += 'onclick="showNoteContent('+"'"+note.guid+"'"+');">'
+			response += '<a href="/note/show/'+note.guid+'/" class="list-group-item">'
+			response += note.title + '</a></button>'
+		return HttpResponse(response)
 
 def syncNotes(request):
-	if request.method == 'POST':
-		sync.syncNotes()
-		return HttpResponse("Sucessfully")
-	else:
-		return Http404()
+	try:
+		if request.method == 'POST':
+			sync.syncNotes(get_current_client().get_note_store())
+			return HttpResponse("<div id=notice>Sucessfully</div>")
+		else:
+			return Http404()
+	except Errors.EDAMSystemException, e:
+		if e.errorCode == Errors.EDAMErrorCode.RATE_LIMIT_REACHED:
+			delay = datetime.timedelta(seconds=e.rateLimitDuration, hours=8)
+			next_time = datetime.datetime.utcnow().replace(microsecond=0) + delay
+			return HttpResponse("<div id=notice>Rate limit reached. Please retry after: "+str(next_time)+"</div>")
+		else:
+			return Http404()

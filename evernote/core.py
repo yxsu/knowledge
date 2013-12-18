@@ -57,10 +57,31 @@ def getNewGuidOfTempNote():
 			candidate_index = i
 	return 'temp_' + str(candidate_index)
 
+
 def showNoteTitle(note_guid):
 	return models.Note.objects.get(guid=note_guid).title
+
 
 def showNotesInSameNotebook(note_guid):
 	notebook = models.Note.objects.get(guid=note_guid).notebook
 	return models.Note.objects.filter(notebook=notebook)
 
+
+def listNotebooks():
+    result = list()
+    notebooks = models.Notebook.objects.order_by('name')
+    for notebook in notebooks:
+        result.append({
+            'guid': notebook.guid,
+            'name': notebook.name,
+            'count': len(models.Note.objects.filter(notebook=notebook))
+            })
+    return  result
+
+
+def listNotes(notebook_guid):
+	notebook = models.Notebook.objects.get(guid=notebook_guid)
+	return models.Note.objects.filter(notebook=notebook)
+
+def getNoteContent(note_guid):
+	return models.Note.objects.get(guid=note_guid).content

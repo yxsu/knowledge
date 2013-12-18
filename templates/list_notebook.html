@@ -18,18 +18,13 @@
 			<span class="row label label-info">Notebook list:</span>
 				{% for notebook in notebook_list %}
 				<button class="row btn" onclick="listNotes('{{notebook.guid}}');">
-					<a class="list-group-item">{{notebook.name}}</a>
+					<a class="list-group-item">{{notebook.name}}({{notebook.count}})</a>
 				</button>
 				{% endfor %}
 		</div>
-		<div class="col-md-3" id="note_list">
-			<div class="row">test 1
-			</div>
-			<div class="row">test 2
-			</div>
+		<div class="col-md-2" id="note_list">
 		</div>
-		<div class="col-md-6" id="note_preview">
-
+		<div class="col-md-7" id="note_preview">
 		</div>
 	</div>
 </body>
