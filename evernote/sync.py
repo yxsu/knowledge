@@ -11,7 +11,7 @@ import sys
 import os
 
 
-def updateNotebookList():
+def updateNotebookList(note_store):
     local_guid_set = {notebook.guid for notebook in Notebook.objects.all()}
     for notebook in note_store.listNotebooks():
         if notebook.guid in local_guid_set:
@@ -47,6 +47,8 @@ def syncNotes(note_store):
         last_status = StoreTypes.SyncState()
     #get the status of server
     server_status = note_store.getSyncState()
+    #update notebook
+    updateNotebookList(note_store)
     #update content from server to client
     if server_status.updateCount > last_status.updateCount:
         downloadFromServer(last_status, server_status, note_store)
@@ -109,9 +111,7 @@ def updateNoteResources(resource, note_store):
 
 
 def uploadTempNotes(note_store):
-    note_store = get_current_client().get_note_store()
     temp_notes = Note.objects.filter(guid__startswith='temp_')
-    temp_notes.delete()
     if not temp_notes:
         return
     for note in temp_notes:

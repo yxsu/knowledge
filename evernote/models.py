@@ -33,7 +33,7 @@ class Notebook(models.Model):
             self.stack = notebook.stack
         else:
             self.stack = ''
-        save()
+        self.save()
 
 
 class Note(models.Model):
