@@ -8,7 +8,8 @@ import hashlib
 import binascii
 
 def updateShapes(note_guid, updated_shapes):
-	raw = getSchema(note_guid)
+	note = models.Note.objects.get(guid=note_guid)
+	raw = note.getSchema()
 	if raw == "":
 		objects = dict()
 	else:
@@ -16,13 +17,15 @@ def updateShapes(note_guid, updated_shapes):
 
 	for shape in json.loads(updated_shapes):
 		objects[shape['id']] = shape
-	setSchema(note_guid, json.dumps(objects))
+	note.setSchema(json.dumps(objects))
 
 def removeShapes(note_guid, removedShapes):
-	objects = json.loads(getSchema(note_guid))
+	note = models.Note.objects.get(guid=note_guid)
+	objects = json.loads(note.getSchema())
 	for shape in json.loads(removedShapes):
 		del objects[shape['id']]
-	setSchema(note_guid, json.dumps(objects))
+	note.setSchema(json.dumps(objects))
+
 
 def updateNoteTitle(note_guid, new_title):
 	note = models.Note.objects.get(guid=note_guid)

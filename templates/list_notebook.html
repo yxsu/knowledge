@@ -10,21 +10,30 @@
 </head>
 <body>
 	<div class="page-header">
-		<button class="btn" id="sync" onclick="Sync();">Sync</button>
-		<button class="btn">Other</button>
+		<ul class="nav nav-pills">
+			<li class="active"><button class="btn" id="sync" onclick="Sync();">Sync</button></li>
+			<li><a href="/note/new/">New</a></li>
+		</ul>
 	</div>
 	<div class="container-fluid">
 		<div class="col-md-3" id="notebook_list">
 			<span class="row label label-info">Notebook list:</span>
+			<div class="list-group">
 				{% for notebook in notebook_list %}
-				<button class="row btn" onclick="listNotes('{{notebook.guid}}');">
-					<a class="list-group-item">{{notebook.name}}({{notebook.count}})</a>
-				</button>
+				<div class="list-group-item" id="{{notebook.guid}}" onclick="listNotes('{{notebook.guid}}');">
+					<span class="badge">{{notebook.count}}</span>{{notebook.name}}
+				</div>
 				{% endfor %}
+			</div>
 		</div>
 		<div class="col-md-2" id="note_list">
 		</div>
 		<div class="col-md-7" id="note_preview">
+			<div class="btn-group" id="note_operator" style="display:none;">
+				<button type="button" class="btn btn-default" onclick="toSchema();">Edit Schema</button>
+			</div>
+			<div id="note_preview_content">
+			</div>
 		</div>
 	</div>
 </body>

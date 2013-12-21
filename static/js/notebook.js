@@ -1,8 +1,16 @@
 
 var current_notebook;
+var current_note;
 
 function listNotes(notebook_guid){
-	current_notebook = notebook_guid;
+	if(typeof current_notebook == "nodefined"){
+		current_notebook = notebook_guid;
+		$("#" + current_notebook).addClass("active");
+	}else{
+		$("#" + current_notebook).removeClass("active");
+		current_notebook = notebook_guid;
+		$("#" + current_notebook).addClass("active");
+	}
 	$.ajax({
 		url: '/notebook/' + notebook_guid + '/',
 		type: 'GET',
@@ -31,7 +39,14 @@ function showNoteContent(note_guid) {
 	})
 	.done(function(data) {
 		console.log("success");
-		$('#note_preview').html(data);
+		if(typeof current_note == "undefined"){
+			$("#note_operator").show();
+			$("#"+note_guid).addClass("active");
+		}
+		$('#note_preview_content').html(data);
+		$("#"+current_note).removeClass("active");
+		current_note = note_guid;
+		$('#' + current_note).addClass("active");
 	})
 	.fail(function() {
 		console.log("error");
@@ -64,4 +79,10 @@ function Sync(){
 		$('#sync').show();
 	});
 	
+}
+
+function toSchema(){
+	if(typeof current_note != "undefined"){
+		window.location.replace("/note/show/"+current_note);
+	}
 }

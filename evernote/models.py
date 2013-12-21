@@ -2,6 +2,11 @@ from django.db import models
 from evernote.edam.limits import constants
 from datetime import datetime
 import logging
+import os
+import sys
+import hashlib
+import binascii
+import evernote.edam.type.ttypes as Types
 
 base_path = 'database/resources/'
 
@@ -42,9 +47,9 @@ class Note(models.Model):
     content = models.TextField(max_length=constants.EDAM_NOTE_CONTENT_LEN_MAX)
     content_hash = models.CharField(max_length=constants.EDAM_HASH_LEN)
     content_length = models.IntegerField(default=0)
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
-    deleted = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    deleted = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     update_sequence_num = models.IntegerField(default=0)
     notebook = models.ForeignKey(Notebook)
@@ -99,7 +104,7 @@ class Note(models.Model):
         file_name = base_path+str(self.guid)+'/knowledge.json'
         if not os.path.exists(file_name):
             with open(file_name, 'w') as f:
-                f.write(" ")
+                f.write("")
         #compute hash value
         raw = open(file_name, 'rb').read()
         md5 = hashlib.md5()

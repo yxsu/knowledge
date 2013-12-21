@@ -37,7 +37,7 @@ def show_note(request, note_guid):
 		note_list = core.showNotesInSameNotebook(note_guid)
 		return render_to_response('note.html', 
 				{'title': core.showNoteTitle(note_guid), 
-				'schema': core.getSchema(note_guid), 
+				'schema': models.Note.objects.get(guid=note_guid).getSchema(), 
 				'note_guid': note_guid, 'note_list': note_list})
 	else:
 		return Http404()
@@ -45,7 +45,7 @@ def show_note(request, note_guid):
 def new_note(request):
 	#compute the size of temp note
 	note_guid = core.createNewNote(note_title='New Note', notebook_guid='default')
-	return redirect('/note/show' + note_guid)
+	return redirect('/note/show/' + note_guid)
 
 def operate_notebook(request, notebook_guid):
 	if request.method == 'POST':
@@ -64,12 +64,11 @@ def listNotesInSameNotebook(notebook_guid):
 	if len(notes) == 0:
 		return HttpResponse('<div class="row">No note!</div>')
 	else:
-		response = ''
+		response = '<div class="list-group">'
 		for note in notes:
-			response += '<button class=row btn style="width:100%"'
+			response += '<div class="list-group-item" id="' + note.guid + '" '
 			response += 'onclick="showNoteContent('+"'"+note.guid+"'"+');">'
-			response += '<a href="/note/show/'+note.guid+'/" class="list-group-item">'
-			response += note.title + '</a></button>'
+			response += note.title + '</div>'
 		return HttpResponse(response)
 
 def syncNotes(request):
