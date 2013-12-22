@@ -2,6 +2,13 @@
 var current_notebook;
 var current_note;
 
+$(function()
+{
+	var height = $(window).height() - $(".page-header").height() - 70;
+	$("#notebook_list").height(height);
+});
+
+
 function listNotes(notebook_guid){
 	if(typeof current_notebook == "nodefined"){
 		current_notebook = notebook_guid;
@@ -20,6 +27,7 @@ function listNotes(notebook_guid){
 	})
 	.done(function(data) {
 		console.log("success");
+		$('#note_list').height($("#notebook_list").height());
 		$('#note_list').html(data);
 	})
 	.fail(function() {
@@ -43,6 +51,7 @@ function showNoteContent(note_guid) {
 			$("#note_operator").show();
 			$("#"+note_guid).addClass("active");
 		}
+		$('#note_preview_content').height($("#notebook_list").height());
 		$('#note_preview_content').html(data);
 		$("#"+current_note).removeClass("active");
 		current_note = note_guid;

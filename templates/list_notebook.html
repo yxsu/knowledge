@@ -16,7 +16,7 @@
 		</ul>
 	</div>
 	<div class="container-fluid">
-		<div class="col-md-3" id="notebook_list">
+		<div class="col-md-3" id="notebook_list"  style="overflow:scroll">
 			<span class="row label label-info">Notebook list:</span>
 			<div class="list-group">
 				{% for notebook in notebook_list %}
@@ -26,9 +26,9 @@
 				{% endfor %}
 			</div>
 		</div>
-		<div class="col-md-2" id="note_list">
+		<div class="col-md-2" id="note_list" style="overflow:scroll">
 		</div>
-		<div class="col-md-7" id="note_preview">
+		<div class="col-md-7" id="note_preview" style="overflow:scroll">
 			<div class="btn-group" id="note_operator" style="display:none;">
 				<button type="button" class="btn btn-default" onclick="toSchema();">Edit Schema</button>
 			</div>

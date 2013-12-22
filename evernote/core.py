@@ -67,7 +67,7 @@ def showNoteTitle(note_guid):
 
 def showNotesInSameNotebook(note_guid):
 	notebook = models.Note.objects.get(guid=note_guid).notebook
-	return models.Note.objects.filter(notebook=notebook)
+	return models.Note.objects.filter(notebook=notebook).order_by('-updated')
 
 
 def listNotebooks():
