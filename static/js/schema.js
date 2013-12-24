@@ -30,7 +30,7 @@ var Schema = {
 			visible: true,
 			rotatable: true,
 			linkable: true,
-			markerOffset: 5
+			markerOffset: 5,
 		},
 		dataAttributes: [],
 		props: {

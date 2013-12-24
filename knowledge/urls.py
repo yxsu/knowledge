@@ -19,6 +19,7 @@ urlpatterns = patterns('front.views',
     url(r'^notebook/$', 'list_notebook'),
     url(r'^notebook/([\w-]+)/$', 'operate_notebook'),
     url(r'^note/new/$', 'new_note'),
+    url(r'^note/check/$', 'check_note'),
     url(r'^sync/$', 'syncNotes'),
     url(r'^note/show/([\w_-]+)/$', 'show_note'),
                        

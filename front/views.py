@@ -4,6 +4,7 @@ from django.http import Http404
 from django.http import HttpRequest
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
+from django.core.exceptions import ObjectDoesNotExist
 from oauth.models import AuthUser
 from oauth.views import get_current_client
 from evernote import core
@@ -85,3 +86,18 @@ def syncNotes(request):
 			return HttpResponse("<div id=notice>Rate limit reached. Please retry after: "+str(next_time)+"</div>")
 		else:
 			return Http404()
+
+def check_note(request):
+	guid = request.GET['link']
+	if guid.startswith('evernote'):
+		guid = guid.split('/')[-2]
+	elif guid.startswith('http'):
+		if guid[-1] == '/':
+			guid = guid.split('/')[-2]
+		else:
+			guid = guid.split('/')[-1]
+	try:
+		note = models.Note.objects.get(guid=guid)
+		return HttpResponse("correct guid is :"+guid)
+	except ObjectDoesNotExist, e:
+		return HttpResponse("<div id=notice>The input guid is invalid</div>")

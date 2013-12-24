@@ -718,10 +718,38 @@ var UI = {
 	 */
 	setLink: function(){
 		var newLink = $("#linkto_addr").val();
-		var shape = Utils.getSelected()[0];
-		shape.link = newLink;
-		Model.update(shape);
-		$('#link_dialog').dlg('close');
+		$.ajax({
+			url: '/note/check/',
+			type: 'GET',
+			data: {link: newLink},
+		})
+		.done(function(data) {
+			if(data.indexOf("correct guid is :") == -1){
+				$("#link_dialog").append(data);
+				return;
+			}
+			//add link attribute
+			var guid = data.substring(data.indexOf(":")+1);
+			console.log(guid)
+			var newAttr = {
+				name: "link",
+				type: "link",
+				value: "/note/show/" + guid,
+				showType: "icon",
+				icon: "38",
+				horizontal: "mostleft",
+				vertical: "topedge"
+			};
+			Designer.addDataAttribute(newAttr);
+			$('#link_dialog').dlg('close');
+		})
+		.fail(function(data) {
+			$("#link_dialog").append(data);
+		})
+		.always(function() {
+		});
+		
+		
 	},
 	/**
 	 * 选中图片后的回调

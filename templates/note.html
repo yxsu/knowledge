@@ -48,7 +48,6 @@ var time = "1386142082157";
 <script type="text/javascript" charset="UTF-8" src="{% static "js/designer_ui.js" %}"></script>
 <script type="text/javascript" charset="UTF-8" src="{% static "js/designer_event.js" %}"></script>
 <script type="text/javascript" charset="UTF-8" src="{% static "js/designer_function.js" %}"></script>
-</head>
 <body>
 
 <canvas id="support_canvas" style="display: none;"></canvas>
@@ -101,7 +100,6 @@ if(!document.getElementById("support_canvas").getContext){
 							</ul>
 						</li>
 						<li class="devider devi_shape"></li>
-						<li ac="changelink"><div class="ico ico_link"></div>Change Link</li>
 						<li ac="edit"><div class="ico edittext"></div>Edit Text<div class="extend">Space</div></li>
 						<li ac="delete"><div class="ico remove"></div>Delete<div class="extend">Delete/Backspace</div></li>
 						<li class="devider devi_del"></li>
@@ -109,6 +107,7 @@ if(!document.getElementById("support_canvas").getContext){
 						<li ac="selectall">Select All<div class="extend">Ctrl+A</div></li>
 						<li class="devider devi_selectall"></li>
 						<li ac="drawline"><div class="ico linkertype_normal"></div>Draw Line<div class="extend">L</div></li>
+						<li ac="changelink"><div class="ico ico_link"></div>Add Note Link</li>
 					</ul>
 				</div>
 			</div>
@@ -244,7 +243,7 @@ if(!document.getElementById("support_canvas").getContext){
 	<div id="link_dialog" class="dialog" style="min-width: 500px;">
 		<div class="dialog_header">Insert Link</div>
 		<div class="dialog_content" style="padding: 30px 20px; text-align: center;">
-			<b>Link to:&nbsp;</b><input id="linkto_addr" class="input_text" style="width: 350px;" type="text">
+			<b>Input the link of note:&nbsp;</b><input id="linkto_addr" class="input_text" style="width: 350px;" type="text">
 		</div>
 		<div class="dialog_buttons">
 			<div class="designer_button" onclick="UI.setLink()">OK</div>&nbsp;

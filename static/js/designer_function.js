@@ -889,9 +889,9 @@ Designer.addFunction("addDataAttribute", function(attr){
 	attr.id = Utils.newId();
 	attr.category = "custom";
 	shape.dataAttributes.push(attr);
-	MessageSource.doWithoutUpdateDock(function(){
-		Model.update(shape);
-	});
+	Model.update(shape);
+	Designer.painter.renderShape(shape);
+
 });
 
 /**
@@ -914,9 +914,7 @@ Designer.addFunction("updateDataAttribute", function(newAttr){
 	if(!changed){
 		return;
 	}
-	MessageSource.doWithoutUpdateDock(function(){
-		Model.update(shape);
-	});
+	Model.update(shape);
 	Designer.painter.renderShape(shape);
 });
 

@@ -776,6 +776,7 @@ var Designer = {
 			menu.children(".devi_selectall").show();
 			menu.children("li[ac=drawshape]").show();
 			menu.children("li[ac=drawline]").show();
+			menu.children("li[ac=changelink]").show();
 			var clipLen = Designer.clipboard.elements.length;
 			if(currentFocus == null){
 				//画布
@@ -817,9 +818,6 @@ var Designer = {
 						menu.children("li[ac=ungroup]").show();
 					}
 					menu.children(".devi_shape").show();
-					if(count == 1 && shape.name != "linker" && shape.link){
-						menu.children("li[ac=changelink]").show();
-					}
 					if(shape.name == "linker" || (shape.textBlock && shape.textBlock.length > 0)){
 						menu.children("li[ac=edit]").show();
 					}
@@ -2244,9 +2242,9 @@ var Designer = {
 			if(spot.length == 0){
 				spot = $("<a id='link_spot' target='_blank'></a>").appendTo("#designer_canvas");
 			}
-			if(url.trim().toLowerCase().indexOf("http") == -1){
-				url = "http://" + url;
-			}
+			//if(url.trim().toLowerCase().indexOf("http") == -1){
+			//	url = "http://" + url;
+			//}
 			spot.attr("href", url);
 			spot.show().css({
 				left: pos.x - 50,
@@ -4360,7 +4358,7 @@ var Designer = {
 				ctx.textBaseline = "middle";
 				ctx.fillText(text, 0, h/2);
 				if(icon != ""){
-					var location = "/images/data-attr/"+icon+".png";
+					var location = "/static/images/icon/"+icon+".png";
 					var image = $(".shape_img[src='" + location + "']");
 					if(image.length == 0){
 						image = $("<img class='shape_img' loaded='false' src='"+location+"'/>").appendTo("#shape_img_container");
