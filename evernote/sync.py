@@ -1,6 +1,7 @@
 from datetime import datetime
 from evernote import models
 import evernote.edam.type.ttypes as Types
+from evernote.edam.error import ttypes as Errors
 import evernote.edam.notestore.ttypes as StoreTypes
 from evernote.edam.limits import constants
 from evernote import core
@@ -8,7 +9,6 @@ import binascii
 import pickle
 import logging
 import sys
-import shutil
 import os
 
 
@@ -88,9 +88,8 @@ def downloadFromServer(last_status, server_status, note_store):
             updateNote(note, note_store)
 
 def updateNote(note, note_store):
-    if type(note.deleted) == int:
-        models.Note.objects.filter(guid=note.guid).delete()
-        shutil.rmtree(models.base_path+note.guid+'/')
+    if note.deleted:
+        core.removeNote(note.guid)
         return
     if models.Note.objects.filter(guid=note.guid).exists():
         local_note = models.Note.objects.get(guid=note.guid)
@@ -129,12 +128,16 @@ def uploadTempNotes(note_store):
         logging.error(new_note.resources[0].data.size)
         new_note.content = note.content
         new_note.noteGuid = note.notebook.guid
-        created_note = note_store.createNote(new_note)
-        created_note.content = note.content
-        #change directory of knowledge.json
-        os.rename(models.base_path+note.guid, models.base_path+created_note.guid)
-        #save in local database
-        logging.error('upload : '+note.title)
-        note.updateContent(created_note)
+        try:
+            created_note = note_store.createNote(new_note)
+            created_note.content = note.content
+            #change directory of knowledge.json
+            os.rename(models.base_path+note.guid, models.base_path+created_note.guid)
+            #save in local database
+            note.updateContent(created_note)
+        except Errors.EDAMUserException, e:
+            core.removeNote(note.guid)
+
+        
 
 

@@ -115,9 +115,15 @@ class Note(models.Model):
         data.size = len(raw)
         data.bodyHash = hash
         data.body = raw
+        #build attribute
+        attr = Types.ResourceAttributes()
+        attr.fileName = "knowledge.json"
+        attr.clientWillIndex = False
+        attr.attachment = True
         #build Resources
         resource = Types.Resource()
         resource.mime = 'text/json'
         resource.data = data
+        resource.attributes = attr
         return resource
 

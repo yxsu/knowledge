@@ -15,7 +15,7 @@ import datetime
 import logging
 
 def index(request):
-    if len(AuthUser.objects.all()) > 0:
+    if AuthUser.objects.all():
         return redirect('/notebook/')
     else:
         return redirect('/auth/')

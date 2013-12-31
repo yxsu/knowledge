@@ -6,6 +6,7 @@ import os
 import logging
 import hashlib
 import binascii
+import shutil
 
 def updateShapes(note_guid, updated_shapes):
 	note = models.Note.objects.get(guid=note_guid)
@@ -88,3 +89,9 @@ def listNotes(notebook_guid):
 
 def getNoteContent(note_guid):
 	return models.Note.objects.get(guid=note_guid).content
+
+def removeNote(note_guid):
+	models.Note.objects.filter(guid=note_guid).delete()
+        resources_directory = models.base_path+note_guid+'/'
+        if os.path.exists(resources_directory):
+            shutil.rmtree()
