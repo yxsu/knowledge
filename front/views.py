@@ -45,9 +45,12 @@ def show_note(request, note_guid):
 
 def new_note(request):
 	#compute the size of temp note
-	note_guid = core.createNewNote(note_title='New Note', notebook_guid='default')
-	return redirect('/note/show/' + note_guid)
-
+	if request.method == 'POST':
+		note_guid = core.createNewNote(note_title='New Note', notebook_guid=request.POST['notebook'])
+		return HttpResponse('/note/show/' + note_guid)
+	else:
+		return Http404()
+		
 def operate_notebook(request, notebook_guid):
 	if request.method == 'POST':
 		return  HttpResponse("Sucessfully")

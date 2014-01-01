@@ -6,6 +6,7 @@ import evernote.edam.notestore.ttypes as StoreTypes
 from evernote.edam.limits import constants
 from evernote import core
 import binascii
+import hashlib
 import pickle
 import logging
 import sys
@@ -97,24 +98,31 @@ def updateNote(note, note_store):
             return
         if local_note.update_sequence_num + 1 < note.updateSequenceNum:
             note.content = note_store.getNoteContent(note.guid)
+            updateNoteResources(note.guid, note.resources, note_store)
             local_note.updateContent(note)
     else:
         local_note = models.Note()
         note.content = note_store.getNoteContent(note.guid)
+        updateNoteResources(note.guid, note.resources, note_store)
         local_note.updateContent(note)
-    logging.error('update : '+note.title)
-    #save knowledge.json
-    if note.resources:
-        for res in note.resources:
-            if res.mime == 'text/json':
-                updateNoteResources(res, note_store)
-
-
-def updateNoteResources(resource, note_store):
-    if not os.path.exists(models.base_path + '/' + resource.noteGuid):
-        os.mkdir(models.base_path+'/' + resource.noteGuid)
-    with open(models.base_path +'/' + resource.noteGuid + '/knowledge.json', 'w') as f:
-        f.write(note_store.getResourceData(resource.guid))
+    
+def updateNoteResources(note_guid, resources, note_store):
+    if not resources:
+        return
+    if not os.path.exists(models.base_path + '/' + note_guid):
+        os.mkdir(models.base_path+'/' + note_guid)
+    for res in resources:
+        #only update json and the related pdf file
+        if res.attributes.fileName in ['knowledge.json', 'knowledge.pdf']:
+            name = models.base_path +'/' + res.noteGuid + '/'+res.attributes.fileName
+            data = note_store.getResourceData(res.guid)
+            #checksum
+            md5 = hashlib.md5()
+            md5.update(data)
+            if res.data.bodyHash != md5.digest():
+                raise Errors.EDAMUserException(errorCode=Errors.EDAMErrorCode.DATA_CONFLICT)
+            with open(name, 'wb') as f:
+                f.write(data)
 
 
 def uploadTempNotes(note_store):
@@ -127,7 +135,7 @@ def uploadTempNotes(note_store):
         new_note.resources = [note.getSchemaResource()]
         logging.error(new_note.resources[0].data.size)
         new_note.content = note.content
-        new_note.noteGuid = note.notebook.guid
+        new_note.notebookGuid = note.notebook.guid
         try:
             created_note = note_store.createNote(new_note)
             created_note.content = note.content

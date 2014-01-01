@@ -66,6 +66,24 @@ function showNoteContent(note_guid) {
 	
 }
 
+function NewNote(){
+	$.ajax({
+		url: '/note/new/',
+		type: 'POST',
+		data: {notebook: current_notebook},
+	})
+	.done(function(url) {
+		window.location.replace(url);
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+	});
+	
+}
+
+
 function Sync(){
 	console.log("run sync...")
 	$('#sync').hide();

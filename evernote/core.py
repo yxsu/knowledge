@@ -35,12 +35,15 @@ def updateNoteTitle(note_guid, new_title):
 
 def createNewNote(note_title, notebook_guid):
 	#get notebook
-	default_notebook = models.Notebook.objects.get(default_notebook=True)
+	try:
+		notebook = models.Notebook.objects.get(guid=notebook_guid)	
+	except Exception, e:
+		notebook = models.Notebook.objects.get(default_notebook=True)
 	#create an empty knowledge.json file
 	note_guid = getNewGuidOfTempNote()
 	#create new note
 	note = models.Note.objects.create(guid=note_guid,
-		title=note_title,notebook=default_notebook)
+		title=note_title,notebook=notebook)
 	resource = note.getSchemaResource()
 	hash_hex = binascii.hexlify(resource.data.bodyHash)
 	note.content = '<?xml version="1.0" encoding="UTF-8"?>'
@@ -94,4 +97,4 @@ def removeNote(note_guid):
 	models.Note.objects.filter(guid=note_guid).delete()
         resources_directory = models.base_path+note_guid+'/'
         if os.path.exists(resources_directory):
-            shutil.rmtree()
+            shutil.rmtree(resources_directory)
