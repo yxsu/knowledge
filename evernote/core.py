@@ -10,22 +10,17 @@ import shutil
 
 def updateShapes(note_guid, updated_shapes):
 	note = models.Note.objects.get(guid=note_guid)
-	raw = note.getSchema()
-	if raw == "":
-		objects = dict()
-	else:
-		objects = json.loads(raw)
-
+	objects = note.getSchema()
 	for shape in json.loads(updated_shapes):
 		objects[shape['id']] = shape
-	note.setSchema(json.dumps(objects))
+	note.setSchema(objects)
 
 def removeShapes(note_guid, removedShapes):
 	note = models.Note.objects.get(guid=note_guid)
-	objects = json.loads(note.getSchema())
+	objects = note.getSchema()
 	for shape in json.loads(removedShapes):
 		del objects[shape['id']]
-	note.setSchema(json.dumps(objects))
+	note.setSchema(objects)
 
 
 def updateNoteTitle(note_guid, new_title):

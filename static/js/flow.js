@@ -6,19 +6,7 @@ Schema.addCategory({
 	name: "flow",
 	text: "Flowchart",
 	dataAttributes: [
-		{name: "no.", type:"number", value:"", category: "default"},
-		{name: "name", type:"string", value:"", category: "default"},
-		{name: "owner", type:"string", value:"", category: "default"},
-		{name: "link", type:"link", value:"", category: "default"},
-		{name: "memo", type:"string", value:"", category: "default"},
-		{name: "cost", type:"number", value:"", category: "default"},
-		{name: "time", type:"number", value:"", category: "default"},
-		{name: "department", type:"string", value:"", category: "default"},
-		{name: "input", type:"string", value:"", category: "default"},
-		{name: "output", type:"string", value:"", category: "default"},
-		{name: "risk", type:"string", value:"", category: "default"},
-		{name: "remarks", type:"string", value:"", category: "default"}
-	]
+		{name: "link", type:"link", value:"", category: "default"}]
 });
 
 /**

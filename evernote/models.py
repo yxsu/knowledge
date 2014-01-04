@@ -5,6 +5,7 @@ import logging
 import os
 import sys
 import hashlib
+import json
 import binascii
 import evernote.edam.type.ttypes as Types
 
@@ -74,20 +75,21 @@ class Note(models.Model):
     def getSchema(self):
         file_name = base_path + str(self.guid) +'/knowledge.json'
         if os.path.exists(file_name):
-            return open(file_name, 'r').read()
+            return json.load(open(file_name, 'rb'))
         else:
-            return ""
+            return {}
 
-    def setSchema(self, content):
+    def setSchema(self, data):
         if not os.path.isdir(base_path+str(self.guid)):
             os.mkdir(base_path+str(self.guid))
-        with open(base_path+str(self.guid)+'/knowledge.json', 'w') as f:
-            f.write(content)
+        file_name = base_path+str(self.guid)+'/knowledge.json'
+        with open(file_name, 'wb') as f:
+            json.dump(data, f)
         #set dirty flag
         self.update_sequence_num = sys.maxint
         #update hash hex of note
         md5 = hashlib.md5()
-        md5.update(content)
+        md5.update(open(file_name, 'rb').read())
         hash_hex = binascii.hexlify(md5.digest())
         affix = '<en-media type="text/json" hash="'
         start = self.content.index(affix) + len(affix)
@@ -103,8 +105,8 @@ class Note(models.Model):
         #create knowledge.json
         file_name = base_path+str(self.guid)+'/knowledge.json'
         if not os.path.exists(file_name):
-            with open(file_name, 'w') as f:
-                f.write("")
+            with open(file_name, 'wb') as f:
+                json.dump({}, f)
         #compute hash value
         raw = open(file_name, 'rb').read()
         md5 = hashlib.md5()

@@ -13,6 +13,7 @@ from evernote import models
 from evernote.edam.error import ttypes as Errors
 import datetime
 import logging
+import json
 
 def index(request):
     if AuthUser.objects.all():
@@ -36,9 +37,10 @@ def show_note(request, note_guid):
 		return HttpResponse('Save Sucessfully!')
 	elif request.method == 'GET':
 		note_list = core.showNotesInSameNotebook(note_guid)
+		json_string = json.dumps(models.Note.objects.get(guid=note_guid).getSchema())
 		return render_to_response('note.html', 
 				{'title': core.showNoteTitle(note_guid), 
-				'schema': models.Note.objects.get(guid=note_guid).getSchema(), 
+				'schema': json_string, 
 				'note_guid': note_guid, 'note_list': note_list})
 	else:
 		return Http404()
