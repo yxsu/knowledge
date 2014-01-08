@@ -8,22 +8,22 @@ import logging
 EN_CONSUMER_KEY = 'suyuxin-9809'
 EN_CONSUMER_SECRET = 'f2541e0d8ea719ff'
 
-sandbox_token = 'S=s1:U=41d1e:E=14a57765c79:C=142ffc5307b:P=1cd:A=en-devtoken:V=2:H=07548db91e6fa51e9bcb42f024a6db82'
+#sandbox_token = 'S=s1:U=41d1e:E=14a57765c79:C=142ffc5307b:P=1cd:A=en-devtoken:V=2:H=07548db91e6fa51e9bcb42f024a6db82'
 def get_current_client():
     """for internal use
     """
-    #token = AuthUser.objects.order_by('-time')[0].access_token
-    return get_evernote_client(sandbox_token)
+    token = AuthUser.objects.order_by('-time')[0].access_token
+    return get_evernote_client(token)
 
 
 def get_evernote_client(token=None):
     if token:
-        return EvernoteClient(token=token, sandbox=True)
+        return EvernoteClient(token=token, sandbox=False)
     else:
         return EvernoteClient(
             consumer_key=EN_CONSUMER_KEY,
             consumer_secret=EN_CONSUMER_SECRET,
-            sandbox=True
+            sandbox=False
         )
 
 
