@@ -1,10 +1,10 @@
 /**
- * Flow shapes
+ * standard shapes
  */
 
 Schema.addCategory({
-	name: "flow",
-	text: "Flowchart",
+	name: "standard",
+	text: "StandardShape",
 	dataAttributes: [
 		{name: "link", type:"link", value:"", category: "default"}]
 });
@@ -15,7 +15,7 @@ Schema.addCategory({
 Schema.addShape({
 	name: "process",
 	title: "Process",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 120,
 		h: 50
@@ -34,7 +34,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "decision",
 	title: "Decision",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 90,
 		h: 70
@@ -54,30 +54,12 @@ Schema.addShape({
 });
 
 /**
- * Root of Tree
- *
- */
-Schema.addShape({
-	name: "Tree",
-	title: "Tree",
-	category: "flow",
-	props: {
-		w: 120,
-		h: 50
-	},
-	path: [
-		{
-			actions: {ref: "roundRectangle"}
-		}
-	]
-});
-/**
  * 胶囊型：Terminator
  */
 Schema.addShape({
 	name: "terminator",
 	title: "Start/Terminator",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 50
@@ -102,7 +84,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "document",
 	title: "Document",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -130,7 +112,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "data",
 	title: "Data",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -157,7 +139,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "predefinedProcess",
 	title: "Predefined Process",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -187,7 +169,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "storedData",
 	title: "Store Data",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -214,7 +196,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "internalStorage",
 	title: "Internal Storage",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -244,7 +226,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "sequentialData",
 	title: "Sequential Data",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 70,
 		h: 70
@@ -269,7 +251,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "directData",
 	title: "Direct Data",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -298,7 +280,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "manualInput",
 	title: "Manual Input",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -325,7 +307,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "card",
 	title: "Card",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -351,7 +333,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "paperTape",
 	title: "Paper Tape",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -380,7 +362,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "display",
 	title: "Display",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -407,7 +389,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "manualOperation",
 	title: "Manual Operation",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -434,7 +416,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "preparation",
 	title: "Preparation",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -461,7 +443,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "parallelMode",
 	title: "Parallel Mode",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -502,7 +484,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "loopLimit",
 	title: "Loop Limit",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70
@@ -529,7 +511,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "onPageReference",
 	title: "On-page Reference",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 70,
 		h: 70
@@ -547,7 +529,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "offPageReference",
 	title: "Off-page Reference",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 70,
 		h: 60
@@ -574,7 +556,7 @@ Schema.addShape({
 Schema.addShape({
 	name: "annotation",
 	title: "Annotation",
-	category: "flow",
+	category: "standard",
 	props: {
 		w: 100,
 		h: 70

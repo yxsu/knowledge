@@ -385,14 +385,14 @@ Schema.addGlobalCommand("round", [
  * 圆角矩形
  */
 Schema.addGlobalCommand("roundRectangle", [
-    {action: "move", x: "0", y: "4"},
-	{action: "quadraticCurve", x1: "0", y1: "0", x: "4", y: "0"},
-	{action: "line", x: "w-4", y: "0"},
-	{action: "quadraticCurve", x1: "w", y1: "0", x: "w", y: "4"},
-	{action: "line", x: "w", y: "h-4"},
-	{action: "quadraticCurve", x1: "w", y1: "h", x: "w-4", y: "h"},
-	{action: "line", x: "4", y: "h"},
-	{action: "quadraticCurve", x1: "0", y1: "h", x: "0", y: "h-4"},
+    {action: "move", x: "0", y: "10"},
+	{action: "quadraticCurve", x1: "0", y1: "0", x: "10", y: "0"},
+	{action: "line", x: "w-10", y: "0"},
+	{action: "quadraticCurve", x1: "w", y1: "0", x: "w", y: "10"},
+	{action: "line", x: "w", y: "h-10"},
+	{action: "quadraticCurve", x1: "w", y1: "h", x: "w-10", y: "h"},
+	{action: "line", x: "10", y: "h"},
+	{action: "quadraticCurve", x1: "0", y1: "h", x: "0", y: "h-10"},
 	{action: "close"}
 ]);
 

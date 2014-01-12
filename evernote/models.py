@@ -10,7 +10,7 @@ import binascii
 import evernote.edam.type.ttypes as Types
 
 base_path = 'database/resources/'
-if not os.exists(base_path):
+if not os.path.exists(base_path):
     os.mkdir(base_path)
 
 class Tag(models.Model):

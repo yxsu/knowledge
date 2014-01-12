@@ -529,6 +529,7 @@ var Designer = {
 			//初始化快捷键
 			var movingShapes = null; //在外围定义movingShapes变量，目的是在移动形状时，不重复获取
 			$(document).unbind("keydown.hotkey").bind("keydown.hotkey", function(e){
+				console.log(e.keyCode);
 				if(e.ctrlKey && e.keyCode == 65){
 					//全选ctrl+a
 					Designer.selectAll();
@@ -686,6 +687,11 @@ var Designer = {
 					$(".menu.list").hide();
 					Designer.op.changeState("creating_free_linker");
 					$("#designer_contextmenu").hide();
+				}else if(e.keyCode == 86 && !e.ctrlKey){
+					//expand vertically as a table
+					Designer.op.expandTableVertically();
+				}else if(e.keyCode == 72 && !e.ctrlKey){
+					Designer.op.expandTableHorizontally();
 				}else if(e.keyCode == 66 && e.ctrlKey){
 					//Ctrl + B，加粗
 					var selectedIds = Utils.getSelectedIds();
@@ -1685,6 +1691,73 @@ var Designer = {
 					}
 				});
 			});
+		},
+		/**
+		 *扩展表格
+		 */
+		expandTableVertically: function(){
+			var selected = Utils.getSelected();
+            var ids = Utils.getSelectedIds();
+			if (selected.length == 0) {return};
+			if(selected[0].name != "process") {return};
+			//
+			if(selected[0].group)
+			{
+				Designer.ungroup();
+			}
+			var box = Utils.getControlBox(ids);
+			var x = box.x;
+			var y = box.y + box.h;
+			var w = selected[0].props.w;
+			var h = selected[0].props.h;
+			//add new one
+			for(var x = 0; x < box.w; x += w)
+			{
+				var newShape = Model.create("process", x + box.x, y, w, h);
+				Designer.painter.renderShape(newShape);
+            	MessageSource.beginBatch();
+            	//发送形状创建事件
+            	if(newShape.onCreated){
+            		newShape.onCreated();
+            	}
+            	Designer.events.push("created", newShape);
+            	Model.add(newShape);
+            	ids.push(newShape.id);
+			}
+            Utils.selectShape(ids);
+            Designer.group();
+		},
+		expandTableHorizontally: function(){
+			var selected = Utils.getSelected();
+            var ids = Utils.getSelectedIds();
+			if (selected.length == 0) {return};
+			if(selected[0].name != "process") {return};
+			//
+			if(selected[0].group)
+			{
+				Designer.ungroup();
+			}
+			var box = Utils.getControlBox(ids);
+			var x = box.x + box.w;
+			var y = box.y;
+			var w = selected[0].props.w;
+			var h = selected[0].props.h;
+			//add new one
+			for(var y = 0; y < box.h; y += h)
+			{
+				var newShape = Model.create("process", x, y + box.y, w, h);
+				Designer.painter.renderShape(newShape);
+            	MessageSource.beginBatch();
+            	//发送形状创建事件
+            	if(newShape.onCreated){
+            		newShape.onCreated();
+            	}
+            	Designer.events.push("created", newShape);
+            	Model.add(newShape);
+            	ids.push(newShape.id);
+			}
+            Utils.selectShape(ids);
+            Designer.group();
 		},
 		/**
 		 * 形状选择
@@ -5191,6 +5264,11 @@ var Model = {
 		newShape.id = newId;
 		newShape.props.x = x;
 		newShape.props.y = y;
+		if(arguments.length == 5)
+		{
+			newShape.props.w = arguments[3];
+			newShape.props.h = arguments[4];
+		}
 		newShape.props.zindex = Model.maxZIndex + 1;
 		newShape.props = $.extend(true, {}, Schema.shapeDefaults.props, newShape.props);
 		for (var i = 0; i < newShape.dataAttributes.length; i++) {
