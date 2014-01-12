@@ -66,7 +66,7 @@ def uploadNoteToServer(last_status, server_status, note_store):
         new_note = Types.Note(guid=note.guid)
         new_note.title = note.title
         new_note.resources = [note.getSchemaResource()]
-        new_note.content = note.content
+        new_note.content = note.getContentWithHashHex()
         new_note.notebookGuid = note.notebook.guid
         updated_note = note_store.updateNote(new_note)
         updated_note.content = note.content

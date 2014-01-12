@@ -10,6 +10,8 @@ import binascii
 import evernote.edam.type.ttypes as Types
 
 base_path = 'database/resources/'
+if not os.exists(base_path):
+    os.mkdir(base_path)
 
 class Tag(models.Model):
     guid = models.CharField(max_length=constants.EDAM_GUID_LEN_MAX)
@@ -87,15 +89,17 @@ class Note(models.Model):
             json.dump(data, f)
         #set dirty flag
         self.update_sequence_num = sys.maxint
-        #update hash hex of note
+        self.save()
+
+    def getContentWithHashHex(self):
+        file_name = base_path+str(self.guid)+'/knowledge.json'
         md5 = hashlib.md5()
         md5.update(open(file_name, 'rb').read())
         hash_hex = binascii.hexlify(md5.digest())
         affix = '<en-media type="text/json" hash="'
         start = self.content.index(affix) + len(affix)
         end = self.content.index('"/>', start)
-        self.content = self.content[:start] + hash_hex + self.content[end:]
-        self.save()
+        return self.content[:start] + hash_hex + self.content[end:]
 
     def getSchemaResource(self):
         if not os.path.exists(base_path):

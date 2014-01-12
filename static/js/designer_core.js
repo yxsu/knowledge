@@ -5,6 +5,8 @@
 Schema.init(true);
 Schema.initMarkers();
 
+var currentMousePos = { x: -1, y: -1 };
+    
 $(function(){
 	Designer.init();
 	if(role == "trial"){
@@ -22,6 +24,10 @@ $(function(){
 	if(Designer.status == "demo"){
 		UI.gettingStart();
 	}
+	$(document).mousemove(function(event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+    });
 });
 
 
@@ -663,6 +669,11 @@ var Designer = {
 					//T，插入文本
 					$(".menu.list").hide();
 					Designer.op.changeState("creating_free_text");
+				}else if(e.keyCode == 83 && !e.ctrlKey){
+					//draw shape, S
+					var x = currentMousePos.x - $("#note_list").outerWidth();
+					var y = currentMousePos.y - $("#designer_header").outerHeight();
+					Designer.op.shapeDashboard(x,y);
 				}else if(e.keyCode == 73 && !e.ctrlKey){
 					//I，插入图片
 					$(".menu.list").hide();

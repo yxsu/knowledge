@@ -17,8 +17,8 @@ Schema.addShape({
 	title: "Process",
 	category: "flow",
 	props: {
-		w: 100,
-		h: 70
+		w: 120,
+		h: 50
 	},
 	textBlock: [{position: {x: "0", y: "0", w: "w", h: "h"}}],
 	path: [
