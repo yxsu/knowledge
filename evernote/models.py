@@ -97,8 +97,14 @@ class Note(models.Model):
         md5.update(open(file_name, 'rb').read())
         hash_hex = binascii.hexlify(md5.digest())
         affix = '<en-media type="text/json" hash="'
-        start = self.content.index(affix) + len(affix)
-        end = self.content.index('"/>', start)
+        start = self.content.find(affix)
+        if start != -1:
+            start += len(affix)
+            end = self.content.index('"/>', start)
+        else:
+            start = self.content.find('</en-note>')
+            end = start
+            hash_hex = '<en-media type="text/json" hash="' + hash_hex + '"/>'
         return self.content[:start] + hash_hex + self.content[end:]
 
     def getSchemaResource(self):
