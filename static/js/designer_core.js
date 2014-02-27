@@ -5302,24 +5302,6 @@ var Model = {
 			this.persistence.elements[shape.id] = Utils.copy(shape);
 		}
 		this.build();
-		//save to server
-		$.ajax({
-			url: '/note/show/' + note_guid + '/',
-			type: 'POST',
-			data: {
-				note_guid: note_guid,
-				updateShapes: JSON.stringify(addShapes)
-			},
-		})
-		.done(function() {
-			console.log("add shape success");
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
 	},
 	/**
 	 * 更新形状定义
@@ -5349,25 +5331,6 @@ var Model = {
 			}
 		}
 		this.build();
-		//save to server
-		$.ajax({
-			url: '/note/show/'+note_guid + '/',
-			type: 'POST',
-			data: {
-				note_guid: note_guid,
-				updateShapes: JSON.stringify(updateShapes)
-			}
-		})
-		.done(function(data) {
-			console.log("update shape: success");
-		})
-		.fail(function(data) {
-			console.log("update shape: error");
-			console.log(data)
-		})
-		.always(function(data) {
-			console.log("complete");
-		});
 	},
 	/**
 	 * 删除形状
@@ -5450,24 +5413,6 @@ var Model = {
 			}
 		}
 		this.build();
-		//save to server
-		$.ajax({
-			url: '/note/show/' + note_guid + '/',
-			type: 'POST',
-			data: {
-				note_guid: note_guid,
-				removedShapes: JSON.stringify(removed)
-			},
-		})
-		.done(function() {
-			console.log("remove shape: success");
-		})
-		.fail(function() {
-			console.log("remove shape: error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
 		//抛出事件
 		if(removeChildren){
 			var related = Designer.events.push("removed", {shapes: shapes, changedIds: changedIds, range: shapeRange});

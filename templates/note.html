@@ -9,6 +9,7 @@
 <link href="{% static "css/global.css" %}" ref="stylesheet">
 
 <script type="text/javascript" src="{% static "js/plugins/jquery.js" %}"></script>
+<script src="{% static "js/plugins/bootstrap.min.js" %}"></script>
 <script src="{% static "js/util.js" %}" type="text/javascript" charset="UTF-8"></script>
 <!--mathjax -->
 <script type="text/x-mathjax-config">
@@ -60,6 +61,7 @@ if(!document.getElementById("support_canvas").getContext){
 	<a class="btn_back" href="/notebook/" title='Back'><span class="ico ico_goback"></span></a>
 	<div class="row row1">
 		<div id="title_container">
+			<button class="btn" id="save" onclick="UI.save();">Save</button>
 			<span class="diagram_title">{{title}}</span>
 		</div>
 	</div>

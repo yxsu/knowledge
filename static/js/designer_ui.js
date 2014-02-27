@@ -3,6 +3,33 @@
 */
 
 var UI = {
+	save: function(){
+		//save content to database and create pdf file
+		$(".btn#save").bind("click", function()
+		{
+			//save to server
+			$.ajax({
+				url: '/note/show/' + note_guid + '/',
+				type: 'POST',
+				data: {
+					note_guid: note_guid,
+					updateShapes: JSON.stringify(Model.define.elements)
+				},
+			})
+			.done(function() {
+				console.log("save shape success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			//save to pdf file
+			
+		});
+	},
+
 	init: function(){
 		//修改标题
 		$(".diagram_title").bind("click", function(){
