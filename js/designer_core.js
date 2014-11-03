@@ -529,7 +529,7 @@ var Designer = {
 			//初始化快捷键
 			var movingShapes = null; //在外围定义movingShapes变量，目的是在移动形状时，不重复获取
 			$(document).unbind("keydown.hotkey").bind("keydown.hotkey", function(e){
-				console.log(e.keyCode);
+				console.log("a hotkey (" + e.keyCode + ") is pressed");
 				if(e.ctrlKey && e.keyCode == 65){
 					//全选ctrl+a
 					Designer.selectAll();

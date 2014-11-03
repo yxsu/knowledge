@@ -30,13 +30,16 @@
 <script type="text/javascript">
 var chartId = "529ec03b0cf20042951b4052";
 var note_guid = "abd";
-var note_content = String('');
-note_content = note_content.replace(/&quot;/g, '"');
-var definition;
-if(note_content == ""){
-	definition = {"page":{"showGrid":true,"padding":0,"width":1500,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements": {} }
-}else{
-	definition = {"page":{"showGrid":true,"padding":0,"width":1500,"backgroundColor":"255,255,255","gridSize":15,"height":1500},"elements": JSON.parse(note_content) }
+var definition = {
+    "page":{
+        "showGrid":true,
+        "padding":0,
+        "gridSize":15,
+        "width":1500,
+        "height":1500,
+        "backgroundColor":"255,255,255"
+    },
+    "elements": {}
 }
 
 var role = "owner";
@@ -57,19 +60,16 @@ if(!document.getElementById("support_canvas").getContext){
 }
 </script>
 <div id="designer_header">
-	<a class="btn_back" href="/notebook/" title='Back'><span class="ico ico_goback"></span></a>
 	<div class="row row1">
 		<div id="title_container">
 			<button class="btn" id="save" onclick="UI.save();">Save</button>
-			<span class="diagram_title">{{title}}</span>
+			<span class="diagram_title">Type title here</span>
 		</div>
 	</div>
 </div>
 <div id="designer">
-	<div style="overflow: scroll;" id="note_list">
-		{% for iter in note_list %}
-		<h4 class="panel_title"><div class="ico ico_accordion"></div><a href="/note/show/{{iter.guid}}"> {{iter.title}} </a></h4>
-		{% endfor %}
+	<div style="overflow: scroll;" id="side_bar">
+		<h4 class="panel_title"><div class="ico ico_accordion"></div>ToolBox</h4>
 	</div>
 	
 	<div id="designer_viewport">
