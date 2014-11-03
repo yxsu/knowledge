@@ -133,7 +133,7 @@ html{
 	margin: 8px 3px 0px 3px;
 }
 .ico{
-	background: url(/static/images/sprite.png) no-repeat;
+	background: url(/images/sprite.png) no-repeat;
 	height: 20px;
 	width: 20px;
 	opacity: 0.7;

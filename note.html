@@ -1,16 +1,17 @@
+<!DOCTYPE html>
 <html>
 <head>
-{% load staticfiles %}
+<meta charset="UTF-8">
+<title>Knowledge</title>
+</head>
+<body>
 
-<title>{{title}} -- Knowledge</title>
-	
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="css/global.css" rel="stylesheet">
+<link href="css/designer.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="css/ui.css">
 
-<link href="{% static "css/global.css" %}" ref="stylesheet">
-
-<script type="text/javascript" src="{% static "js/plugins/jquery.js" %}"></script>
-<script src="{% static "js/plugins/bootstrap.min.js" %}"></script>
-<script src="{% static "js/util.js" %}" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript" src="js/plugins/jquery.js"></script>
+<script src="js/plugins/bootstrap.min.js"></script>
 <!--mathjax -->
 <script type="text/x-mathjax-config">
 	MathJax.Hub.Config({
@@ -19,18 +20,17 @@
     	tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
   	});
 </script>
-<script src="{% static "js/plugins/mathjax/MathJax.js" %}"></script>
-<link type="text/css" rel="stylesheet" href="{% static "css/designer.css" %}">
-<link type="text/css" rel="stylesheet" href="{% static "css/ui.css" %}">
-<script src="{% static "js/schema.js" %}" type="text/javascript" charset="UTF-8"></script>
-
-<script type="text/javascript" charset="UTF-8" src="{% static "js/flow.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/lane.js" %}"></script>
+<script src="js/plugins/mathjax/MathJax.js"></script>
+<!--graph -->
+<script src="js/util.js" type="text/javascript" charset="UTF-8"></script>
+<script src="js/schema.js" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8" src="js/flow.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/lane.js"></script>
 
 <script type="text/javascript">
 var chartId = "529ec03b0cf20042951b4052";
-var note_guid = "{{note_guid}}";
-var note_content = String('{{schema}}');
+var note_guid = "abd";
+var note_content = String('');
 note_content = note_content.replace(/&quot;/g, '"');
 var definition;
 if(note_content == ""){
@@ -44,13 +44,12 @@ var userId = "529ebc4d0cf20042951b2f49";
 var userName = "Su Yuxin";
 var time = "1386142082157";
 </script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/collaboration.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/designer_core.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/designer_ui.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/designer_event.js" %}"></script>
-<script type="text/javascript" charset="UTF-8" src="{% static "js/designer_function.js" %}"></script>
-<body>
-
+<script type="text/javascript" charset="UTF-8" src="js/collaboration.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/designer_core.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/designer_ui.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/designer_event.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/designer_function.js"></script>
+<!-- content -->
 <canvas id="support_canvas" style="display: none;"></canvas>
 <script type="text/javascript">
 if(!document.getElementById("support_canvas").getContext){

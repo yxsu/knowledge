@@ -9,22 +9,7 @@ html,body{
 	-khtml-user-select:none;
 	user-select:none;
 }
-::-webkit-scrollbar {
-	width: 9px;
-	height: 9px;
-	background: white;
-	border-left: 1px solid #e8e8e8;
-}
-::-webkit-scrollbar-thumb {
-	border-width: 1px;
-	border-style: solid;
-	border-color: #fff;
-	border-radius: 6px;
-	background: #c9c9c9;
-}
-::-webkit-scrollbar-thumb:hover {
-	background: #b5b5b5;
-}
+
 .clear{
 	clear:both;
 }
@@ -110,7 +95,7 @@ html,body{
 	display:block;
 	bottom:0px;
 	right:0px;
-	background: url(/static/images/sprite.png) no-repeat;
+	background: url(/images/sprite.png) no-repeat;
 	height: 10px;
 	width: 10px;
 	background-position: -43px -64px;
