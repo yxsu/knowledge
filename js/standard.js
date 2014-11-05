@@ -13,8 +13,8 @@ Schema.addCategory({
  * 矩形
  */
 Schema.addShape({
-	name: "process",
-	title: "Process",
+	name: "rectangle",
+	title: "Rectangle",
 	category: "standard",
 	props: {
 		w: 120,
@@ -24,6 +24,22 @@ Schema.addShape({
 	path: [
 		{
 			actions: {ref: "rectangle"}
+		}
+	]
+});
+
+Schema.addShape({
+	name: "roundRectangle",
+	title: "RoundRectangle",
+	category: "standard",
+	props: {
+		w: 120,
+		h: 50
+	},
+	textBlock: [{position: {x: "0", y: "0", w: "w", h: "h"}}],
+	path: [
+		{
+			actions: {ref: "roundRectangle"}
 		}
 	]
 });

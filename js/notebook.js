@@ -23,7 +23,7 @@ function listNotes(notebook_guid){
 		type: 'GET',
 		data: {
 			guid: notebook_guid
-		},
+		}
 	})
 	.done(function(data) {
 		console.log("success");

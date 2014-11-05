@@ -726,10 +726,6 @@ img:-moz-broken{
 	border-radius:4px;
 }
 
-.dialog_close{
-	background:transparent url(images/common-16.png) 0px -16px no-repeat;position:absolute;top:15px;right:15px;width:16px;height:16px;cursor:pointer;
-	display:none;
-}
 .dialog_close:hover{
 	background-position: 0px -32px;
 }
@@ -772,10 +768,8 @@ img:-moz-broken{
 	position: absolute;  z-index:100000000000;
 	max-width: 250px;color: #fff;
 }
-#hover_tip .tip_arrow{
-	height: 6px;
-	background: url(images/common-16.png) center 0px no-repeat;
-}
+
+
 #hover_tip .tip_arrow.tip_right{
 	left: -6px;
 	top: 5px;
@@ -1052,14 +1046,8 @@ Slider Styles
 .message-box-top .message-box-size:hover{
 	background-position:0px -18px;
 }
-.message-box-top .message-box-remove{
-	background: transparent url(images/common-16.png) 0px -16px no-repeat;
-	position: absolute;
-	right: 10px;
-	width: 16px;
-	height: 16px;
-	cursor: pointer;
-}
+
+
 .message-box-top .message-box-remove:hover{
 	background-position: 0px -32px;
 }
@@ -1073,13 +1061,7 @@ Slider Styles
 	background: #F2F2F2;
 	_overflow: hidden;
 }
-.message-mutlperson .mess-scrolltop_n, .message-mutlperson .mess-scrollbtn_n{
-	width: 104px;
-	height: 20px;
-	display: block;
-	position: relative;
-	background: url(./images/network/message-box-icons.png) no-repeat;
-}
+
 .message-mutlperson .mess-scrolltop_n{
 	background-position: -360px -60px;
 	cursor:pointer;

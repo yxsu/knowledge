@@ -24,12 +24,9 @@
 <!--graph -->
 <script src="js/util.js" type="text/javascript" charset="UTF-8"></script>
 <script src="js/schema.js" type="text/javascript" charset="UTF-8"></script>
-<script type="text/javascript" charset="UTF-8" src="js/flow.js"></script>
-<script type="text/javascript" charset="UTF-8" src="js/lane.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/standard.js"></script>
 
 <script type="text/javascript">
-var chartId = "529ec03b0cf20042951b4052";
-var note_guid = "abd";
 var definition = {
     "page":{
         "showGrid":true,
@@ -39,16 +36,16 @@ var definition = {
         "height":1500,
         "backgroundColor":"255,255,255"
     },
-    "elements": {}
-}
+    "content": "\\node[rectangle, draw, minimum width=120, minimum height=50, name=1497ac9584465] (382, 269){test};"
+};
 
 var role = "owner";
 var userId = "529ebc4d0cf20042951b2f49";
 var userName = "Su Yuxin";
 var time = "1386142082157";
 </script>
-<script type="text/javascript" charset="UTF-8" src="js/collaboration.js"></script>
 <script type="text/javascript" charset="UTF-8" src="js/designer_core.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/tikz.js"></script>
 <script type="text/javascript" charset="UTF-8" src="js/designer_ui.js"></script>
 <script type="text/javascript" charset="UTF-8" src="js/designer_event.js"></script>
 <script type="text/javascript" charset="UTF-8" src="js/designer_function.js"></script>
@@ -62,7 +59,7 @@ if(!document.getElementById("support_canvas").getContext){
 <div id="designer_header">
 	<div class="row row1">
 		<div id="title_container">
-			<button class="btn" id="save" onclick="UI.save();">Save</button>
+			<button class="btn" id="save">Save</button>
 			<span class="diagram_title">Type title here</span>
 		</div>
 	</div>

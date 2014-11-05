@@ -201,9 +201,9 @@ var Designer = {
 			$("#shape_panel").empty();
 			for(var i = 0; i < Schema.categories.length; i++){
 				var cate = Schema.categories[i];
-				if(cate.name == "standard"){
-					continue;
-				}
+				//if(cate.name == "standard"){
+				//	continue;
+				//}
 				$("#shape_panel").append("<div class='panel_container'><h3 class='panel_title'><div class='ico ico_accordion'></div>" + cate.text + "</h3><div id='panel_" + cate.name + "' class='content'></div></div>");
 			}
 			$(".panel_title").unbind().bind("click", function(){
@@ -212,14 +212,12 @@ var Designer = {
 			//Init schema items.
 			for(var name in Schema.shapes){
 				var shape = Schema.shapes[name];
-				if(shape.attribute.visible && shape.category != "standard"){
-					if(!shape.groupName){
-						appendPanelItem(shape);
-					}else{
-						var groupShapes = SchemaGroup.getGroup(shape.groupName);
-						if(groupShapes[0] == name){
-							appendPanelItem(shape, shape.groupName);
-						}
+				if(!shape.groupName){
+					appendPanelItem(shape);
+				}else {
+					var groupShapes = SchemaGroup.getGroup(shape.groupName);
+					if (groupShapes[0] == name) {
+						appendPanelItem(shape, shape.groupName);
 					}
 				}
 			}
@@ -529,7 +527,7 @@ var Designer = {
 			//初始化快捷键
 			var movingShapes = null; //在外围定义movingShapes变量，目的是在移动形状时，不重复获取
 			$(document).unbind("keydown.hotkey").bind("keydown.hotkey", function(e){
-				console.log("a hotkey (" + e.keyCode + ") is pressed");
+				console.log("a hotkey (" + e.keyCode + ') is pressed' );
 				if(e.ctrlKey && e.keyCode == 65){
 					//全选ctrl+a
 					Designer.selectAll();
@@ -1713,7 +1711,7 @@ var Designer = {
 			//add new one
 			for(var x = 0; x < box.w; x += w)
 			{
-				var newShape = Model.create("process", x + box.x, y, w, h);
+				var newShape = Model.create("rectangle", x + box.x, y, w, h);
 				Designer.painter.renderShape(newShape);
             	MessageSource.beginBatch();
             	//发送形状创建事件
@@ -2395,7 +2393,6 @@ var Designer = {
 		 */
 		canvasDraggable: function(){
 			var container = $("#canvas_container");
-			container.css("cursor", "url(/static/images/cursor_hand.png) 8 8, auto");
 			if(this.canvasDragTimeout){
 				clearTimeout(this.canvasDragTimeout);
 			}
@@ -2434,7 +2431,6 @@ var Designer = {
 		 */
 		canvasFreeDraggable: function(){
 			var container = $("#canvas_container");
-			container.css("cursor", "url(/themes/default/images/diagraming/cursor_hand.png) 8 8, auto");
 			container.unbind("mousedown.drag_canvas").bind("mousedown.drag_canvas", function(downE){
 				var beginTop = $("#designer_viewport").scrollTop();
 				var beginLeft = $("#designer_viewport").scrollLeft();
@@ -3082,7 +3078,7 @@ var Designer = {
 		 * @return {[type]} [description]
 		 */
 		shapeDashboard: function(x , y){
-			var category = "flow";
+			var category = "standard";
 
 			if($("#panel_" + category).length != 0){
 				//如果此分类在当前形状面板中，则可以带出此分类的画板
