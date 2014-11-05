@@ -12,7 +12,7 @@ var UI = {
 			for (var shapeID in shapes) {
 				var shape = shapes[shapeID];
 				if(shape.name == "rectangle") {
-					final_content += Tikz.converter.getRectangleFromShape(shape);
+					final_content += Tikz.getRectangleFromShape(shape);
 				}
 			}
 			console.log(final_content);
