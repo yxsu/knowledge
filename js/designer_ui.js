@@ -7,15 +7,14 @@ var UI = {
 	    //save
 		$(".btn#save").bind("click", function(){
 			//save content
-			var shapes = Model.define.elements;
-			var final_content = '';
-			for (var shapeID in shapes) {
-				var shape = shapes[shapeID];
-				if(shape.name == "rectangle") {
-					final_content += Tikz.getRectangleFromShape(shape);
-				}
-			}
-			console.log(final_content);
+            $.ajax({
+                url: '/save.php',
+                type: 'POST',
+                data: {
+                    title: $(".diagram_title").text(),
+                    content: Model.define.elements
+                }
+            })
 		});
 		//修改标题
 		$(".diagram_title").bind("click", function(){
