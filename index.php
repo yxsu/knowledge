@@ -33,7 +33,8 @@ if(!empty($_POST)) {
     	tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
   	});
 </script>
-<script src="js/plugins/mathjax/MathJax.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 <!--graph -->
 <script src="js/util.js" type="text/javascript" charset="UTF-8"></script>
 <script src="js/schema.js" type="text/javascript" charset="UTF-8"></script>
