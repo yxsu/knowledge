@@ -8,7 +8,7 @@ var UI = {
 		$(".btn#save").bind("click", function(){
 			//save content
             $.ajax({
-                url: '/index.php',
+                url: 'index.php',
                 type: 'POST',
                 data: {
                     title: $(".diagram_title").text(),

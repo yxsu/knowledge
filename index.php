@@ -52,7 +52,7 @@ var definition = {
     },
     <?php
         $content = "{}";
-        $title = "\"empty\"";
+        $title = "empty";
         if(!empty($_GET)) {
             $title = $_GET['title'];
             $file_name = "data/{$title}";
@@ -97,7 +97,7 @@ if(!document.getElementById("support_canvas").getContext){
                 if($fileinfo->isDot()) continue;
                 $file_name = $fileinfo->getFilename();
         ?>
-                <h4 class="panel_title"><div class="ico ico_accordion"></div><a href="/index.php?title=<?php echo $file_name;?>"><?php echo $file_name;?></a></h4>
+                <h4 class="panel_title"><div class="ico ico_accordion"></div><a href="index.php?title=<?php echo $file_name;?>"><?php echo $file_name;?></a></h4>
         <?php
             }
         ?>
