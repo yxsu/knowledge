@@ -5,7 +5,20 @@
 <title>Knowledge</title>
 </head>
 <body>
-
+<?php
+if(!file_exists("data/")){
+    mkdir("data/");
+}
+if(!empty($_POST)) {
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $file_handle = fopen("data/{$title}", "w+");
+    if(fwrite($file_handle, $content) == FALSE) {
+        echo "Cannot write to file {$title}";
+    }
+    fclose($file_handle);
+}
+?>
 <link href="css/global.css" rel="stylesheet">
 <link href="css/designer.css" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="css/ui.css">
@@ -36,7 +49,20 @@ var definition = {
         "height":1500,
         "backgroundColor":"255,255,255"
     },
-    "content": "\\node[rectangle, draw, minimum width=120, minimum height=50, name=1497ac9584465] (382, 269){$\\int_{a}^{b}$};"
+    <?php
+        $content = "{}";
+        $title = "\"empty\"";
+        if(!empty($_GET)) {
+            $title = $_GET['title'];
+            $file_name = "data/{$title}";
+            if(file_exists($file_name)){
+                $file_handle = fopen($file_name, "r+");
+                $content = fread($file_handle, filesize($file_name));
+            }
+        }
+    ?>
+    "elements": <?php echo $content; ?>,
+    "title" : "<?php echo $title; ?>"
 };
 var role = "owner";
 var userId = "529ebc4d0cf20042951b2f49";
@@ -44,7 +70,7 @@ var userName = "Su Yuxin";
 var time = "1386142082157";
 </script>
 <script type="text/javascript" charset="UTF-8" src="js/designer_core.js"></script>
-<script type="text/javascript" charset="UTF-8" src="js/tikz.js"></script>
+<!-- <script type="text/javascript" charset="UTF-8" src="js/tikz.js"></script> -->
 <script type="text/javascript" charset="UTF-8" src="js/designer_ui.js"></script>
 <script type="text/javascript" charset="UTF-8" src="js/designer_event.js"></script>
 <script type="text/javascript" charset="UTF-8" src="js/designer_function.js"></script>
@@ -65,7 +91,15 @@ if(!document.getElementById("support_canvas").getContext){
 </div>
 <div id="designer">
 	<div style="overflow: scroll;" id="side_bar">
-		<h4 class="panel_title"><div class="ico ico_accordion"></div>ToolBox</h4>
+        <?php
+            foreach(new DirectoryIterator("data") as $fileinfo) {
+                if($fileinfo->isDot()) continue;
+                $file_name = $fileinfo->getFilename();
+        ?>
+                <h4 class="panel_title"><div class="ico ico_accordion"></div><a href="/index.php?title=<?php echo $file_name;?>"><?php echo $file_name;?></a></h4>
+        <?php
+            }
+        ?>
 	</div>
 	
 	<div id="designer_viewport">

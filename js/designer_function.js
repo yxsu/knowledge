@@ -20,7 +20,8 @@ Designer.addFunction("open", function(definition){
  	Model.define.page = definition.page;
  	Model.persistence.page = Utils.copy(definition.page);
  	Designer.initialize.initCanvas();
- 	var shapes = Tikz.readElements(definition.content);
+ 	var shapes = definition.elements;
+    $(".diagram_title").text(definition.title);
  	//先构造形状，再构造连接线，因为连接线的绘制过程有可能依赖所连接的图形
  	var shapeCount = 0;
  	for(var shapeId in shapes){

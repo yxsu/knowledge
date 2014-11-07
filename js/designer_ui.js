@@ -8,12 +8,16 @@ var UI = {
 		$(".btn#save").bind("click", function(){
 			//save content
             $.ajax({
-                url: '/save.php',
+                url: '/index.php',
                 type: 'POST',
                 data: {
                     title: $(".diagram_title").text(),
-                    content: Model.define.elements
+                    content: JSON.stringify(Model.define.elements)
                 }
+            }).done(function(){
+                console.log("done");
+            }).fail(function() {
+                console.log("error");
             })
 		});
 		//修改标题
@@ -36,18 +40,6 @@ var UI = {
 		function changeTitle(){
 			var newTitle = $.trim($("#title_container").children("input").val());
 			var oldTitle = $(".diagram_title").text();
-			if(newTitle != oldTitle) {
-				$.ajax({
-					url: '/note/show/' + note_guid + '/',
-					type: 'POST',
-					data: {
-						note_guid: note_guid,
-						new_title: newTitle
-					},
-				}).done(function() {
-					$("a[href='/note/show/"+note_guid+"']").html(newTitle);
-				});
-			}
 			var title = newTitle != "" ? newTitle : oldTitle;
 			$("title").text(title + " - Knowledge");
 			$(".diagram_title").text(title).show();
