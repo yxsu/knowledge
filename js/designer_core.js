@@ -7,7 +7,7 @@ Schema.initMarkers();
 
 var currentMousePos = { x: -1, y: -1 };
     
-$(function(){
+jQuery(function(){
 	Designer.init();
 	if(role == "trial"){
 		Designer.status = "demo";
@@ -24,7 +24,7 @@ $(function(){
 	if(Designer.status == "demo"){
 		UI.gettingStart();
 	}
-	$(document).mousemove(function(event) {
+	jQuery(document).mousemove(function(event) {
         currentMousePos.x = event.pageX;
         currentMousePos.y = event.pageY;
     });
@@ -71,21 +71,21 @@ var Designer = {
 		 */
 		initLayout: function(){
 			//Init designer layout.
-			$(window).bind("resize.designer", function(){
-				var height = $(window).height() - $("#designer_header").outerHeight();
+			jQuery(window).bind("resize.designer", function(){
+				var height = jQuery(window).height() - jQuery("#designer_header").outerHeight();
 				var width_left_bar = 200;
-				$("#designer").height(height);
-				$("#note_list").height(height).width(width_left_bar);
+				jQuery("#designer").height(height);
+				jQuery("#note_list").height(height).width(width_left_bar);
 				var attr = {
 					top: 0,
 					left: width_left_bar,
-					width: $(window).width() - width_left_bar,
+					width: jQuery(window).width() - width_left_bar,
 					height: height
 				};
-				$("#designer_viewport").css(attr);
+				jQuery("#designer_viewport").css(attr);
 
 			});
-			$(window).trigger("resize.designer");
+			jQuery(window).trigger("resize.designer");
 		},
 		/**
 		 * 初始化对象
@@ -110,11 +110,11 @@ var Designer = {
 			var darker = Utils.getDarkerColor(pageColor); //较深一级的颜色，为画布外围颜色、网格浅色线条
 			var darkest = Utils.getDarkestColor(pageColor); //更深一级的颜色，为网格深色线条颜色
 			//图形画布容器
-			$("#designer_canvas").css({
+			jQuery("#designer_canvas").css({
 				"background-color": "rgb("+darker+")"
 			});
 			//网布网格
-			var grids = $("#designer_grids");
+			var grids = jQuery("#designer_grids");
 			grids.attr({
 				width: w,
 				height: h
@@ -177,17 +177,17 @@ var Designer = {
 				}
 			}
 			//画布的容器区域
-			$("#canvas_container").css({
+			jQuery("#canvas_container").css({
 				width: w,
 				height: h,
 				padding: Designer.config.pageMargin
 			});
 			if(!this.initialized){
 				//如果没有初始化完毕，即第一次初始化，调整滚动条
-				$("#designer_viewport").scrollTop(Designer.config.pageMargin - 10);
-				$("#designer_viewport").scrollLeft(Designer.config.pageMargin - 10);
+				jQuery("#designer_viewport").scrollTop(Designer.config.pageMargin - 10);
+				jQuery("#designer_viewport").scrollLeft(Designer.config.pageMargin - 10);
 			}
-			var domShowGrid = $("#bar_list_page").children("li[ac=set_page_showgrid]");
+			var domShowGrid = jQuery("#bar_list_page").children("li[ac=set_page_showgrid]");
 			domShowGrid.menuitem("unselect");
 			if(Model.define.page.showGrid){
 				domShowGrid.menuitem("select");
@@ -198,16 +198,16 @@ var Designer = {
 		 */
 		initShapes: function(){
 			//Init shape panel.
-			$("#shape_panel").empty();
+			jQuery("#shape_panel").empty();
 			for(var i = 0; i < Schema.categories.length; i++){
 				var cate = Schema.categories[i];
 				//if(cate.name == "standard"){
 				//	continue;
 				//}
-				$("#shape_panel").append("<div class='panel_container'><h3 class='panel_title'><div class='ico ico_accordion'></div>" + cate.text + "</h3><div id='panel_" + cate.name + "' class='content'></div></div>");
+				jQuery("#shape_panel").append("<div class='panel_container'><h3 class='panel_title'><div class='ico ico_accordion'></div>" + cate.text + "</h3><div id='panel_" + cate.name + "' class='content'></div></div>");
 			}
-			$(".panel_title").unbind().bind("click", function(){
-				$(this).parent().toggleClass("panel_collapsed");
+			jQuery(".panel_title").unbind().bind("click", function(){
+				jQuery(this).parent().toggleClass("panel_collapsed");
 			});
 			//Init schema items.
 			for(var name in Schema.shapes){
@@ -227,17 +227,17 @@ var Designer = {
 			function appendPanelItem(shape, group){
 				shape = Utils.copy(shape);
 				var html = "<div class='panel_box' shapeName='" + shape.name + "'><canvas class='panel_item' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas></div>";
-				var panelBox = $(html).appendTo("#panel_" + shape.category);
+				var panelBox = jQuery(html).appendTo("#panel_" + shape.category);
 				if(group){
 					panelBox.append("<div class='group_icon' onmousedown='Designer.op.showPanelGroup(\""+group+"\", event, this)'></div>")
 				}
 				var canvas = panelBox.children()[0];
 				//绑定鼠标悬浮时，显示大图
 				panelBox.bind("mouseenter", function(){
-					if($(this).hasClass("readonly")){
+					if(jQuery(this).hasClass("readonly")){
 						return;
 					}
-					var thumb = $("#shape_thumb");
+					var thumb = jQuery("#shape_thumb");
 					thumb.children("div").text(shape.title);
 					var ctx = thumb.children("canvas")[0].getContext("2d");
 					thumb.attr("current", shape.name);
@@ -279,7 +279,7 @@ var Designer = {
 					ctx.rotate(props.angle);
 					ctx.translate(-(props.w/2), -(props.h/2));
 					Designer.painter.renderShapePath(ctx, shape, false, function(){
-						if($("#shape_thumb[current="+shape.name+"]:visible").length > 0){
+						if(jQuery("#shape_thumb[current="+shape.name+"]:visible").length > 0){
 							panelBox.trigger("mouseenter");
 						}
 					});
@@ -288,15 +288,15 @@ var Designer = {
 					ctx.restore();
 					ctx.translate(translateX, translateY);
 					//控制坐标
-					var top = panelBox.offset().top - $("#designer_header").outerHeight() + panelBox.height()/2 - thumb.outerHeight()/2;
+					var top = panelBox.offset().top - jQuery("#designer_header").outerHeight() + panelBox.height()/2 - thumb.outerHeight()/2;
 					if(top < 5){
 						top = 5;
-					}else if(top + thumb.outerHeight() > $("#designer_viewport").height() - 5){
-						top = $("#designer_viewport").height() - 5 - thumb.outerHeight();
+					}else if(top + thumb.outerHeight() > jQuery("#designer_viewport").height() - 5){
+						top = jQuery("#designer_viewport").height() - 5 - thumb.outerHeight();
 					}
 					thumb.css("top", top);
 				}).bind("mouseleave", function(){
-					$("#shape_thumb").hide();
+					jQuery("#shape_thumb").hide();
 				});
 				//绘制图形
 				Designer.painter.drawPanelItem(canvas, shape.name);
@@ -307,8 +307,8 @@ var Designer = {
 			 * 绘制图形面板
 			 */
 			function initPanelShapes(){
-				$(".panel_box").die().live("mousedown", function(downE){
-					var currentShape = $(this);
+				jQuery(".panel_box").die().live("mousedown", function(downE){
+					var currentShape = jQuery(this);
 					if(currentShape.hasClass("readonly")){
 						return;
 					}
@@ -319,16 +319,16 @@ var Designer = {
 					//currentShape.css("position", "absolute");
 					var createdShape = null;
 					var createdBox = null;
-					var designer_canvas = $("#designer_canvas");
+					var designer_canvas = jQuery("#designer_canvas");
 					var creatingCanvas = getCreatingCanvas(name);
-					$("#designer").bind("mousemove.creating", function(moveE){
+					jQuery("#designer").bind("mousemove.creating", function(moveE){
 						setCreatingCanvas(creatingCanvas, moveE);
 					});
-					$("#canvas_container").bind("mousemove.create", function(e){
+					jQuery("#canvas_container").bind("mousemove.create", function(e){
 						var location = Utils.getRelativePos(e.pageX, e.pageY, designer_canvas);
 						if(createdShape == null){
 							createdShape = createShape(name, location.x, location.y);
-							createdBox = $("#" + createdShape.id);
+							createdBox = jQuery("#" + createdShape.id);
 							createdBox.attr("class", "shape_box_creating");
 						}
 						createdBox.css({
@@ -364,16 +364,16 @@ var Designer = {
 					});
 					var created = false;
 					//判断mouseup是否发生在了画布上
-					$("#canvas_container").bind("mouseup.create", function(e){
+					jQuery("#canvas_container").bind("mouseup.create", function(e){
 						created = true;
 					});
-					$(document).bind("mouseup.create", function(){
-						$(this).unbind("mouseup.create");
-						$("#designer").unbind("mousemove.creating");
-						$("#creating_shape_container").hide();
+					jQuery(document).bind("mouseup.create", function(){
+						jQuery(this).unbind("mouseup.create");
+						jQuery("#designer").unbind("mousemove.creating");
+						jQuery("#creating_shape_container").hide();
 						Designer.op.hideLinkPoint();
 						Designer.op.hideSnapLine();
-						$("#canvas_container").unbind("mouseup.create").unbind("mousemove.create");
+						jQuery("#canvas_container").unbind("mouseup.create").unbind("mousemove.create");
 						if(createdShape != null){
 							if(created == false){
 								createdBox.remove();
@@ -471,17 +471,17 @@ var Designer = {
 			 * 创建一个所创建图形的画布，并在上边绘制图形
 			 */
 			function getCreatingCanvas(name){
-				var canvas = $("#creating_shape_canvas");
-				var container = $("#creating_shape_container");
+				var canvas = jQuery("#creating_shape_canvas");
+				var container = jQuery("#creating_shape_container");
 				if(canvas.length == 0){
-					container = $("<div id='creating_shape_container'></div>").appendTo("#designer");
-					canvas = $("<canvas id='creating_shape_canvas' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas>").appendTo(container);
+					container = jQuery("<div id='creating_shape_container'></div>").appendTo("#designer");
+					canvas = jQuery("<canvas id='creating_shape_canvas' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas>").appendTo(container);
 				}
 				container.css({
 					left: "0px",
 					top: "0px",
-					width: $(".panel_container").width(),
-					height: $("#shape_panel").outerHeight()
+					width: jQuery(".panel_container").width(),
+					height: jQuery("#shape_panel").outerHeight()
 				});
 				Designer.painter.drawPanelItem(canvas[0], name);
 				return canvas;
@@ -490,8 +490,8 @@ var Designer = {
 			 * 设置创建时图形的坐标
 			 */
 			function setCreatingCanvas(canvas, e){
-				$("#creating_shape_container").show();
-				var location = Utils.getRelativePos(e.pageX, e.pageY, $("#creating_shape_container"));
+				jQuery("#creating_shape_container").show();
+				var location = Utils.getRelativePos(e.pageX, e.pageY, jQuery("#creating_shape_container"));
 				canvas.css({
 					left: location.x - Designer.config.panelItemWidth/2,
 					top: location.y - Designer.config.panelItemHeight/2
@@ -526,7 +526,7 @@ var Designer = {
 		init: function(){
 			//初始化快捷键
 			var movingShapes = null; //在外围定义movingShapes变量，目的是在移动形状时，不重复获取
-			$(document).unbind("keydown.hotkey").bind("keydown.hotkey", function(e){
+			jQuery(document).unbind("keydown.hotkey").bind("keydown.hotkey", function(e){
 				console.log("a hotkey (" + e.keyCode + ') is pressed' );
 				if(e.ctrlKey && e.keyCode == 65){
 					//全选ctrl+a
@@ -611,11 +611,11 @@ var Designer = {
 							//下移
 							Designer.op.moveShape(movingShapes, {x: 0, y: step});
 						}
-						$(document).unbind("keyup.moveshape").bind("keyup.moveshape", function(){
+						jQuery(document).unbind("keyup.moveshape").bind("keyup.moveshape", function(){
 							//发生了拖动，修改定义
 							Model.updateMulti(movingShapes);
 							movingShapes = null;
-							$(document).unbind("keyup.moveshape");
+							jQuery(document).unbind("keyup.moveshape");
 							Designer.op.hideTip();
 							Utils.showLinkerCursor();
 							UI.showShapeOptions();
@@ -658,33 +658,33 @@ var Designer = {
 					//Esc
 					if(!Designer.op.state){
 						Utils.unselect();
-						$(".menu.list").hide();
-						$(".menu").hide();
-						$(".color_picker").hide();
+						jQuery(".menu.list").hide();
+						jQuery(".menu").hide();
+						jQuery(".color_picker").hide();
 					}else if(Designer.op.state == "creating_free_text" || Designer.op.state == "creating_free_linker"){
 						Designer.op.resetState();
 					}
 				}else if(e.keyCode == 84 && !e.ctrlKey){
 					//T，插入文本
-					$(".menu.list").hide();
+					jQuery(".menu.list").hide();
 					Designer.op.changeState("creating_free_text");
 				}else if(e.keyCode == 83 && !e.ctrlKey){
 					//draw shape, S
-					var x = currentMousePos.x - $("#note_list").outerWidth();
-					var y = currentMousePos.y - $("#designer_header").outerHeight();
+					var x = currentMousePos.x - jQuery("#note_list").outerWidth();
+					var y = currentMousePos.y - jQuery("#designer_header").outerHeight();
 					Designer.op.shapeDashboard(x,y);
 				}else if(e.keyCode == 73 && !e.ctrlKey){
 					//I，插入图片
-					$(".menu.list").hide();
+					jQuery(".menu.list").hide();
 					UI.showImageSelect(function(fileId, w, h){
 						UI.insertImage(fileId, w, h);
 					});
-					$("#designer_contextmenu").hide();
+					jQuery("#designer_contextmenu").hide();
 				}else if(e.keyCode == 76 && !e.ctrlKey){
 					//T，插入文本
-					$(".menu.list").hide();
+					jQuery(".menu.list").hide();
 					Designer.op.changeState("creating_free_linker");
-					$("#designer_contextmenu").hide();
+					jQuery("#designer_contextmenu").hide();
 				}else if(e.keyCode == 86 && !e.ctrlKey){
 					//expand vertically as a table
 					Designer.op.expandTableVertically();
@@ -729,7 +729,7 @@ var Designer = {
 					Dock.enterPresentation();
 				}
 			});
-			$("input,textarea,select").die().live("keydown.hotkey", function(e){
+			jQuery("input,textarea,select").die().live("keydown.hotkey", function(e){
 				//阻止冒泡
 				e.stopPropagation();
 			});
@@ -738,7 +738,7 @@ var Designer = {
 		 * 取消快捷键
 		 */
 		cancel: function(){
-			$(document).unbind("keydown.hotkey");
+			jQuery(document).unbind("keydown.hotkey");
 		}
 	},
 	/**
@@ -747,19 +747,19 @@ var Designer = {
 	 */
 	contextMenu: {
 		init: function(){
-			$("#designer_contextmenu").unbind("mousedown").bind("mousedown", function(e){
+			jQuery("#designer_contextmenu").unbind("mousedown").bind("mousedown", function(e){
 				e.stopPropagation();
 			});
-			$("#designer_contextmenu").find("li:not(.devider)").unbind("click").bind("click", function(){
-				var item = $(this);
+			jQuery("#designer_contextmenu").find("li:not(.devider)").unbind("click").bind("click", function(){
+				var item = jQuery(this);
 				if(!item.menuitem("isDisabled") && item.children(".extend_menu").length == 0){
 					Designer.contextMenu.execAction(item);
 					Designer.contextMenu.hide();
 				}
 			});
-			$("#canvas_container").unbind("contextmenu").bind("contextmenu", function(e){
+			jQuery("#canvas_container").unbind("contextmenu").bind("contextmenu", function(e){
 				e.preventDefault();
-				var canvas = $("#designer_canvas");
+				var canvas = jQuery("#designer_canvas");
 				var pos = Utils.getRelativePos(e.pageX, e.pageY, canvas);
 				Designer.contextMenu.show(pos.x, pos.y);
 			});
@@ -768,7 +768,7 @@ var Designer = {
 		 * 取消右键菜单
 		 */
 		destroy: function(){
-			$("#canvas_container").unbind("contextmenu");
+			jQuery("#canvas_container").unbind("contextmenu");
 			this.hide();
 		},
 		/**
@@ -784,7 +784,7 @@ var Designer = {
 		show: function(x, y){
 			this.menuPos.x = x;
 			this.menuPos.y = y;
-			var menu = $("#designer_contextmenu");
+			var menu = jQuery("#designer_contextmenu");
 			var currentFocus = Utils.getShapeByPosition(x, y, false);
 			menu.children().hide();
 			menu.children("li[ac=selectall]").show();
@@ -826,7 +826,7 @@ var Designer = {
 					var count = selectedIds.length;
 					if(count >= 2){
 						menu.children("li[ac=group]").show();
-						$("#ctxmenu_align").show();
+						jQuery("#ctxmenu_align").show();
 					}
 					var groupCount = Utils.getSelectedGroups().length;
 					if(groupCount >= 1){
@@ -846,7 +846,7 @@ var Designer = {
 				left: x,
 				top: y
 			});
-			$(document).bind("mousedown.ctxmenu", function(){
+			jQuery(document).bind("mousedown.ctxmenu", function(){
 				Designer.contextMenu.hide();
 			});
 		},
@@ -854,8 +854,8 @@ var Designer = {
 		 * 隐藏右键菜单
 		 */
 		hide: function(){
-			$("#designer_contextmenu").hide();
-			$(document).unbind("mousedown.ctxmenu");
+			jQuery("#designer_contextmenu").hide();
+			jQuery(document).unbind("mousedown.ctxmenu");
 		},
 		/**
 		 * 执行一个右键菜单指令
@@ -909,7 +909,7 @@ var Designer = {
 		this.initialize.initModel();
 		this.initialize.initCanvas();
 		this.initialize.initShapes();
-		$("#shape_panel").hide();
+		jQuery("#shape_panel").hide();
 		this.hotkey.init();
 		this.contextMenu.init();
 		//初始化图形操作
@@ -927,8 +927,8 @@ var Designer = {
 		 * 初始化用户操作
 		 */
 		init: function(){
-			var canvas = $("#designer_canvas");
-			var container = $("#canvas_container");
+			var canvas = jQuery("#designer_canvas");
+			var container = jQuery("#canvas_container");
 			//绑定在画布上鼠标移动时，显示移动、连线，还是框选
 			container.unbind("mousemove.operate").bind("mousemove.operate", function(hoverEvent){
 				if(Designer.op.state != null){
@@ -1000,21 +1000,21 @@ var Designer = {
 		 * 取消用户操作
 		 */
 		cancel: function(){
-			$("#canvas_container").unbind("mousemove.operate").css("cursor", "default");
+			jQuery("#canvas_container").unbind("mousemove.operate").css("cursor", "default");
 			this.destroy();
 		},
 		/**
 		 * 销毁操作状态
 		 */
 		destroy: function(){
-			$("#designer_canvas").unbind("mousedown.drag").unbind("dblclick.edit")
+			jQuery("#designer_canvas").unbind("mousedown.drag").unbind("dblclick.edit")
 				.unbind("mousedown.draglinker").unbind("mousedown.select").unbind("mousedown.brokenLinker")
 				.unbind("dblclick.edit_linker");
-			$("#canvas_container").unbind("mousedown.link").unbind("mousedown.create_text")
+			jQuery("#canvas_container").unbind("mousedown.link").unbind("mousedown.create_text")
 				.unbind("mousedown.drag_canvas");
-			$("#designer_viewport").unbind("mousedown.multiselect");
+			jQuery("#designer_viewport").unbind("mousedown.multiselect");
 			Utils.hideAnchors();
-			$("#link_spot").hide();
+			jQuery("#link_spot").hide();
 		},
 		/**
 		 * 操作状态
@@ -1030,12 +1030,12 @@ var Designer = {
 			if(state == "creating_free_text"){
 				//创建自由文本
 				this.destroy();
-				$("#canvas_container").css("cursor", "crosshair");
+				jQuery("#canvas_container").css("cursor", "crosshair");
 				this.textCreatable();
 			}else if(state == "creating_free_linker"){
 				//创建自由连接线
 				this.destroy();
-				$("#canvas_container").css("cursor", "crosshair");
+				jQuery("#canvas_container").css("cursor", "crosshair");
 				this.shapeLinkable();
 			}else if(state == "drag_canvas"){
 				this.destroy();
@@ -1049,13 +1049,13 @@ var Designer = {
 		 */
 		resetState: function(){
 			this.state = null;
-			$("#canvas_container").css("cursor", "default");
+			jQuery("#canvas_container").css("cursor", "default");
 		},
 		/**
 		 * 选中图形
 		 */
 		shapeSelectable: function(shape){
-			var canvas = $("#designer_canvas");
+			var canvas = jQuery("#designer_canvas");
 			canvas.bind("mousedown.select", function(downE){
 				Designer.op.changeState("seelcting_shapes");
 				var shapeId = shape.id;
@@ -1077,10 +1077,10 @@ var Designer = {
 					Utils.unselect();
 					Utils.selectShape(shapeId);
 				}
-				$(document).bind("mouseup.select", function(){
+				jQuery(document).bind("mouseup.select", function(){
 					Designer.op.resetState();
 					canvas.unbind("mousedown.select");
-					$(document).unbind("mouseup.select");
+					jQuery(document).unbind("mouseup.select");
 				});
 			});
 		},
@@ -1088,8 +1088,8 @@ var Designer = {
 		 * 形状拖动
 		 */
 		shapeDraggable: function(){
-			var canvas = $("#designer_canvas");
-			var container = $("#canvas_container");
+			var canvas = jQuery("#designer_canvas");
+			var container = jQuery("#canvas_container");
 			canvas.bind("mousedown.drag", function(downE){
 				Utils.hideLinkerCursor();
 				Utils.hideLinkerControls();
@@ -1137,7 +1137,7 @@ var Designer = {
 				var outlinkers = Utils.getOutlinkers(selected);
 				selected = selected.concat(outlinkers);
 				container.bind("mousemove.drag", function(moveE){
-					$("#link_spot").hide();
+					jQuery("#link_spot").hide();
 					UI.hideShapeOptions();
 					var now = Utils.getRelativePos(moveE.pageX, moveE.pageY, canvas);
 					//计算和开始时候的偏移量
@@ -1171,18 +1171,18 @@ var Designer = {
 					Designer.op.moveShape(selected, offset);
 					begin = now;
 					//在mousemove里绑定一个mouseup，目的是为了当鼠标发生了拖动之后，才认为是进行了拖动事件
-					$(document).unbind("mouseup.drop").bind("mouseup.drop", function(){
+					jQuery(document).unbind("mouseup.drop").bind("mouseup.drop", function(){
 						//发生了拖动，修改定义
 						Model.updateMulti(selected);
-						$(document).unbind("mouseup.drop");
+						jQuery(document).unbind("mouseup.drop");
 					});
 				});
-				$(document).bind("mouseup.drag", function(){
+				jQuery(document).bind("mouseup.drag", function(){
 					UI.showShapeOptions();
 					Designer.op.resetState();
 					container.unbind("mousemove.drag");
 					canvas.unbind("mousedown.drag");
-					$(document).unbind("mouseup.drag");
+					jQuery(document).unbind("mouseup.drag");
 					Designer.op.hideTip();
 					Designer.op.hideSnapLine();
 					Utils.showLinkerCursor();
@@ -1194,18 +1194,18 @@ var Designer = {
 		 * 形状缩放
 		 */
 		shapeResizable: function(){
-			$(".shape_controller").bind("mousedown", function(downE){
+			jQuery(".shape_controller").bind("mousedown", function(downE){
 				Utils.hideLinkerCursor();
-				if($("#shape_text_edit").length){
-					$("#shape_text_edit").trigger("blur");
+				if(jQuery("#shape_text_edit").length){
+					jQuery("#shape_text_edit").trigger("blur");
 				}
-				var container = $("#canvas_container");
-				var canvas = $("#designer_canvas");
+				var container = jQuery("#canvas_container");
+				var canvas = jQuery("#designer_canvas");
 				//首先四个控制点上，阻止事件冒泡
 				downE.stopPropagation();
 				//初始坐标，要取相对画布的坐标
 				var begin = Utils.getRelativePos(downE.pageX, downE.pageY, canvas);
-				var controller = $(this);
+				var controller = jQuery(this);
 				Designer.op.changeState("resizing");
 				var selectedIds = Utils.getSelectedIds();
 				var selected = Utils.getSelected();
@@ -1512,20 +1512,20 @@ var Designer = {
 					}
 					Designer.op.showTip(tipText);
 					//在mousemove里绑定一个mouseup，目的是为了当鼠标发生了拖动之后，才认为是进行了缩放事件
-					$(document).unbind("mouseup.resize_ok").bind("mouseup.resize_ok", function(){
+					jQuery(document).unbind("mouseup.resize_ok").bind("mouseup.resize_ok", function(){
 						if(movingRelated.length > 0){
 							changedShapes = changedShapes.concat(movingRelated);
 						}
 						Model.updateMulti(changedShapes);
-						$(document).unbind("mouseup.resize_ok");
+						jQuery(document).unbind("mouseup.resize_ok");
 					});
 				});
-				$(document).bind("mouseup.resize", function(){
+				jQuery(document).bind("mouseup.resize", function(){
 					UI.showShapeOptions();
 					container.css("cursor", "default");
 					Designer.op.resetState();
 					container.unbind("mousemove.resize");
-					$(document).unbind("mouseup.resize");
+					jQuery(document).unbind("mouseup.resize");
 					Designer.op.hideTip();
 					Utils.showLinkerCursor();
 					Designer.op.hideSnapLine();
@@ -1536,8 +1536,8 @@ var Designer = {
 		 * 形状旋转
 		 */
 		shapeRotatable: function(){
-			$(".shape_rotater").bind("mousemove", function(e){
-				var box = $(this);
+			jQuery(".shape_rotater").bind("mousemove", function(e){
+				var box = jQuery(this);
 				var x = e.pageX - box.offset().left;
 				var y = e.pageY - box.offset().top;
 				var ctx = box[0].getContext("2d");
@@ -1547,8 +1547,8 @@ var Designer = {
 					box.addClass("rotate_enable");
 					box.bind("mousedown", function(downE){
 						Utils.hideLinkerCursor();
-						if($("#shape_text_edit").length){
-							$("#shape_text_edit").trigger("blur");
+						if(jQuery("#shape_text_edit").length){
+							jQuery("#shape_text_edit").trigger("blur");
 						}
 						downE.stopPropagation();
 						Designer.op.changeState("rotating");
@@ -1571,7 +1571,7 @@ var Designer = {
 							y: selectorPos.y + selectorPos.h/2
 						};
 						var scaledCenter = Utils.toScale(center);
-						var canvas = $("#designer_canvas");
+						var canvas = jQuery("#designer_canvas");
 						var selected = Utils.getSelected();
 						//获取吸附的图形，一起旋转
 						var attachedShapes = Utils.getAttachedShapes(selected);
@@ -1579,7 +1579,7 @@ var Designer = {
 						var outlinkers = Utils.getOutlinkers(selected);
 						selected = selected.concat(outlinkers);
 						var lastAngle = startAngle; //记录上一次旋转的角度
-						$(document).bind("mousemove.rotate", function(moveE){
+						jQuery(document).bind("mousemove.rotate", function(moveE){
 							UI.hideShapeOptions();
 							var pos = Utils.getRelativePos(moveE.pageX, moveE.pageY, canvas);
 							//计算旋转角度
@@ -1651,7 +1651,7 @@ var Designer = {
 							}
 						}).bind("mouseup.rotate", function(){
 							UI.showShapeOptions();
-							$(document).unbind("mousemove.rotate").unbind("mouseup.rotate");
+							jQuery(document).unbind("mousemove.rotate").unbind("mouseup.rotate");
 							Designer.op.resetState();
 							Model.updateMulti(selected);
 							Designer.painter.drawControls(selectedIds);
@@ -1669,11 +1669,11 @@ var Designer = {
 		 * 切换分组的图形
 		 */
 		groupShapeChangable: function(){
-			$(".change_shape_icon").bind("mousedown", function(e){
+			jQuery(".change_shape_icon").bind("mousedown", function(e){
 				e.stopPropagation();
 				var targetShape = Utils.getSelected()[0];
 				var groupName = targetShape.groupName;
-				var target = $(this).parent();
+				var target = jQuery(this).parent();
 				var pos = target.position();
 				var left = pos.left + target.width();
 				var top = pos.top + target.height() + 10;
@@ -1761,8 +1761,8 @@ var Designer = {
 		 * 形状选择
 		 */
 		shapeMultiSelectable: function(){
-			var canvas = $("#designer_canvas");
-			var layout = $("#designer_viewport");
+			var canvas = jQuery("#designer_canvas");
+			var layout = jQuery("#designer_viewport");
 			layout.unbind("mousedown.multiselect").bind("mousedown.multiselect", function(downE){
 				var selector = null;
 				if(!downE.ctrlKey){
@@ -1772,7 +1772,7 @@ var Designer = {
 				Designer.op.changeState("multi_selecting");
 				layout.bind("mousemove.multiselect", function(moveE){
 					if(selector == null){
-						selector = $("<div id='selecting_box'></div>").appendTo(canvas);
+						selector = jQuery("<div id='selecting_box'></div>").appendTo(canvas);
 					}
 					var location = Utils.getRelativePos(moveE.pageX, moveE.pageY, canvas);
 					var style = {
@@ -1790,7 +1790,7 @@ var Designer = {
 					style.height = Math.abs(location.y - dLocation.y);
 					selector.css(style);
 				});
-				$(document).unbind("mouseup.multiselect").bind("mouseup.multiselect", function(upE){
+				jQuery(document).unbind("mouseup.multiselect").bind("mouseup.multiselect", function(upE){
 					if(selector != null){
 						//判断选取范围内的图形
 						var range = {
@@ -1809,7 +1809,7 @@ var Designer = {
 						selector.remove();
 					}
 					Designer.op.resetState();
-					$(document).unbind("mouseup.multiselect");
+					jQuery(document).unbind("mouseup.multiselect");
 					layout.unbind("mousemove.multiselect");
 				});
 				layout.unbind("mousedown.multiselect");
@@ -1819,7 +1819,7 @@ var Designer = {
 		 * 编辑形状文本
 		 */
 		shapeEditable: function(shape){
-			var canvas = $("#designer_canvas");
+			var canvas = jQuery("#designer_canvas");
 			canvas.unbind("dblclick.edit").bind("dblclick.edit", function(e){
 				//计算点击位置在图形的哪个文本区域上
 				canvas.unbind("dblclick.edit");
@@ -1863,19 +1863,19 @@ var Designer = {
 				}
 			}
 			Designer.contextMenu.hide();
-			var textarea = $("#shape_text_edit");
+			var textarea = jQuery("#shape_text_edit");
 			if(textarea.length == 0){
-				textarea = $("<textarea id='shape_text_edit'></textarea>").appendTo("#designer_canvas");
+				textarea = jQuery("<textarea id='shape_text_edit'></textarea>").appendTo("#designer_canvas");
 			}
-			var ruler = $("#shape_text_ruler");
+			var ruler = jQuery("#shape_text_ruler");
 			if(ruler.length == 0){
-				ruler = $("<textarea id='shape_text_ruler'></textarea>").appendTo("#designer_canvas");
+				ruler = jQuery("<textarea id='shape_text_ruler'></textarea>").appendTo("#designer_canvas");
 			}
 			//隐藏原有文本
-			$(".text_canvas[forshape="+shape.id+"][ind="+index+"]").hide();
+			jQuery(".text_canvas[forshape="+shape.id+"][ind="+index+"]").hide();
 			var textBlock = textBlocks[index];
 			var blockEntity = shape.textBlock[index]; //对象中的textBlock定义
-			var fontStyle = $.extend({}, shape.fontStyle, textBlock.fontStyle);
+			var fontStyle = jQuery.extend({}, shape.fontStyle, textBlock.fontStyle);
 			var textPos = textBlock.position;
 			if(fontStyle.orientation == "horizontal"){
 				var blockCenter = {
@@ -1913,9 +1913,9 @@ var Designer = {
 			}
 			textarea.val(String.fromCharCode.apply(null, textBlock.text));
 			//绑定事件
-			$("#shape_text_edit").unbind().bind("keyup", function(){
+			jQuery("#shape_text_edit").unbind().bind("keyup", function(){
 				//得到文本的高度
-				var text = $(this).val();
+				var text = jQuery(this).val();
 				ruler.val(text);
 				ruler.scrollTop(99999);
 				var textH = ruler.scrollTop();
@@ -1987,7 +1987,7 @@ var Designer = {
 				});
 			}).bind("keydown", function(e){
 				//Enter保存， Ctrl + Enter换行
-				var input = $(this);
+				var input = jQuery(this);
 				if(e.keyCode == 13 && e.ctrlKey){
 					//执行保存
 					saveText();
@@ -1995,18 +1995,18 @@ var Designer = {
 				}else if(e.keyCode == 27){
 					//Esc取消
 					input.unbind().remove();
-					$(".text_canvas[forshape="+shape.id+"][ind="+index+"]").show();
+					jQuery(".text_canvas[forshape="+shape.id+"][ind="+index+"]").show();
 				}else if(e.keyCode == 66 && e.ctrlKey){
 					//Ctrl + B，加粗
 					var newVal = !fontStyle.bold;
 					if(shape.textBlock.length == 1){
 						shape.fontStyle.bold = newVal;
 					}else{
-						blockEntity.fontStyle = $.extend(blockEntity.fontStyle, {bold: newVal});
+						blockEntity.fontStyle = jQuery.extend(blockEntity.fontStyle, {bold: newVal});
 					}
 					Model.update(shape);
 					var css = newVal ? "bold" : "normal";
-					$(this).css("font-weight", css);
+					jQuery(this).css("font-weight", css);
 					ruler.css("font-weight", css);
 					UI.update();
 				}else if(e.keyCode == 73 && e.ctrlKey){
@@ -2015,11 +2015,11 @@ var Designer = {
 					if(shape.textBlock.length == 1){
 						shape.fontStyle.italic = newVal;
 					}else{
-						blockEntity.fontStyle = $.extend(blockEntity.fontStyle, {italic: newVal});
+						blockEntity.fontStyle = jQuery.extend(blockEntity.fontStyle, {italic: newVal});
 					}
 					Model.update(shape);
 					var css = newVal ? "italic" : "normal";
-					$(this).css("font-style", css);
+					jQuery(this).css("font-style", css);
 					ruler.css("font-style", css);
 					UI.update();
 				}else if(e.keyCode == 85 && e.ctrlKey){
@@ -2028,11 +2028,11 @@ var Designer = {
 					if(shape.textBlock.length == 1){
 						shape.fontStyle.underline = newVal;
 					}else{
-						blockEntity.fontStyle = $.extend(blockEntity.fontStyle, {underline: newVal});
+						blockEntity.fontStyle = jQuery.extend(blockEntity.fontStyle, {underline: newVal});
 					}
 					Model.update(shape);
 					var css = newVal ? "underline" : "none";
-					$(this).css("text-decoration", css);
+					jQuery(this).css("text-decoration", css);
 					ruler.css("text-decoration", css);
 					e.preventDefault();
 					UI.update();
@@ -2046,14 +2046,14 @@ var Designer = {
 			}).bind("mouseenter", function(e){
 				Designer.op.destroy();
 			});
-			$("#shape_text_edit").trigger("keyup");
+			jQuery("#shape_text_edit").trigger("keyup");
 			textarea.select();
 			/**
 			 * 保存文本编辑
 			 */
 			function saveText(){
-				var newText = $("#shape_text_edit").val();
-				if($("#shape_text_edit").length && $("#shape_text_edit").is(":visible")){
+				var newText = jQuery("#shape_text_edit").val();
+				if(jQuery("#shape_text_edit").length && jQuery("#shape_text_edit").is(":visible")){
 					var code_list = new Array(newText.length);
 					for(var i = 0; i < code_list.length; i++){
 						code_list[i] = newText.charCodeAt(i);
@@ -2061,7 +2061,7 @@ var Designer = {
 					blockEntity.text = code_list;
 					Model.update(shape);
 					Designer.painter.renderShape(shape);
-					$("#shape_text_edit").remove();
+					jQuery("#shape_text_edit").remove();
 				}
 			}
 		},
@@ -2069,8 +2069,8 @@ var Designer = {
 		 * 从图形上画线
 		 */
 		shapeLinkable: function(shape, linkPoint){
-			var canvas = $("#designer_canvas");
-			var container = $("#canvas_container");
+			var canvas = jQuery("#designer_canvas");
+			var container = jQuery("#canvas_container");
 			container.unbind("mousedown.link").bind("mousedown.link", function(downE){
 				Designer.op.changeState("linking_from_shape");
 				var linkCanvas = null;
@@ -2099,7 +2099,7 @@ var Designer = {
 					}
 					Designer.op.moveLinker(createdLinker, "to", now.x, now.y);
 					//在mousemove里绑定一个mouseup，目的是为了当鼠标发生了拖动之后，才认为是进行了拖动事件
-					$(document).unbind("mouseup.droplinker").bind("mouseup.droplinker", function(){
+					jQuery(document).unbind("mouseup.droplinker").bind("mouseup.droplinker", function(){
 						//发生了拖动，修改定义
 						if(Math.abs(now.x - from.x) > 20 || Math.abs(now.y - from.y) > 20){
 							Model.add(createdLinker);
@@ -2114,17 +2114,17 @@ var Designer = {
 							Utils.showLinkerCursor();
 						}else{
 							//拖动没超过20*20，删除
-							$("#" + createdLinker.id).remove();
+							jQuery("#" + createdLinker.id).remove();
 						}
-						$(document).unbind("mouseup.droplinker");
+						jQuery(document).unbind("mouseup.droplinker");
 					});
 				});
-				$(document).bind("mouseup.link", function(){
+				jQuery(document).bind("mouseup.link", function(){
 					Designer.op.hideLinkPoint();
 					Designer.op.resetState();
 					container.unbind("mousedown.link");
 					container.unbind("mousemove.link");
-					$(document).unbind("mouseup.link");
+					jQuery(document).unbind("mouseup.link");
 				});
 			});
 			
@@ -2157,7 +2157,7 @@ var Designer = {
 		 * @param {} linker
 		 */
 		linkerEditable: function(linker){
-			var canvas = $("#designer_canvas");
+			var canvas = jQuery("#designer_canvas");
 			canvas.unbind("dblclick.edit_linker").bind("dblclick.edit_linker", function(){
 				Designer.op.editLinkerText(linker);
 				canvas.unbind("dblclick.edit_linker");
@@ -2169,13 +2169,13 @@ var Designer = {
 		editLinkerText: function(linker){
 			Designer.contextMenu.hide();
 			var midpoint = Designer.painter.getLinkerMidpoint(linker);
-			var ruler = $("#" + linker.id).find(".text_canvas");
-			var textarea = $("#linker_text_edit");
+			var ruler = jQuery("#" + linker.id).find(".text_canvas");
+			var textarea = jQuery("#linker_text_edit");
 			if(textarea.length == 0){
-				textarea = $("<textarea id='linker_text_edit'></textarea>").appendTo("#designer_canvas");
+				textarea = jQuery("<textarea id='linker_text_edit'></textarea>").appendTo("#designer_canvas");
 			}
 			//隐藏原有文本，全透明
-			$("#" + linker.id).find(".text_canvas").hide();
+			jQuery("#" + linker.id).find(".text_canvas").hide();
 			var fontStyle = linker.fontStyle;
 			var scale = "scale("+Designer.config.scale+")";
 			var lineH = Math.round(fontStyle.size * 1.25);
@@ -2199,7 +2199,7 @@ var Designer = {
 			//修改坐标
 			textarea.val(String.fromCharCode.apply(null, linker.text)).show().select();
 			textarea.unbind().bind("keyup", function(){
-				var newText = $(this).val();
+				var newText = jQuery(this).val();
 				var text = newText.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br/>");
 				ruler.html(text + "<br/>");
 				var textW = ruler.width();
@@ -2233,7 +2233,7 @@ var Designer = {
 					linker.fontStyle.bold = newVal;
 					Model.update(linker);
 					var css = newVal ? "bold" : "normal";
-					$(this).css("font-weight", css);
+					jQuery(this).css("font-weight", css);
 					ruler.css("font-weight", css);
 					UI.update();
 				}else if(e.keyCode == 73 && e.ctrlKey){
@@ -2242,7 +2242,7 @@ var Designer = {
 					linker.fontStyle.italic = newVal;
 					Model.update(linker);
 					var css = newVal ? "italic" : "normal";
-					$(this).css("font-style", css);
+					jQuery(this).css("font-style", css);
 					ruler.css("font-style", css);
 					UI.update();
 				}else if(e.keyCode == 85 && e.ctrlKey){
@@ -2251,7 +2251,7 @@ var Designer = {
 					linker.fontStyle.underline = newVal;
 					Model.update(linker);
 					var css = newVal ? "underline" : "none";
-					$(this).css("text-decoration", css);
+					jQuery(this).css("text-decoration", css);
 					ruler.css("text-decoration", css);
 					e.preventDefault();
 					UI.update();
@@ -2264,7 +2264,7 @@ var Designer = {
 			 * 保存文本
 			 */
 			function saveText(){
-				var textarea = $("#linker_text_edit");
+				var textarea = jQuery("#linker_text_edit");
 				if(textarea.length && textarea.is(":visible")){
 					var newText = textarea.val();
 					var code_list = new Array(newText.length);
@@ -2283,8 +2283,8 @@ var Designer = {
 		 * 拖动连接线
 		 */
 		linkerDraggable: function(linker, point){
-			var canvas = $("#designer_canvas");
-			var container = $("#canvas_container");
+			var canvas = jQuery("#designer_canvas");
+			var container = jQuery("#canvas_container");
 			canvas.bind("mousedown.draglinker", function(downE){
 				Utils.hideLinkerControls();
 				Designer.op.changeState("dragging_linker");
@@ -2300,18 +2300,18 @@ var Designer = {
 					if(redrawControls){
 						Designer.painter.drawControls(selectedIds);
 					}
-					$(document).unbind("mouseup.droplinker").bind("mouseup.droplinker", function(){
-						$(document).unbind("mouseup.droplinker");
+					jQuery(document).unbind("mouseup.droplinker").bind("mouseup.droplinker", function(){
+						jQuery(document).unbind("mouseup.droplinker");
 						Model.update(linker);
 						Utils.showLinkerControls();
 					});
 				});
-				$(document).bind("mouseup.draglinker", function(){
+				jQuery(document).bind("mouseup.draglinker", function(){
 					Designer.op.hideLinkPoint();
 					Designer.op.resetState();
 					canvas.unbind("mousedown.draglinker");
 					container.unbind("mousemove.draglinker");
-					$(document).unbind("mouseup.draglinker");
+					jQuery(document).unbind("mouseup.draglinker");
 					Utils.showLinkerControls();
 				});
 			});
@@ -2320,9 +2320,9 @@ var Designer = {
 		 * 链接可以点击
 		 */
 		linkClickable: function(url, pos){
-			var spot = $("#link_spot");
+			var spot = jQuery("#link_spot");
 			if(spot.length == 0){
-				spot = $("<a id='link_spot' target='_blank'></a>").appendTo("#designer_canvas");
+				spot = jQuery("<a id='link_spot' target='_blank'></a>").appendTo("#designer_canvas");
 			}
 			//if(url.trim().toLowerCase().indexOf("http") == -1){
 			//	url = "http://" + url;
@@ -2338,8 +2338,8 @@ var Designer = {
 		 * 创建自由的文本
 		 */
 		textCreatable: function(){
-			var canvas = $("#designer_canvas");
-			var container = $("#canvas_container");
+			var canvas = jQuery("#designer_canvas");
+			var container = jQuery("#canvas_container");
 			container.unbind("mousedown.create_text").bind("mousedown.create_text", function(downE){
 				var selector = null;
 				if(!downE.ctrlKey){
@@ -2349,7 +2349,7 @@ var Designer = {
 				var location = null;
 				container.bind("mousemove.create_text", function(moveE){
 					if(selector == null){
-						selector = $("<div id='texting_box'></div>").appendTo(canvas);
+						selector = jQuery("<div id='texting_box'></div>").appendTo(canvas);
 					}
 					var mLocation = Utils.getRelativePos(moveE.pageX, moveE.pageY, canvas);
 					location = {
@@ -2367,7 +2367,7 @@ var Designer = {
 					location.height = Math.abs(mLocation.y - dLocation.y - 2);
 					selector.css(location);
 				});
-				$(document).unbind("mouseup.create_text").bind("mouseup.create_text", function(upE){
+				jQuery(document).unbind("mouseup.create_text").bind("mouseup.create_text", function(upE){
 					if(location != null && location.width >= 20 && location.height >= 20){
 						//判断选取范围内的图形
 						var shape = Model.create("standardText", location.left.restoreScale(), location.top.restoreScale());
@@ -2381,7 +2381,7 @@ var Designer = {
 					}
 					selector.remove();
 					Designer.op.resetState();
-					$(document).unbind("mouseup.create_text");
+					jQuery(document).unbind("mouseup.create_text");
 					container.unbind("mousemove.create_text");
 				});
 				container.unbind("mousedown.create_text");
@@ -2392,7 +2392,7 @@ var Designer = {
 		 * 拖动画布
 		 */
 		canvasDraggable: function(){
-			var container = $("#canvas_container");
+			var container = jQuery("#canvas_container");
 			if(this.canvasDragTimeout){
 				clearTimeout(this.canvasDragTimeout);
 			}
@@ -2400,27 +2400,27 @@ var Designer = {
 				container.unbind("mousedown.drag_canvas");
 				Designer.op.resetState();
 				container.unbind("mousemove.drag_canvas");
-				$(document).unbind("mouseup.drag_canvas");
+				jQuery(document).unbind("mouseup.drag_canvas");
 			}, 500);
 			container.unbind("mousedown.drag_canvas").bind("mousedown.drag_canvas", function(downE){
-				var beginTop = $("#designer_viewport").scrollTop();
-				var beginLeft = $("#designer_viewport").scrollLeft();
+				var beginTop = jQuery("#designer_viewport").scrollTop();
+				var beginLeft = jQuery("#designer_viewport").scrollLeft();
 				container.bind("mousemove.drag_canvas", function(moveE){
 					var offsetX = moveE.pageX - downE.pageX;
 					var offsetY = moveE.pageY - downE.pageY;
-					$("#designer_viewport").scrollLeft(beginLeft - offsetX);
-					$("#designer_viewport").scrollTop(beginTop - offsetY);
+					jQuery("#designer_viewport").scrollLeft(beginLeft - offsetX);
+					jQuery("#designer_viewport").scrollTop(beginTop - offsetY);
 				});
-				$(document).unbind("mouseup.drag_canvas").bind("mouseup.drag_canvas", function(upE){
+				jQuery(document).unbind("mouseup.drag_canvas").bind("mouseup.drag_canvas", function(upE){
 					container.unbind("mousemove.drag_canvas");
-					$(document).unbind("mouseup.drag_canvas");
+					jQuery(document).unbind("mouseup.drag_canvas");
 				});
 			});
-			$(document).unbind("keyup.drag_canvas").bind("keyup.drag_canvas", function(e){
+			jQuery(document).unbind("keyup.drag_canvas").bind("keyup.drag_canvas", function(e){
 				//放alt键后，取消
 				container.unbind("mousedown.drag_canvas");
 				Designer.op.resetState();
-				$(document).unbind("mouseup.drag_canvas");
+				jQuery(document).unbind("mouseup.drag_canvas");
 				e.preventDefault();
 				clearTimeout(this.canvasDragTimeout);
 				container.unbind("mousemove.drag_canvas");
@@ -2430,19 +2430,19 @@ var Designer = {
 		 * 画布可以随意拖动，不需要Alt键盘
 		 */
 		canvasFreeDraggable: function(){
-			var container = $("#canvas_container");
+			var container = jQuery("#canvas_container");
 			container.unbind("mousedown.drag_canvas").bind("mousedown.drag_canvas", function(downE){
-				var beginTop = $("#designer_viewport").scrollTop();
-				var beginLeft = $("#designer_viewport").scrollLeft();
+				var beginTop = jQuery("#designer_viewport").scrollTop();
+				var beginLeft = jQuery("#designer_viewport").scrollLeft();
 				container.bind("mousemove.drag_canvas", function(moveE){
 					var offsetX = moveE.pageX - downE.pageX;
 					var offsetY = moveE.pageY - downE.pageY;
-					$("#designer_viewport").scrollLeft(beginLeft - offsetX);
-					$("#designer_viewport").scrollTop(beginTop - offsetY);
+					jQuery("#designer_viewport").scrollLeft(beginLeft - offsetX);
+					jQuery("#designer_viewport").scrollTop(beginTop - offsetY);
 				});
-				$(document).unbind("mouseup.drag_canvas").bind("mouseup.drag_canvas", function(upE){
+				jQuery(document).unbind("mouseup.drag_canvas").bind("mouseup.drag_canvas", function(upE){
 					container.unbind("mousemove.drag_canvas");
-					$(document).unbind("mouseup.drag_canvas");
+					jQuery(document).unbind("mouseup.drag_canvas");
 				});
 			});
 		},
@@ -2496,7 +2496,7 @@ var Designer = {
 							p.x += restored.x;
 							p.y += restored.y;
 						}
-						var shapeBox = $("#" + shape.id);
+						var shapeBox = jQuery("#" + shape.id);
 						var oriPos = shapeBox.position();
 						shapeBox.css({
 							left: oriPos.left += offset.x,
@@ -2507,7 +2507,7 @@ var Designer = {
 					}
 				}else{
 					relocateShape(shape);
-					$(".shape_contour[forshape="+shape.id+"]").css({
+					jQuery(".shape_contour[forshape="+shape.id+"]").css({
 						left: shape.props.x.toScale(),
 						top: shape.props.y.toScale()
 					});
@@ -2522,13 +2522,13 @@ var Designer = {
 				var selectedIds = Utils.getSelectedIds();
 				Designer.painter.drawControls(selectedIds);
 			}else{
-				var controls = $("#shape_controls");
+				var controls = jQuery("#shape_controls");
 				controls.css({
 					left: parseFloat(controls.css("left")) + offset.x,
 					top: parseFloat(controls.css("top")) + offset.y
 				});
 			}
-			var controlPos = $("#shape_controls").position();
+			var controlPos = jQuery("#shape_controls").position();
 			Designer.op.showTip("X: " + Math.round(controlPos.left.restoreScale()) + "&nbsp;&nbsp;Y: " + Math.round(controlPos.top.restoreScale()));
 			/**
 			 * 重新放置图形
@@ -2536,7 +2536,7 @@ var Designer = {
 			function relocateShape(shape){
 				shape.props.x += restored.x;
 				shape.props.y += restored.y;
-				var shapeBox = $("#" + shape.id);
+				var shapeBox = jQuery("#" + shape.id);
 				shapeBox.css({
 					left: parseFloat(shapeBox.css("left")) + offset.x,
 					top: parseFloat(shapeBox.css("top")) + offset.y
@@ -2643,7 +2643,7 @@ var Designer = {
 		 * 向一个形状连线时，显示锚点示意
 		 */
 		showLinkPoint: function(point){
-			var canvas = $("<canvas class='link_point_canvas' width=32 height=32></canvas>").appendTo($("#designer_canvas"));
+			var canvas = jQuery("<canvas class='link_point_canvas' width=32 height=32></canvas>").appendTo(jQuery("#designer_canvas"));
 			var ctx = canvas[0].getContext("2d");
 			ctx.translate(1, 1);
 			ctx.lineWidth = 1;
@@ -2667,14 +2667,14 @@ var Designer = {
 		 * 隐藏锚点示意
 		 */
 		hideLinkPoint: function(){
-			$(".link_point_canvas").hide();
+			jQuery(".link_point_canvas").hide();
 		},
 		/**
 		 * 折线可以拖动
 		 */
 		brokenLinkerChangable: function(linker, index){
-			var container = $("#canvas_container");
-			var canvas = $("#designer_canvas");
+			var container = jQuery("#canvas_container");
+			var canvas = jQuery("#designer_canvas");
 			var p1 = linker.points[index - 1];
 			var p2 = linker.points[index];
 			if(p1.x == p2.x){
@@ -2709,16 +2709,16 @@ var Designer = {
 					}
 					begin = now;
 					//在mousemove里绑定一个mouseup，目的是为了当鼠标发生了拖动之后，才认为是进行了拖动事件
-					$(document).unbind("mouseup.changed").bind("mouseup.changed", function(){
+					jQuery(document).unbind("mouseup.changed").bind("mouseup.changed", function(){
 						Model.update(linker);
-						$(document).unbind("mouseup.changed");
+						jQuery(document).unbind("mouseup.changed");
 					});
 				});
-				$(document).bind("mouseup.brokenLinker", function(){
+				jQuery(document).bind("mouseup.brokenLinker", function(){
 					Designer.op.resetState();
 					container.unbind("mousemove.brokenLinker");
 					canvas.unbind("mousedown.brokenLinker");
-					$(document).unbind("mouseup.brokenLinker");
+					jQuery(document).unbind("mouseup.brokenLinker");
 				});
 			});
 		},
@@ -2746,12 +2746,12 @@ var Designer = {
 		 * @param {} text
 		 */
 		showTip: function(text){
-			var tip = $("#designer_op_tip");
+			var tip = jQuery("#designer_op_tip");
 			if(tip.length == 0){
-				tip = $("<div id='designer_op_tip'></div>").appendTo("#designer_canvas");
+				tip = jQuery("<div id='designer_op_tip'></div>").appendTo("#designer_canvas");
 			}
 			tip.stop().html(text);
-			var control = $("#shape_controls");
+			var control = jQuery("#shape_controls");
 			var pos = control.position();
 			tip.css({
 				top: pos.top + control.height() + 5,
@@ -2763,7 +2763,7 @@ var Designer = {
 		 * 隐藏操作提示
 		 */
 		hideTip: function(){
-			$("#designer_op_tip").fadeOut(100);
+			jQuery("#designer_op_tip").fadeOut(100);
 		},
 		/**
 		 * 在移动图形过程中，显示对齐线
@@ -2898,12 +2898,12 @@ var Designer = {
 				}
 			}
 			this.hideSnapLine();
-			var canvas = $("#designer_canvas");
+			var canvas = jQuery("#designer_canvas");
 			if(result.attach != null){
 				//如果有可以吸附的图形，在被吸附图形上显示轮廓
-				var tip = $("#designer_op_snapline_attach");
+				var tip = jQuery("#designer_op_snapline_attach");
 				if(tip.length == 0){
-					tip = $("<div id='designer_op_snapline_attach'></div>").appendTo(canvas);
+					tip = jQuery("<div id='designer_op_snapline_attach'></div>").appendTo(canvas);
 				}
 				var attach = result.attach;
 				var lineWidth = attach.lineStyle.lineWidth;
@@ -2912,13 +2912,13 @@ var Designer = {
 					height:(attach.props.h + lineWidth).toScale(),
 					left: (attach.props.x - lineWidth/2).toScale() - 2,
 					top: (attach.props.y - lineWidth/2).toScale() - 2,
-					"z-index": $("#" + attach.id).css("z-index")
+					"z-index": jQuery("#" + attach.id).css("z-index")
 				}).show();
 			}
 			if(result.h != null){
-				var hLine = $("#designer_op_snapline_h");
+				var hLine = jQuery("#designer_op_snapline_h");
 				if(hLine.length == 0){
-					hLine = $("<div id='designer_op_snapline_h'></div>").appendTo(canvas);
+					hLine = jQuery("<div id='designer_op_snapline_h'></div>").appendTo(canvas);
 				}
 				hLine.css({
 					width: canvas.width() + Designer.config.pageMargin * 2,
@@ -2928,9 +2928,9 @@ var Designer = {
 				}).show();
 			}
 			if(result.v != null){
-				var vLine = $("#designer_op_snapline_v");
+				var vLine = jQuery("#designer_op_snapline_v");
 				if(vLine.length == 0){
-					vLine = $("<div id='designer_op_snapline_v'></div>").appendTo(canvas);
+					vLine = jQuery("<div id='designer_op_snapline_v'></div>").appendTo(canvas);
 				}
 				vLine.css({
 					height: canvas.height() + Designer.config.pageMargin * 2,
@@ -3038,11 +3038,11 @@ var Designer = {
 				}
 			}
 			this.hideSnapLine();
-			var canvas = $("#designer_canvas");
+			var canvas = jQuery("#designer_canvas");
 			if(result.h != null){
-				var hLine = $("#designer_op_snapline_h");
+				var hLine = jQuery("#designer_op_snapline_h");
 				if(hLine.length == 0){
-					hLine = $("<div id='designer_op_snapline_h'></div>").appendTo(canvas);
+					hLine = jQuery("<div id='designer_op_snapline_h'></div>").appendTo(canvas);
 				}
 				hLine.css({
 					width: canvas.width() + Designer.config.pageMargin * 2,
@@ -3052,9 +3052,9 @@ var Designer = {
 				}).show();
 			}
 			if(result.v != null){
-				var vLine = $("#designer_op_snapline_v");
+				var vLine = jQuery("#designer_op_snapline_v");
 				if(vLine.length == 0){
-					vLine = $("<div id='designer_op_snapline_v'></div>").appendTo(canvas);
+					vLine = jQuery("<div id='designer_op_snapline_v'></div>").appendTo(canvas);
 				}
 				vLine.css({
 					height: canvas.height() + Designer.config.pageMargin * 2,
@@ -3069,9 +3069,9 @@ var Designer = {
 		 * 隐藏对齐线
 		 */
 		hideSnapLine: function(){
-			$("#designer_op_snapline_h").hide();
-			$("#designer_op_snapline_v").hide();
-			$("#designer_op_snapline_attach").hide();
+			jQuery("#designer_op_snapline_h").hide();
+			jQuery("#designer_op_snapline_v").hide();
+			jQuery("#designer_op_snapline_attach").hide();
 		},
 		/**
 		 * open shape dashboard, it is similar to linkDashboard
@@ -3080,24 +3080,24 @@ var Designer = {
 		shapeDashboard: function(x , y){
 			var category = "standard";
 
-			if($("#panel_" + category).length != 0){
+			if(jQuery("#panel_" + category).length != 0){
 				//如果此分类在当前形状面板中，则可以带出此分类的画板
-				var board = $("#shape_dashboard_" + category);
+				var board = jQuery("#shape_dashboard_" + category);
 				if(board.length == 0){
 					//此分类的画板不存在，则初始化
-					board = $("<div id='shape_dashboard_"+category+"' class='shape_dashboard menu'></div>").appendTo("#designer_canvas");
+					board = jQuery("<div id='shape_dashboard_"+category+"' class='shape_dashboard menu'></div>").appendTo("#designer_canvas");
 					/**
 					 * 添加图形DOM元素
 					 */
 					function appendPanelItem(shape, group){
 						var html = "<div class='dashboard_box' shapeName='" + shape.name + "'><canvas title='"+shape.title+"' title_pos='right' class='panel_item' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas></div>";
-						var panelBox = $(html).appendTo(board);
+						var panelBox = jQuery(html).appendTo(board);
 						if(group){
 							panelBox.append("<div class='group_icon link_shape_icon' group='"+group+"'></div>");
 						}
 						var canvas = panelBox.children()[0];
 						//绘制图形
-						Designer.painter.drawPanelItem(canvas, shape.name);
+						//Designer.painter.drawPanelItem(canvas, shape.name);
 					}
 					for(var key in Schema.shapes){
 						var shape = Schema.shapes[key];
@@ -3129,23 +3129,23 @@ var Designer = {
 				}).show();
 				board.find(".link_shape_icon").unbind().bind("mousedown", function(e){
 					e.stopPropagation();
-					var group = $(this).attr("group");
-					var pos = $(this).parent().position();
+					var group = jQuery(this).attr("group");
+					var pos = jQuery(this).parent().position();
 					var boardPos = board.position();
-					var left = pos.left + boardPos.left + $(this).parent().outerWidth() - 10;
-					var top = pos.top + boardPos.top + $(this).parent().outerHeight();
+					var left = pos.left + boardPos.left + jQuery(this).parent().outerWidth() - 10;
+					var top = pos.top + boardPos.top + jQuery(this).parent().outerHeight();
 					Designer.op.groupDashboard(group, left, top, function(name){
 						linkShape(name);
 						board.hide();
-						$(document).unbind("mousedown.dashboard");
+						jQuery(document).unbind("mousedown.dashboard");
 					});
 				}).bind("click", function(e){
 					e.stopPropagation(); 
 				});
 				board.children(".dashboard_box").unbind().bind("click", function(){
 					board.hide();
-					$(document).unbind("mousedown.dashboard");
-					var current = $(this);
+					jQuery(document).unbind("mousedown.dashboard");
+					var current = jQuery(this);
 					var name = current.attr("shapeName");
 					var newShape = Model.create(name, x, y);
 					Designer.painter.renderShape(newShape);
@@ -3160,9 +3160,9 @@ var Designer = {
 					Utils.selectShape(newShape.id);
 					Designer.op.editShapeText(newShape);
 				});
-				$(document).bind("mousedown.dashboard", function(){
+				jQuery(document).bind("mousedown.dashboard", function(){
 					board.hide();
-					$(document).unbind("mousedown.dashboard");
+					jQuery(document).unbind("mousedown.dashboard");
 				});
 			}
 		},
@@ -3175,24 +3175,24 @@ var Designer = {
 		linkDashboard: function(linker){
 			var fromShape = Model.getShapeById(linker.from.id); //拿到起点形状
 			var category = fromShape.category; //拿到起点形状的分类
-			if($("#panel_" + category).length != 0){
+			if(jQuery("#panel_" + category).length != 0){
 				//如果此分类在当前形状面板中，则可以带出此分类的画板
-				var board = $("#shape_dashboard_" + category);
+				var board = jQuery("#shape_dashboard_" + category);
 				if(board.length == 0){
 					//此分类的画板不存在，则初始化
-					board = $("<div id='shape_dashboard_"+category+"' class='shape_dashboard menu'></div>").appendTo("#designer_canvas");
+					board = jQuery("<div id='shape_dashboard_"+category+"' class='shape_dashboard menu'></div>").appendTo("#designer_canvas");
 					/**
 					 * 添加图形DOM元素
 					 */
 					function appendPanelItem(shape, group){
 						var html = "<div class='dashboard_box' shapeName='" + shape.name + "'><canvas title='"+shape.title+"' title_pos='right' class='panel_item' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas></div>";
-						var panelBox = $(html).appendTo(board);
+						var panelBox = jQuery(html).appendTo(board);
 						if(group){
 							panelBox.append("<div class='group_icon link_shape_icon' group='"+group+"'></div>");
 						}
 						var canvas = panelBox.children()[0];
 						//绘制图形
-						Designer.painter.drawPanelItem(canvas, shape.name);
+						//Designer.painter.drawPanelItem(canvas, shape.name);
 					}
 					for(var key in Schema.shapes){
 						var shape = Schema.shapes[key];
@@ -3224,29 +3224,29 @@ var Designer = {
 				}).show();
 				board.find(".link_shape_icon").unbind().bind("mousedown", function(e){
 					e.stopPropagation();
-					var group = $(this).attr("group");
-					var pos = $(this).parent().position();
+					var group = jQuery(this).attr("group");
+					var pos = jQuery(this).parent().position();
 					var boardPos = board.position();
-					var left = pos.left + boardPos.left + $(this).parent().outerWidth() - 10;
-					var top = pos.top + boardPos.top + $(this).parent().outerHeight();
+					var left = pos.left + boardPos.left + jQuery(this).parent().outerWidth() - 10;
+					var top = pos.top + boardPos.top + jQuery(this).parent().outerHeight();
 					Designer.op.groupDashboard(group, left, top, function(name){
 						linkShape(name);
 						board.hide();
-						$(document).unbind("mousedown.dashboard");
+						jQuery(document).unbind("mousedown.dashboard");
 					});
 				}).bind("click", function(e){
 					e.stopPropagation(); 
 				});
 				board.children(".dashboard_box").unbind().bind("click", function(){
 					board.hide();
-					$(document).unbind("mousedown.dashboard");
-					var current = $(this);
+					jQuery(document).unbind("mousedown.dashboard");
+					var current = jQuery(this);
 					var name = current.attr("shapeName");
 					linkShape(name);
 				});
-				$(document).bind("mousedown.dashboard", function(){
+				jQuery(document).bind("mousedown.dashboard", function(){
 					board.hide();
-					$(document).unbind("mousedown.dashboard");
+					jQuery(document).unbind("mousedown.dashboard");
 				});
 				/**
 				 * 链接一个形状
@@ -3324,19 +3324,19 @@ var Designer = {
 		 * 打开分组面板
 		 */
 		groupDashboard: function(groupName, left, top, onSelected){
-			$(".group_dashboard").hide();
-			var board = $("#shape_group_dashboard_" + groupName);
+			jQuery(".group_dashboard").hide();
+			var board = jQuery("#shape_group_dashboard_" + groupName);
 			if(board.length == 0){
 				//此分类的画板不存在，则初始化
-				board = $("<div id='shape_group_dashboard_"+groupName+"' class='group_dashboard menu'></div>").appendTo("#designer_canvas");
+				board = jQuery("<div id='shape_group_dashboard_"+groupName+"' class='group_dashboard menu'></div>").appendTo("#designer_canvas");
 				var groupShapes = SchemaGroup.getGroup(groupName);
 				for (var i = 0; i < groupShapes.length; i++) {
 					var name = groupShapes[i];
 					var shape = Schema.shapes[name];
 					if(shape.attribute.visible){
-						var box = $("<div class='dashboard_box' shapeName='" + name + "'><canvas title='"+shape.title+"' title_pos='right' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas></div>").appendTo(board);
+						var box = jQuery("<div class='dashboard_box' shapeName='" + name + "'><canvas title='"+shape.title+"' title_pos='right' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas></div>").appendTo(board);
 						var canvas = box.children("canvas")[0];
-						Designer.painter.drawPanelItem(canvas, shape.name);
+						//Designer.painter.drawPanelItem(canvas, shape.name);
 					}
 				}
 				board.bind("mousedown", function(e){
@@ -3348,15 +3348,15 @@ var Designer = {
 				top: top,
 				"z-index": Model.orderList.length + 1
 			}).show();
-			$(".dashboard_box").unbind().bind("click", function(){
-				var shapeName = $(this).attr("shapeName");
+			jQuery(".dashboard_box").unbind().bind("click", function(){
+				var shapeName = jQuery(this).attr("shapeName");
 				onSelected(shapeName);
 				board.hide();
-				$(document).unbind("mousedown.group_dashboard");
+				jQuery(document).unbind("mousedown.group_dashboard");
 			});
-			$(document).bind("mousedown.group_dashboard", function(){
+			jQuery(document).bind("mousedown.group_dashboard", function(){
 				board.hide();
-				$(document).unbind("mousedown.group_dashboard");
+				jQuery(document).unbind("mousedown.group_dashboard");
 			});
 			return board;
 		},
@@ -3367,37 +3367,37 @@ var Designer = {
 		 */
 		showPanelGroup: function(groupName, event, target){
 			event.stopPropagation();
-			var board = $("#group_dashboard_" + groupName);
-			$(".group_dashboard").hide();
+			var board = jQuery("#group_dashboard_" + groupName);
+			jQuery(".group_dashboard").hide();
 			if(board.length == 0){
 				//此分类的画板不存在，则初始化
-				board = $("<div id='group_dashboard_"+groupName+"' class='group_dashboard menu'></div>").appendTo("#designer");
+				board = jQuery("<div id='group_dashboard_"+groupName+"' class='group_dashboard menu'></div>").appendTo("#designer");
 				var groupShapes = SchemaGroup.getGroup(groupName);
 				for (var i = 0; i < groupShapes.length; i++) {
 					var name = groupShapes[i];
 					var shape = Schema.shapes[name];
 					if(shape.attribute.visible){
-						var box = $("<div class='panel_box' shapeName='" + name + "'><canvas title='"+shape.title+"' title_pos='right' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas></div>").appendTo(board);
+						var box = jQuery("<div class='panel_box' shapeName='" + name + "'><canvas title='"+shape.title+"' title_pos='right' width='"+(Designer.config.panelItemWidth)+"' height='"+(Designer.config.panelItemHeight)+"'></canvas></div>").appendTo(board);
 						var canvas = box.children("canvas")[0];
-						Designer.painter.drawPanelItem(canvas, shape.name);
+						//Designer.painter.drawPanelItem(canvas, shape.name);
 					}
 				}
 				board.css("position", "fixed");
 			}
-			var shapeBox = $(target).parent();
+			var shapeBox = jQuery(target).parent();
 			var offset = shapeBox.offset();
 			board.show();
 			var top = offset.top + shapeBox.height();
-			if(top + board.outerHeight() > $(window).height()){
-				top = $(window).height() - board.outerHeight();
+			if(top + board.outerHeight() > jQuery(window).height()){
+				top = jQuery(window).height() - board.outerHeight();
 			}
 			board.css({
 				left: offset.left - 7,
 				top: top
 			});
-			$(document).bind("mousedown.group_board", function(){
+			jQuery(document).bind("mousedown.group_board", function(){
 				board.hide();
-				$(document).unbind("mousedown.group_board");
+				jQuery(document).unbind("mousedown.group_board");
 			});
 		},
 		/**
@@ -3412,7 +3412,7 @@ var Designer = {
 					point.y += (props.y - shape.props.y);
 				}
 				if(typeof props.w != "undefined" || typeof props.h != "undefined" || typeof props.angle != "undefined"){
-					var p = $.extend({}, shape.props, props);
+					var p = jQuery.extend({}, shape.props, props);
 					//得到图形原始的中心点
 					var shapeCenter = {
 						x: shape.props.x + shape.props.w/2,
@@ -3461,7 +3461,7 @@ var Designer = {
 				}
 				changedlinkers =  shapeLinkers;
 			}
-			$.extend(shape.props, props);
+			jQuery.extend(shape.props, props);
 			Designer.painter.renderShape(shape);
 			Utils.showLinkerCursor();
 			UI.showShapeOptions();
@@ -3696,8 +3696,8 @@ var Designer = {
 			for(var i = 0; i < selected.length; i++){
 				var shape = selected[i];
 				if(shape.name == "linker"){
-					$.extend(brushStyles.lineStyle, shape.lineStyle);
-					$.extend(brushStyles.fontStyle, shape.fontStyle);
+					jQuery.extend(brushStyles.lineStyle, shape.lineStyle);
+					jQuery.extend(brushStyles.fontStyle, shape.fontStyle);
 				}else{
 					if(brushStyles.fillStyle == null){
 						brushStyles.fillStyle = {};
@@ -3705,27 +3705,27 @@ var Designer = {
 					if(brushStyles.shapeStyle == null){
 						brushStyles.shapeStyle = {};
 					}
-					$.extend(brushStyles.lineStyle, shape.lineStyle);
-					$.extend(brushStyles.fontStyle, shape.fontStyle);
-					$.extend(brushStyles.shapeStyle, shape.shapeStyle);
-					$.extend(brushStyles.fillStyle, shape.fillStyle);
+					jQuery.extend(brushStyles.lineStyle, shape.lineStyle);
+					jQuery.extend(brushStyles.fontStyle, shape.fontStyle);
+					jQuery.extend(brushStyles.shapeStyle, shape.shapeStyle);
+					jQuery.extend(brushStyles.fillStyle, shape.fillStyle);
 				}
 			}
-			$("#bar_brush").button("select");
+			jQuery("#bar_brush").button("select");
 			//打开帮助
-			var help = $("#designer_op_help");
+			var help = jQuery("#designer_op_help");
 			if(help.length == 0){
-				help = $("<div id='designer_op_help'></div>").appendTo("#designer_viewport");
+				help = jQuery("<div id='designer_op_help'></div>").appendTo("#designer_viewport");
 			}
 			help.html("Select shape to set style from brush<br/>Esc to cancel").show();
-			$(document).unbind("keydown.cancelbrush").bind("keydown.cancelbrush", function(e){
+			jQuery(document).unbind("keydown.cancelbrush").bind("keydown.cancelbrush", function(e){
 				//按Esc取消，并且停止brush
 				if(e.keyCode == 27){
-					$("#bar_brush").button("unselect");
+					jQuery("#bar_brush").button("unselect");
 					help.hide();
-					$(document).unbind("keydown.cancelbrush");
+					jQuery(document).unbind("keydown.cancelbrush");
 					Utils.selectCallback = null;
-					$("#bar_brush").button("disable");
+					jQuery("#bar_brush").button("disable");
 				}
 			});
 			//设置选择后的回调事件，设置样式
@@ -3734,8 +3734,8 @@ var Designer = {
 				for(var i = 0; i < copyTo.length; i++){
 					var shape = copyTo[i];
 					var textOrientation = shape.fontStyle.orientation;
-					$.extend(shape.lineStyle, brushStyles.lineStyle);
-					$.extend(shape.fontStyle, brushStyles.fontStyle);
+					jQuery.extend(shape.lineStyle, brushStyles.lineStyle);
+					jQuery.extend(shape.fontStyle, brushStyles.fontStyle);
 					if(shape.name != "linker"){
 						shape.lineStyle = brushStyles.lineStyle;
 						delete shape.lineStyle.beginArrowStyle;
@@ -3829,8 +3829,8 @@ var Designer = {
 				var cmd = paths[i];
 				ctx.save();
 				ctx.beginPath();
-				var lineStyle = $.extend({}, shape.lineStyle, cmd.lineStyle);
-				var fillStyle = $.extend({}, shape.fillStyle, cmd.fillStyle);
+				var lineStyle = jQuery.extend({}, shape.lineStyle, cmd.lineStyle);
+				var fillStyle = jQuery.extend({}, shape.fillStyle, cmd.fillStyle);
 				for (var j = 0; j < cmd.actions.length; j++) {
 					var cmdAction = cmd.actions[j];
 					this.actions[cmdAction.action].call(ctx, cmdAction);
@@ -3861,13 +3861,13 @@ var Designer = {
 			}
 		},
 		drawImage: function(ctx, cmd){
-			var image = $(".shape_img[src='" + cmd.image + "']");
+			var image = jQuery(".shape_img[src='" + cmd.image + "']");
 			if(image.length == 0){
-				image = $("<img class='shape_img' loaded='0' src=''/>").appendTo("#shape_img_container");
+				image = jQuery("<img class='shape_img' loaded='0' src=''/>").appendTo("#shape_img_container");
 				image.bind("load.drawshape", function(){
 					//如果图片不存在，需要在图片加载完后，回调
 					ctx.drawImage(image[0], cmd.x ,cmd.y, cmd.w, cmd.h);
-					$(this).attr("loaded", "1");
+					jQuery(this).attr("loaded", "1");
 				});
 				image.attr("src", cmd.image);
 			}else if(image.attr("loaded") == "0"){
@@ -3885,42 +3885,7 @@ var Designer = {
 		 * @param schemeName
 		 */
 		drawPanelItem: function(canvas, shapeName){
-			var ctx = canvas.getContext("2d");
-			var shape = Utils.copy(Schema.shapes[shapeName]);
-			var props = {
-				x: 0,
-				y: 0,
-				w: shape.props.w,
-				h: shape.props.h,
-				angle: shape.props.angle
-			};
-			ctx.clearRect(0, 0, Designer.config.panelItemWidth, Designer.config.panelItemHeight);
-			//计算图标的宽高以及位移
-			if(props.w >= Designer.config.panelItemWidth || props.h >= Designer.config.panelItemWidth){
-				if(shape.props.w >= shape.props.h){
-					props.w = Designer.config.panelItemWidth - shape.lineStyle.lineWidth * 2;
-					props.h = parseInt(shape.props.h / shape.props.w * props.w);
-				}else{
-					props.h = Designer.config.panelItemHeight - shape.lineStyle.lineWidth * 2;
-					props.w = parseInt(shape.props.w / shape.props.h * props.h);
-				}
-			}
-			shape.props = props;
-			ctx.save();
-			ctx.lineJoin = "round";
-			ctx.globalAlpha = shape.shapeStyle.alpha;
-			var translateX = (Designer.config.panelItemWidth - props.w)/2;
-			var translateY = (Designer.config.panelItemHeight - props.h)/2;
-			ctx.translate(translateX, translateY);
-			ctx.translate(props.w/2, props.h/2);
-			ctx.rotate(props.angle);
-			ctx.translate(-(props.w/2), -(props.h/2));
-			this.renderShapePath(ctx, shape, true, function(){
-				Designer.painter.drawPanelItem(canvas, shapeName);
-			});
-			//绘制BPMN Marker
-			this.renderMarkers(ctx, shape, true);
-			ctx.restore();
+
 		},
 		/**
 		 * 绘制形状
@@ -3932,11 +3897,11 @@ var Designer = {
 				this.renderLinker(shape);
 				return;
 			}
-			var shapeBox = $("#" + shape.id);
+			var shapeBox = jQuery("#" + shape.id);
 			if(shapeBox.length == 0){
 				//如果不存在，要执行创建
-				var superCanvas = $("#designer_canvas");
-				shapeBox = $("<div id='"+shape.id+"' class='shape_box'><canvas class='shape_canvas'></canvas></div>").appendTo(superCanvas);
+				var superCanvas = jQuery("#designer_canvas");
+				shapeBox = jQuery("<div id='"+shape.id+"' class='shape_box'><canvas class='shape_canvas'></canvas></div>").appendTo(superCanvas);
 			}
 			//得到图形旋转后的矩形边界
 			var box = Utils.getShapeBox(shape);
@@ -4013,12 +3978,12 @@ var Designer = {
 				}else{
 					url = "/file/id/"+fillStyle.fileId+"/diagram_user_image";
 				}
-				var image = $(".shape_img[src='" + url + "']");
+				var image = jQuery(".shape_img[src='" + url + "']");
 				if(image.length == 0){
-					image = $("<img class='shape_img' loaded='0' src=''/>").appendTo("#shape_img_container");
+					image = jQuery("<img class='shape_img' loaded='0' src=''/>").appendTo("#shape_img_container");
 					image.bind("load.drawshape", function(){
 						//如果图片不存在，需要在图片加载完后，回调
-						$(this).attr("loaded", "1");
+						jQuery(this).attr("loaded", "1");
 						if(delayCallback){
 							delayCallback();
 						}
@@ -4117,16 +4082,16 @@ var Designer = {
 		 * @param {} shape
 		 */
 		renderText: function(shape, shapeBox){
-			var shapeContainer = $("#" + shape.id);
+			var shapeContainer = jQuery("#" + shape.id);
 			var tbs = shape.getTextBlock();
 			shapeContainer.find(".text_canvas").remove();
 			for(var i = 0; i < tbs.length; i++){
 				var textBlock = tbs[i];
 				var textarea = shapeContainer.find(".text_canvas[ind="+i+"]");
 				if(textarea.length == 0){
-					textarea = $("<div class='text_canvas' id="+shape.id+i+" forshape='"+shape.id+"' ind='"+i+"'></div>").appendTo(shapeContainer);
+					textarea = jQuery("<div class='text_canvas' id="+shape.id+i+" forshape='"+shape.id+"' ind='"+i+"'></div>").appendTo(shapeContainer);
 					textarea.bind("focus", function(){
-						$(this).blur();
+						jQuery(this).blur();
 					});
 				}
 				textarea.attr("readonly", "readonly");
@@ -4137,7 +4102,7 @@ var Designer = {
 					}).hide();
 					continue;
 				}
-				var fontStyle = $.extend({}, shape.fontStyle, textBlock.fontStyle);
+				var fontStyle = jQuery.extend({}, shape.fontStyle, textBlock.fontStyle);
 				var style = {
 					"line-height": Math.round(fontStyle.size * 1.25) + "px",
 					"font-size": fontStyle.size + "px",
@@ -4217,7 +4182,7 @@ var Designer = {
 				//recompute the height of textarea
 				MathJax.Hub.Queue(function() {
 					var pos = textBlock.position;
-					var textarea = $("#" + name);
+					var textarea = jQuery("#" + name);
 					textarea.height(0);
 					textarea.scrollTop(99999);
 					var textH = textarea.scrollTop() + 5;
@@ -4331,7 +4296,7 @@ var Designer = {
 		 * 绘制图形的数据属性
 		 */
 		renderDataAttributes: function(shape, shapeBox){
-			$("#" + shape.id).children(".attr_canvas").remove();
+			jQuery("#" + shape.id).children(".attr_canvas").remove();
 			if(!shape.dataAttributes || shape.dataAttributes.length == 0){
 				return;
 			}
@@ -4362,7 +4327,7 @@ var Designer = {
 			function renderAttribute(attr, text, icon){
 				var horizontal = attr.horizontal;
 				var vertical = attr.vertical;
-				var canvas = $("<canvas id='attr_canvas_"+attr.id+"' class='attr_canvas'></canvas>").appendTo($("#" + shape.id));
+				var canvas = jQuery("<canvas id='attr_canvas_"+attr.id+"' class='attr_canvas'></canvas>").appendTo(jQuery("#" + shape.id));
 				var ctx = canvas[0].getContext("2d");
 				var font = "12px ";
 				font += shape.fontStyle.fontFamily;
@@ -4439,9 +4404,9 @@ var Designer = {
 				ctx.fillText(text, 0, h/2);
 				if(icon != ""){
 					var location = "/static/images/icon/"+icon+".png";
-					var image = $(".shape_img[src='" + location + "']");
+					var image = jQuery(".shape_img[src='" + location + "']");
 					if(image.length == 0){
-						image = $("<img class='shape_img' loaded='false' src='"+location+"'/>").appendTo("#shape_img_container");
+						image = jQuery("<img class='shape_img' loaded='false' src='"+location+"'/>").appendTo("#shape_img_container");
 					}
 					if(image.attr("loaded") == "true"){
 						//如果图片没加载完，不执行重绘
@@ -4449,7 +4414,7 @@ var Designer = {
 					}else{
 						image.bind("load.drawshape", function(){
 							//如果图片没加载完，需要在图片加载完后，回调
-							$(this).attr("loaded", "true");
+							jQuery(this).attr("loaded", "true");
 							ctx.drawImage(image[0], textBox.w-20 ,0, 20, 20);
 						});
 					}
@@ -4516,11 +4481,11 @@ var Designer = {
 				w: maxX - minX,
 				h: maxY - minY
 			}
-			var linkerBox = $("#" + linker.id);
+			var linkerBox = jQuery("#" + linker.id);
 			if(linkerBox.length == 0){
 				//如果不存在，要执行创建
-				var superCanvas = $("#designer_canvas");
-				linkerBox = $("<div id='"+linker.id+"' class='shape_box linker_box'><canvas class='shape_canvas'></canvas></div>").appendTo(superCanvas);
+				var superCanvas = jQuery("#designer_canvas");
+				linkerBox = jQuery("<div id='"+linker.id+"' class='shape_box linker_box'><canvas class='shape_canvas'></canvas></div>").appendTo(superCanvas);
 			}
 			var linkerCanvas = linkerBox.find(".shape_canvas");
 			linkerCanvas.attr({
@@ -4765,10 +4730,10 @@ var Designer = {
 		 * @param {} linker
 		 */
 		renderLinkerText: function(linker){
-			var linkerContainer = $("#" + linker.id);
+			var linkerContainer = jQuery("#" + linker.id);
 			var canvas = linkerContainer.find(".text_canvas");
 			if(canvas.length == 0){
-				canvas = $("<div class='text_canvas linker_text' id='"+linker.id+"_text'></div>").appendTo(linkerContainer);
+				canvas = jQuery("<div class='text_canvas linker_text' id='"+linker.id+"_text'></div>").appendTo(linkerContainer);
 			}
 			var fontStyle = linker.fontStyle;
 			var scale = "scale("+Designer.config.scale+")";
@@ -4876,12 +4841,12 @@ var Designer = {
 		 * 绘制图形控制框
 		 */
 		drawControls: function(shapeIds){
-			var control = $("#shape_controls");
+			var control = jQuery("#shape_controls");
 			if(control.length == 0){
 				//创建控件容器
-				var canvas = $("#designer_canvas");
+				var canvas = jQuery("#designer_canvas");
 				//如果第一次选择框不存在，进行绘制，执行绑定事件等初始化
-				control = $("<div id='shape_controls'></div>").appendTo(canvas);
+				control = jQuery("<div id='shape_controls'></div>").appendTo(canvas);
 				//添加选择区域的画布
 				control.append("<canvas id='controls_bounding'></canvas>");
 				//添加上下左右四个控制点
@@ -4900,17 +4865,17 @@ var Designer = {
 				//分组图形切换箭头
 				control.append("<div class='group_icon change_shape_icon'></div>");
 				Designer.op.groupShapeChangable();
-				$(".shape_controller").css({
+				jQuery(".shape_controller").css({
 					"border-color": Designer.config.anchorColor,
 					width: Designer.config.anchorSize - 2,
 					height: Designer.config.anchorSize - 2
 				});
 			}
-			$(".shape_controller").css({
+			jQuery(".shape_controller").css({
 				//Z轴坐标比选择轮廓大1
 				"z-index": Model.orderList.length
 			});
-			$(".change_shape_icon").hide();
+			jQuery(".change_shape_icon").hide();
 			control.show();
 			var angle = 0;
 			var pos;
@@ -4923,7 +4888,7 @@ var Designer = {
 				//只有一个图形时，根据图形配置决定缩放方向
 				dir = shape.resizeDir;
 				if(shape.groupName && SchemaGroup.groupExists(shape.groupName)){
-					$(".change_shape_icon").show();
+					jQuery(".change_shape_icon").show();
 				}
 			}else{
 				pos = Utils.getControlBox(shapeIds);
@@ -4953,7 +4918,7 @@ var Designer = {
 		 * @param {} angle 旋转角度
 		 */
 		rotateControls: function(pos, angle){
-			var control = $("#shape_controls");
+			var control = jQuery("#shape_controls");
 			var box = Utils.getRotatedBox(pos, angle);
 			var boxW = box.w.toScale();
 			var boxH = box.h.toScale();
@@ -4967,7 +4932,7 @@ var Designer = {
 			});
 			var canvasW = boxW + 20;
 			var canvasH = boxH + 20;
-			var bounding = $("#controls_bounding");
+			var bounding = jQuery("#controls_bounding");
 			bounding.attr({
 				width: canvasW,
 				height: canvasH
@@ -5009,7 +4974,7 @@ var Designer = {
 			control.children(".shape_controller").hide(); //先全部隐藏
 			for (var i = 0; i < this.controlStatus.resizeDir.length; i++) {
 				var dir = this.controlStatus.resizeDir[i];
-				var dirDom = $(".shape_controller[resizeDir="+dir+"]");
+				var dirDom = jQuery(".shape_controller[resizeDir="+dir+"]");
 				dirDom.show();
 				var controlX, controlY;
 				if(dir.indexOf("l") >= 0){
@@ -5266,7 +5231,7 @@ var Model = {
 			newShape.props.h = arguments[4];
 		}
 		newShape.props.zindex = Model.maxZIndex + 1;
-		newShape.props = $.extend(true, {}, Schema.shapeDefaults.props, newShape.props);
+		newShape.props = jQuery.extend(true, {}, Schema.shapeDefaults.props, newShape.props);
 		for (var i = 0; i < newShape.dataAttributes.length; i++) {
 			var attr = newShape.dataAttributes[i];
 			attr.id = Utils.newId();
@@ -5358,7 +5323,7 @@ var Model = {
 		for(var i = 0; i < shapes.length; i++){
 			var shape = shapes[i];
 			removed.push(Utils.copy(shape));
-			$("#" + shape.id).remove();
+			jQuery("#" + shape.id).remove();
 			//从定义中删除
 			delete this.define.elements[shape.id];
 			delete this.persistence.elements[shape.id];
@@ -5426,7 +5391,7 @@ var Model = {
 	 * @param {} pageStyle
 	 */
 	updatePage: function(pageStyle, current){
-		var newStyle = $.extend(Model.define.page, pageStyle);
+		var newStyle = jQuery.extend(Model.define.page, pageStyle);
 		var msg = {
 			page: Utils.copy(Model.persistence.page),
 			update: Utils.copy(newStyle)
@@ -5481,7 +5446,7 @@ var Model = {
 	 	//修改形状的z-index
 	 	for(var i = 0; i < Model.orderList.length; i++){
 			var shapeId = Model.orderList[i].id;
-			$("#" + shapeId).css("z-index", i);
+			jQuery("#" + shapeId).css("z-index", i);
  		}
 	 	var index = 0;
 	 	if(this.orderList.length > 0){
@@ -5544,7 +5509,7 @@ var Utils = {
 		var focusShapes = [];
 		for(var i = Model.orderList.length - 1; i >= 0; i--){
 			var shapeId = Model.orderList[i].id;
-			var shapeBox = $("#" + shapeId);
+			var shapeBox = jQuery("#" + shapeId);
 			var shape = Model.getShapeById(shapeId);
 			//计算出相对于图形画布的x,y坐标
 			var shapeBoxPos = shapeBox.position();
@@ -6161,7 +6126,7 @@ var Utils = {
 				Designer.painter.renderLinker(shape);
 			}
 		}
-		$("#shape_controls").hide();
+		jQuery("#shape_controls").hide();
 		Utils.removeLockers();
 		Utils.removeAnchors();
 		Designer.events.push("selectChanged");
@@ -6368,7 +6333,7 @@ var Utils = {
 	playLinkerCursor: function(cursors){
 		for(var i = 0; i < cursors.length; i++){
 			var cursor = cursors[i];
-			var dom = $("<div class='linker_cursor'></div>").appendTo("#designer_canvas");
+			var dom = jQuery("<div class='linker_cursor'></div>").appendTo("#designer_canvas");
 			var linker = cursor.linker;
 			var size = (linker.lineStyle.lineWidth + 2).toScale();
 			if(size < 5){
@@ -6385,7 +6350,7 @@ var Utils = {
 				"-ms-border-radius": half,
 				"-o-border-radius": half,
 				"border-radius": half,
-				"z-index": $("#" + linker.id).css("z-index")
+				"z-index": jQuery("#" + linker.id).css("z-index")
 			});
 		}
 		this.linkerCursorTimer = setInterval(function(){
@@ -6447,7 +6412,7 @@ var Utils = {
 		if(this.linkerCursorTimer){
 			clearInterval(this.linkerCursorTimer);
 		}
-		$(".linker_cursor").remove();
+		jQuery(".linker_cursor").remove();
 	},
 	/**
 	 * 绘制连接线上的控件
@@ -6483,8 +6448,8 @@ var Utils = {
 				y: (0.5*fixed.y + 0.5*cursor.y).toScale()
 			};
 			var angle = Utils.getAngle(fixed, cursor) + Math.PI / 2;
-			var line = $("<div class='linker_control_line'></div>").appendTo("#designer_canvas");
-			var point = $("<div class='linker_control_point'></div>").appendTo("#designer_canvas");
+			var line = jQuery("<div class='linker_control_line'></div>").appendTo("#designer_canvas");
+			var point = jQuery("<div class='linker_control_point'></div>").appendTo("#designer_canvas");
 			var deg = Math.round(angle / (Math.PI*2) * 360);
 			var degStr = "rotate(" + deg + "deg)";
 			line.css({
@@ -6515,24 +6480,24 @@ var Utils = {
 				downE.stopPropagation();
 				point.addClass("moving");
 				Designer.op.changeState("changing_curve");
-				$(document).bind("mousemove.change_curve", function(e){
-					var pos = Utils.getRelativePos(e.pageX, e.pageY, $("#designer_canvas"));
+				jQuery(document).bind("mousemove.change_curve", function(e){
+					var pos = Utils.getRelativePos(e.pageX, e.pageY, jQuery("#designer_canvas"));
 					cursor.x = pos.x;
 					cursor.y = pos.y;
 					Designer.painter.renderLinker(linker);
 					Model.define.elements[linker.id] = linker;
 					Utils.showLinkerControls();
-					$(".linker_control_point[ty="+point.attr("ty")+"]").addClass("moving");
+					jQuery(".linker_control_point[ty="+point.attr("ty")+"]").addClass("moving");
 					//放在mousemove中进行绑定，意义是在发生了拖动后，才会触发mouseup事件
-					$(document).unbind("mouseup.changed_curve").bind("mouseup.changed_curve", function(e){
+					jQuery(document).unbind("mouseup.changed_curve").bind("mouseup.changed_curve", function(e){
 						Model.update(linker);
-						$(document).unbind("mouseup.changed_curve")
+						jQuery(document).unbind("mouseup.changed_curve")
 					});
 				});
-				$(document).unbind("mouseup.change_curve").bind("mouseup.change_curve", function(e){
-					$(document).unbind("mouseup.change_curve");
-					$(document).unbind("mousemove.change_curve");
-					$(".linker_control_point").removeClass("moving");
+				jQuery(document).unbind("mouseup.change_curve").bind("mouseup.change_curve", function(e){
+					jQuery(document).unbind("mouseup.change_curve");
+					jQuery(document).unbind("mousemove.change_curve");
+					jQuery(".linker_control_point").removeClass("moving");
 					Designer.op.resetState();
 				});
 			});
@@ -6545,19 +6510,19 @@ var Utils = {
 	 * 隐藏连接线上的控件
 	 */
 	hideLinkerControls: function(){
-		$(".linker_control_line").remove();
-		$(".linker_control_point").remove();
+		jQuery(".linker_control_line").remove();
+		jQuery(".linker_control_point").remove();
 	},
 	/**
 	 * 显示锚点
 	 * @param shape 形状对象
 	 */
 	showAnchors: function(shape){
-		if($(".shape_contour[forshape="+shape.id+"]").length > 0){
+		if(jQuery(".shape_contour[forshape="+shape.id+"]").length > 0){
 			return;
 		}
 		//创建图形的矩形轮廓
-		var contour = $("<div class='shape_contour' forshape='"+shape.id+"'></div>").appendTo($("#designer_canvas"));
+		var contour = jQuery("<div class='shape_contour' forshape='"+shape.id+"'></div>").appendTo(jQuery("#designer_canvas"));
 		contour.css({
 			left: shape.props.x.toScale(),
 			top: shape.props.y.toScale(),
@@ -6580,7 +6545,7 @@ var Utils = {
 		var angle = shape.props.angle;
 		for ( var ai = 0; ai < anchors.length; ai++) {
 			var an = anchors[ai];
-			var anchorDom = $("<div class='shape_anchor'></div>").appendTo(contour);
+			var anchorDom = jQuery("<div class='shape_anchor'></div>").appendTo(contour);
 			var rotated = this.getRotated(shapeCenter, an, angle);
 			anchorStyle.left = rotated.x.toScale() - Designer.config.anchorSize / 2;
 			anchorStyle.top = rotated.y.toScale() - Designer.config.anchorSize / 2;
@@ -6592,25 +6557,25 @@ var Utils = {
 	 * 此处只隐藏鼠标悬浮时的锚点
 	 */
 	hideAnchors: function(){
-		$(".hovered_contour").remove();
+		jQuery(".hovered_contour").remove();
 	},
 	/**
 	 * 隐藏锚点
 	 * 隐藏所有锚点
 	 */
 	removeAnchors: function(){
-		$(".shape_contour").remove();
+		jQuery(".shape_contour").remove();
 	},
 	/**
 	 * 对锁定的图形，显示叉号
 	 * @param shape 形状对象
 	 */
 	showLockers: function(shape){
-		var shapeBox = $("#" + shape.id);
+		var shapeBox = jQuery("#" + shape.id);
 		var pos = shapeBox.position();
 		//创建锁定点
 		function createLocker(){
-			var locker = $("<canvas class='shape_locker' width='10px' height='10px'></canvas>").appendTo(shapeBox);
+			var locker = jQuery("<canvas class='shape_locker' width='10px' height='10px'></canvas>").appendTo(shapeBox);
 			var ctx = locker[0].getContext("2d");
 			ctx.strokeStyle="#777"
 			ctx.lineWidth=1;
@@ -6652,7 +6617,7 @@ var Utils = {
 	 * 隐藏所有锚点
 	 */
 	removeLockers: function(){
-		$(".shape_locker").remove();
+		jQuery(".shape_locker").remove();
 	},
 	/**
 	 * 测量两点间距离
@@ -6728,7 +6693,7 @@ var Utils = {
 	 * 获取连接点相对于形状的角度
 	 */
 	getPointAngle: function(shapeId, x, y, r){
-		var shapeBoxPos = $("#" + shapeId).position();
+		var shapeBoxPos = jQuery("#" + shapeId).position();
 		var shapeCtx = Utils.getShapeContext(shapeId);
 		//把x, y换算成相对于画布的相对坐标
 		x = x.toScale() - shapeBoxPos.left;
@@ -8014,7 +7979,7 @@ var Utils = {
 	 * @param {} obj
 	 */
 	copy: function(obj){
-		return $.extend(true, {}, obj);
+		return jQuery.extend(true, {}, obj);
 	},
 	/**
 	 * 排列图形的子图形
@@ -8380,9 +8345,9 @@ var MessageSource = {
 			if(chartId != ""){
 				var messagesStr = JSON.stringify(this.messages);
 				if(role != "trial"){
-					$("#saving_tip").text("Saving...");
+					jQuery("#saving_tip").text("Saving...");
 				}
-				$("#saving_tip").text("All changes saved");
+				jQuery("#saving_tip").text("All changes saved");
 				var msgObj = {
 					action: "command",
 					messages: messagesStr,
@@ -8392,7 +8357,7 @@ var MessageSource = {
 				/*
 				CLB.send(msgObj, function(){
 					if(role != "trial"){
-						$("#saving_tip").text("All changes saved");
+						jQuery("#saving_tip").text("All changes saved");
 					}
 				});*/
 			}

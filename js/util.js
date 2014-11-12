@@ -3,14 +3,14 @@ var Util = {};
 /**
  * 插件初始化
  */
-$(function(){
+jQuery(function(){
 	//禁用ajax缓存
-	$.ajaxSetup({
+	jQuery.ajaxSetup({
 		cache: false
 	});
 	/**************启动Title自定义提示***************/
-	$("[title],[original-title]").live("mouseover", function(){
-		var target = $(this);
+	jQuery("[title],[original-title]").live("mouseover", function(){
+		var target = jQuery(this);
 		if(target.attr("title")){
 			target.attr("original-title", target.attr("title"));
 			target.removeAttr("title");
@@ -19,25 +19,25 @@ $(function(){
 			return;
 		}
 		var title = target.attr("original-title");
-		var tip = $("#hover_tip");
+		var tip = jQuery("#hover_tip");
 		if(tip.length == 0){
-			tip = $("<div id='hover_tip'><div class='tip_arrow'></div><div class='tip_content radius3'></div></div>").appendTo("body");
+			tip = jQuery("<div id='hover_tip'><div class='tip_arrow'></div><div class='tip_content radius3'></div></div>").appendTo("body");
 		}
-		$(".tip_content").html(title);
-		$("#hover_tip").show();
-		$(".tip_arrow").removeClass("tip_right").removeClass("tip_top").css("top", "");
+		jQuery(".tip_content").html(title);
+		jQuery("#hover_tip").show();
+		jQuery(".tip_arrow").removeClass("tip_right").removeClass("tip_top").css("top", "");
 		if(target.attr("title_pos") == "right"){
 			tip.css({
 				left: target.offset().left + target.outerWidth() + 7,
 				top: target.offset().top + target.outerHeight()/2 - tip.outerHeight()/2
 			});
-			$(".tip_arrow").addClass("tip_right").css("top", tip.outerHeight()/2 - 7);
+			jQuery(".tip_arrow").addClass("tip_right").css("top", tip.outerHeight()/2 - 7);
 		}else if(target.attr("title_pos") == "top"){
 			tip.css({
 				left: target.offset().left + target.outerWidth()/2 - tip.outerWidth()/2,
 				top: target.offset().top - tip.outerHeight()
 			});
-			$(".tip_arrow").addClass("tip_top");
+			jQuery(".tip_arrow").addClass("tip_top");
 		}else{
 			tip.css({
 				left: target.offset().left + target.outerWidth()/2 - tip.outerWidth()/2,
@@ -45,19 +45,19 @@ $(function(){
 			});
 		}
 	}).live("mouseout", function(){
-		$("#hover_tip").hide();
+		jQuery("#hover_tip").hide();
 	});
 	/**************启动通知加载***************/
-	var badges = $(".notification_badge");
+	var badges = jQuery(".notification_badge");
 	if(badges.length){
 		Util.notificationsTips();
 	}
 	/**************Header导航***************/
 	var leaveTimeout;
-	$("#header-user").live("mouseenter",function(){
+	jQuery("#header-user").live("mouseenter",function(){
 		clearTimeout(leaveTimeout);
-		var target = $(this);
-		var menu = $("#header_user_menu");
+		var target = jQuery(this);
+		var menu = jQuery("#header_user_menu");
 		target.addClass("droped");
 		menu.popMenu({
 			target: target,
@@ -71,14 +71,14 @@ $(function(){
 			leaveTimeout = setTimeout(function(){menu.popMenu("close");target.removeClass("droped");}, 200);
 		});
 	}).live("mouseleave", function(){
-		var target = $(this);
-		leaveTimeout = setTimeout(function(){$("#header_user_menu").popMenu("close");target.removeClass("droped");}, 200);
+		var target = jQuery(this);
+		leaveTimeout = setTimeout(function(){jQuery("#header_user_menu").popMenu("close");target.removeClass("droped");}, 200);
 	});
 	/**************启动user quickinfo***************/
 	var userInfoRequest;
 	var closeUserInfoTimeout;
-	$(".user_quickinfo").live("mouseenter", function(){
-		var target = $(this);
+	jQuery(".user_quickinfo").live("mouseenter", function(){
+		var target = jQuery(this);
 		var userId = target.attr("userId");
 		if(userInfoRequest){
 			userInfoRequest.abort();
@@ -105,14 +105,14 @@ $(function(){
 				}).bind("mouseleave", function(){
 					box.popMenu("close");
 				});
-				$(".unfollowuser_btn").die().on("mouseover",function(){
-					$(this).text("Unfollow").removeClass("green");
+				jQuery(".unfollowuser_btn").die().on("mouseover",function(){
+					jQuery(this).text("Unfollow").removeClass("green");
 				}).live("mouseout",function(){
-					$(this).text("Following").addClass("green");
+					jQuery(this).text("Following").addClass("green");
 				}).live("click",function(){
 					doUnFollowUser(this,userId);
 				});
-				$(".followuser_btn").die().live("click",function(){
+				jQuery(".followuser_btn").die().live("click",function(){
 					doFollowUser(this,userId);
 				});
 				
@@ -120,14 +120,14 @@ $(function(){
 		});
 	}).live("mouseleave", function(){
 		closeUserInfoTimeout = setTimeout(function(){
-			$("#userQuickInfo").popMenu("close");
+			jQuery("#userQuickInfo").popMenu("close");
 		},400);
 	});
 	
 	function getQuickInfoBox(){
-		var box = $("#userQuickInfo");
+		var box = jQuery("#userQuickInfo");
 		if(box.length == 0){
-			box = $("<div id='userQuickInfo' class='shadow_1 radius3' style='display:none;'></div>").appendTo("body");
+			box = jQuery("<div id='userQuickInfo' class='shadow_1 radius3' style='display:none;'></div>").appendTo("body");
 		}
 		return box;
 	}
@@ -154,15 +154,15 @@ Array.prototype.remove = function(elem){
 };
 
 Util.notificationsTips = function(){
-	$.get("/notification/count", {}, function(data){
+	jQuery.get("/notification/count", {}, function(data){
 		if(data.goon){
 			//如果后台允许再次刷新
 			setTimeout(Util.notificationsTips, 30 * 1000);
 		}
 		if(data.count > 0){
-			$(".notification_badge").text(data.count).show();
+			jQuery(".notification_badge").text(data.count).show();
 		}else{
-			$(".notification_badge").hide();
+			jQuery(".notification_badge").hide();
 		}
 	});
 };
@@ -229,11 +229,11 @@ Util.onlyNum = function(eventTag){
 /**
  * 清空DOM中的输入框
  */
-$.fn.clear = function(){
-	$(this).find("input[type=text]").val("");
-	$(this).find("input[type=password]").val("");
-	$(this).find("textarea").val("");
-	$(this).find("select").val("");
+jQuery.fn.clear = function(){
+	jQuery(this).find("input[type=text]").val("");
+	jQuery(this).find("input[type=password]").val("");
+	jQuery(this).find("textarea").val("");
+	jQuery(this).find("select").val("");
 };
 
 /**
@@ -243,20 +243,20 @@ $.fn.clear = function(){
  * @param .onSubmit  提交前事件
  * @param .success  提交成功事件
  */
-$.fn.submitFormAjax = function(options){
-	var form = $(this);
+jQuery.fn.submitFormAjax = function(options){
+	var form = jQuery(this);
 	if(options.onSubmit){
 		if (options.onSubmit.call() == false) {
 			return;
 		}
 	}
-	$.ajax({
-		url:options.url ? options.url : $(this).attr("action"),
+	jQuery.ajax({
+		url:options.url ? options.url : jQuery(this).attr("action"),
 		type:"POST",
-		data:$(this).serialize(),
+		data:jQuery(this).serialize(),
 		success:function(data){
 			if(data.error == "error"){
-				$.simpleAlert("Server is temporarily unable to process your request, please try again", "error", 3000);
+				jQuery.simpleAlert("Server is temporarily unable to process your request, please try again", "error", 3000);
 			}else if (data.error == "notlogin") {
 				//由AOP拦截处理的登录验证
 				Util.loginWindow("open", function(){
@@ -267,7 +267,7 @@ $.fn.submitFormAjax = function(options){
 			}
 		},
 		error:function(data){
-			$.simpleAlert("Server is temporarily unable to process your request, please try again".errorMsg,"error",3000);
+			jQuery.simpleAlert("Server is temporarily unable to process your request, please try again".errorMsg,"error",3000);
 			if(options.error){
 				options.error(data);
 			}
@@ -283,12 +283,12 @@ $.fn.submitFormAjax = function(options){
  * @param .success  提交成功事件
  * @param {boolean} json 是否是json形式
  */
-$.fn.submitForm = function(opt){
+jQuery.fn.submitForm = function(opt){
 	var defaultOpt = {
 			json:true
 	};
-	var options = $.extend(defaultOpt, opt);
-	var form = $(this);
+	var options = jQuery.extend(defaultOpt, opt);
+	var form = jQuery(this);
 	if(options.onSubmit){
 		if (options.onSubmit.call(form) == false) {
 			return;
@@ -298,7 +298,7 @@ $.fn.submitForm = function(opt){
 		form.attr('action', options.url);
 	}
 	var frameId = 'submit_frame_' + (new Date().getTime());
-	var frame = $('<iframe id='+frameId+' name='+frameId+'></iframe>')
+	var frame = jQuery('<iframe id='+frameId+' name='+frameId+'></iframe>')
 		.attr('src', window.ActiveXObject ? 'javascript:false' : 'about:blank')
 		.css({
 			position:'absolute',
@@ -310,12 +310,12 @@ $.fn.submitForm = function(opt){
 	frame.bind('load', submitCallback);
 	form.append("<input type='hidden' name='submitFormByHiddenFrame' id='submitFormByHiddenFrameParam' value='hiddenFrame'/>");
 	form[0].submit();
-	$("#submitFormByHiddenFrameParam").remove();
+	jQuery("#submitFormByHiddenFrameParam").remove();
 	
 	var checkCount = 10;
 	function submitCallback(){
 		frame.unbind();
-		var body = $('#'+frameId).contents().find("body");
+		var body = jQuery('#'+frameId).contents().find("body");
 		var data = body.html();
 		if (data == ''){
 			if (--checkCount){
@@ -336,7 +336,7 @@ $.fn.submitForm = function(opt){
 		try{
 			eval('data='+data);
 			if(data.error == "error"){
-				$.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
+				jQuery.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
 			}else if (data.error == "notlogin") {
 				//由AOP拦截处理的登录验证
 				Util.loginWindow("open", function(){
@@ -347,7 +347,7 @@ $.fn.submitForm = function(opt){
 			}
 		} catch(e) {
 			if(options.json){
-				$.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
+				jQuery.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
 				if (options.error){
 					options.error(data);
 				}
@@ -365,7 +365,7 @@ $.fn.submitForm = function(opt){
 };
 
 /**
- * 封装的ajax，对$.ajax结果进行了过滤
+ * 封装的ajax，对jQuery.ajax结果进行了过滤
  * @param {Object} options
  */
 Util.ajax = function(options){
@@ -377,15 +377,15 @@ Util.ajax = function(options){
 	var defaults = {
 		type: "POST"
 	}
-	options = $.extend(defaults, options);
-	return $.ajax({
+	options = jQuery.extend(defaults, options);
+	return jQuery.ajax({
 		url:options.url,
 		type:options.type,
 		traditional:true,
 		data:options.data,
 		success:function(data){
 			if(data.error == "error"){
-				$.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
+				jQuery.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
 				if(options.error){
 					options.error(data);
 				}
@@ -409,7 +409,7 @@ Util.ajax = function(options){
 				if(options.error){
 					options.error(data);
 				}else{
-					$.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
+					jQuery.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
 				}
 			}
 		}
@@ -417,14 +417,14 @@ Util.ajax = function(options){
 };
 
 Util.load = function(dom, url, params, callback, filter){
-	$.ajax({
+	jQuery.ajax({
 		url:url,
 		type:"POST",
 		dataType: "html",
 		data:params,
 		success:function(data){
 			if(data.error == "error"){
-				$.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
+				jQuery.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
 			}else if (data.error == "notlogin") {
 				//由AOP拦截处理的登录验证
 				Util.loginWindow("open", function(){
@@ -448,19 +448,19 @@ Util.load = function(dom, url, params, callback, filter){
 			}
 		},
 		error:function(data){
-			$.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
+			jQuery.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
 		}
 	});
 };
 
 Util.get = function(url, params, callback){
-	$.ajax({
+	jQuery.ajax({
 		url:url,
 		type:"GET",
 		data:params,
 		success:function(data){
 			if(data.error == "error"){
-				$.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
+				jQuery.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
 			}else if (data.error == "notlogin") {
 				//由AOP拦截处理的登录验证
 				Util.loginWindow("open", function(){
@@ -472,7 +472,7 @@ Util.get = function(url, params, callback){
 			}
 		},
 		error:function(data){
-			$.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
+			jQuery.simpleAlert("Server is temporarily unable to process your request, please try again","error",3000);
 		}
 	});
 };
@@ -480,32 +480,32 @@ Util.get = function(url, params, callback){
 /**
  * 置为不可用
  */
-$.fn.disable = function(grow,zindex){
-	$(this).attr("disable",true);
-	$(this).addClass("opacity");
-	for(var i = 0 ; i < $(this).length; i++){
-		var dom = $(this)[i];
-		$(dom).unbind("mouseover.disable").bind("mouseover.disable", function(){
-			var mask = $("<div class='disabled-mask'></div>").appendTo("body");
+jQuery.fn.disable = function(grow,zindex){
+	jQuery(this).attr("disable",true);
+	jQuery(this).addClass("opacity");
+	for(var i = 0 ; i < jQuery(this).length; i++){
+		var dom = jQuery(this)[i];
+		jQuery(dom).unbind("mouseover.disable").bind("mouseover.disable", function(){
+			var mask = jQuery("<div class='disabled-mask'></div>").appendTo("body");
 			if(!grow){
 				grow = 2;
 			}
 			mask.css({
-				width:$(this).outerWidth() + grow,
-				height:$(this).outerHeight() + 4,
-				top:$(this).offset().top,
-				left:$(this).offset().left
+				width:jQuery(this).outerWidth() + grow,
+				height:jQuery(this).outerHeight() + 4,
+				top:jQuery(this).offset().top,
+				left:jQuery(this).offset().left
 			});
 			if(zindex){
 				mask.css("z-index", zindex);
 			}
 			mask.bind("mouseout", function(){
-				$(this).remove();
+				jQuery(this).remove();
 			});
 		}).bind("focus", function(){
-			$(this).blur();
+			jQuery(this).blur();
 		});
-		$(dom).trigger("mouseover.disable");
+		jQuery(dom).trigger("mouseover.disable");
 	}
 	return this;
 };
@@ -514,14 +514,14 @@ $.fn.disable = function(grow,zindex){
  * 激活
  * @param {Object} fn  重新绑定的事件
  */
-$.fn.enable = function(){
-	$(this).attr("disable",false);
-	$(this).removeClass("opacity");
-	for(var i = 0 ; i < $(this).length; i++){
-		var dom = $(this)[i];
-		$(dom).unbind("mouseover.disable").unbind("focus");
+jQuery.fn.enable = function(){
+	jQuery(this).attr("disable",false);
+	jQuery(this).removeClass("opacity");
+	for(var i = 0 ; i < jQuery(this).length; i++){
+		var dom = jQuery(this)[i];
+		jQuery(dom).unbind("mouseover.disable").unbind("focus");
 	}
-	$(".disabled-mask").trigger("mouseout");
+	jQuery(".disabled-mask").trigger("mouseout");
 	return this;
 };
 
@@ -535,17 +535,17 @@ Util.loginWindow = function(method, callback){
 		method="open";
 	}
 	if (method == "open") {
-		if ($("#loginWindow").length) {
-			$("#loginWindow").remove();
+		if (jQuery("#loginWindow").length) {
+			jQuery("#loginWindow").remove();
 		}
-		var loginWindow = $("<div id='loginWindow' class='loginWindow'></div>").appendTo("body");
+		var loginWindow = jQuery("<div id='loginWindow' class='loginWindow'></div>").appendTo("body");
 		loginWindow.append("<div id='loginWindow-content' class='loginWindow-content'><img src='/images/ajaxload.gif' style='margin:80px 0px 0px 45%'/></div>");
-		$("#loginWindow-content").load("/login/window",function(){
+		jQuery("#loginWindow-content").load("/login/window",function(){
 			loginCallback = callback;
 		});
 		loginWindow.dialog();
 	}else if(method="close"){
-		$("#loginWindow").dialog("close");
+		jQuery("#loginWindow").dialog("close");
 	}
 };
 
@@ -560,22 +560,22 @@ Util.loginWindow = function(method, callback){
 	 * @param {Object} method
 	 */
 	var maskStackCount = 0;
-	$.mask = function(method){
+	jQuery.mask = function(method){
 		if(typeof method == "undefined"){
 			method="open";
 		}
 		if (method == "open") {
 			if (maskStackCount == 0) {
-				var mask = $("<div id='window-mask' class='window-mask' style='display:none'></div>").appendTo("body");
+				var mask = jQuery("<div id='window-mask' class='window-mask' style='display:none'></div>").appendTo("body");
 				mask.css({
-					width: $(window).width() + "px",
-					height: $(window).height() + "px",
+					width: jQuery(window).width() + "px",
+					height: jQuery(window).height() + "px",
 					filter: "alpha(opacity=60)"
 				}).show();
-				$(window).bind("resize.mask", function(){
+				jQuery(window).bind("resize.mask", function(){
 					mask.css({
-						width: $(window).width() + "px",
-						height: $(window).height() + "px"
+						width: jQuery(window).width() + "px",
+						height: jQuery(window).height() + "px"
 					});
 				});
 			}
@@ -584,8 +584,8 @@ Util.loginWindow = function(method, callback){
 		else if(method == "close"){
 			maskStackCount--;
 			if(maskStackCount == 0){
-				$("#window-mask").remove();
-				$(window).unbind("resize.mask");
+				jQuery("#window-mask").remove();
+				jQuery(window).unbind("resize.mask");
 			}
 		}
 		
@@ -598,15 +598,15 @@ Util.loginWindow = function(method, callback){
 	 * title
 	 * onClose
 	 */
-	$.fn.dialog = function(options){
-		var dialogWin = $(this);
+	jQuery.fn.dialog = function(options){
+		var dialogWin = jQuery(this);
 		//如果是字符串类型，则调用方法
 		if(typeof options == "string"){
 			//关闭
 			if(options == "close"){
 				dialogWin.find(".dialog_close").trigger("click");
-				if($("#window-mask") != null){
-					$("#window-mask").hide();
+				if(jQuery("#window-mask") != null){
+					jQuery("#window-mask").hide();
 				}
 			}
 		}else{
@@ -615,7 +615,7 @@ Util.loginWindow = function(method, callback){
 				closable: true,
 				mask: true
 			};
-			options = $.extend(defaults, options);
+			options = jQuery.extend(defaults, options);
 			//初始化，打开
 			if(!options){
 				options = {};
@@ -633,7 +633,7 @@ Util.loginWindow = function(method, callback){
 //			})
 			dialogWin.addClass("dialog_box")
 			.show();
-			var dialogClose = $("<div class='dialog_close'></div>")
+			var dialogClose = jQuery("<div class='dialog_close'></div>")
 				.appendTo(dialogWin);
 			dialogClose.bind("click", function(){
 				if(options.onClose){
@@ -641,13 +641,13 @@ Util.loginWindow = function(method, callback){
 						return;
 					}
 				}
-				$.mask("close");
+				jQuery.mask("close");
 				dialogWin.hide();
 				dialogWin.removeClass("dialog_box").find(".dialog_close").remove();
 				var title = dialogWin.find(".dialog_title");
 				dialogWin.attr("title",title.text());
 				title.remove();
-				$(window).unbind("resize.dialog");
+				jQuery(window).unbind("resize.dialog");
 			});
 			if(options.closable){
 				dialogClose.show();
@@ -657,35 +657,35 @@ Util.loginWindow = function(method, callback){
 			}
 			//遮罩
 			if(options.mask){
-				$.mask();
+				jQuery.mask();
 			}
 			var dialogWidth = dialogWin.outerWidth();
 			var dialogHeight = dialogWin.outerHeight();
-			$(window).bind("resize.dialog", function(){
+			jQuery(window).bind("resize.dialog", function(){
 				var top = 0;
 				if(options.fixed){
 					dialogWin.css("position", "fixed");
-					top = ($(window).height() - dialogHeight) / 2 + "px";
+					top = (jQuery(window).height() - dialogHeight) / 2 + "px";
 				}else{
 					dialogWin.css("position", "absolute");
-					top = ($(window).height() - dialogHeight) / 2 + $(document).scrollTop() + "px";
+					top = (jQuery(window).height() - dialogHeight) / 2 + jQuery(document).scrollTop() + "px";
 				}
-				var left = ($(window).width() - dialogWidth) / 2 + "px";
+				var left = (jQuery(window).width() - dialogWidth) / 2 + "px";
 				dialogWin.css({
 					top: top,
 					left: left
 				});
 			});
-			$(window).trigger("resize.dialog");
+			jQuery(window).trigger("resize.dialog");
 			dialogWin.find(".dialog_title").draggable({target:dialogWin});
 		}
 		return dialogWin;
 	};
 	
-	$.confirm = function(options){
-		var confirmWin = $("#global_confirm_window")
+	jQuery.confirm = function(options){
+		var confirmWin = jQuery("#global_confirm_window")
 		if(!confirmWin.length){
-			confirmWin = $("<div id='global_confirm_window' title='Please Confirm'><div class='msg'></div><div class='buttons'><span class='button default okbtn'>OK</span>&nbsp;&nbsp;<span class='button cancelbtn'>Cancel</span></div></div>").appendTo("body");
+			confirmWin = jQuery("<div id='global_confirm_window' title='Please Confirm'><div class='msg'></div><div class='buttons'><span class='button default okbtn'>OK</span>&nbsp;&nbsp;<span class='button cancelbtn'>Cancel</span></div></div>").appendTo("body");
 		}
 		confirmWin.find(".msg").html(options.content);
 		if(options.width){
@@ -723,13 +723,13 @@ Util.loginWindow = function(method, callback){
 	 *  autoPosition 是否当显示位置超出浏览器窗口时，自动移动
 	 * }
 	 */
-	$.fn.popMenu = function(options){
-		var menu = $(this);
+	jQuery.fn.popMenu = function(options){
+		var menu = jQuery(this);
 		if(typeof options == "string"){
 			//关闭
 			if(options == "close"){
 				menu.hide().removeClass("popover");
-				$(window).unbind("resize.popmenu");
+				jQuery(window).unbind("resize.popmenu");
 			}
 			return;
 		}
@@ -743,8 +743,8 @@ Util.loginWindow = function(method, callback){
 				closeAfterClick: false,
 				autoPosition: true
 		};
-		var opt = $.extend(defaults, options);
-		var target = $(opt.target);
+		var opt = jQuery.extend(defaults, options);
+		var target = jQuery(opt.target);
 		menu.addClass("popover").css("z-index", opt.zindex);
 		if(opt.fixed){
 			menu.css("position", "fixed");
@@ -755,15 +755,15 @@ Util.loginWindow = function(method, callback){
 					e.stopPropagation();
 				});
 			}
-			$(document).bind("mouseup.popmenu", function(){
+			jQuery(document).bind("mouseup.popmenu", function(){
 				menu.popMenu("close");
-				$(document).unbind("mouseup.popmenu");
+				jQuery(document).unbind("mouseup.popmenu");
 				if(opt.onClose){
 					opt.onClose();
 				}
 			});
 		}
-		$(window).bind("resize.popmenu", function(){
+		jQuery(window).bind("resize.popmenu", function(){
 			menu.popMenu(options);
 		});
 		menu.show();
@@ -775,13 +775,13 @@ Util.loginWindow = function(method, callback){
 		}else{
 			left = target.offset().left;
 		}
-		if(left + menu.outerWidth() > $(window).width()){
-			left = $(window).width() - menu.outerWidth();
+		if(left + menu.outerWidth() > jQuery(window).width()){
+			left = jQuery(window).width() - menu.outerWidth();
 		}
 		var top = target.offset().top + target.outerHeight();
-		if(opt.autoPosition && top + opt.offsetY + menu.outerHeight() > $(window).height() + $(document).scrollTop()){
+		if(opt.autoPosition && top + opt.offsetY + menu.outerHeight() > jQuery(window).height() + jQuery(document).scrollTop()){
 			menu.css({
-				top:$(window).height() - menu.outerHeight() + $(document).scrollTop(),
+				top:jQuery(window).height() - menu.outerHeight() + jQuery(document).scrollTop(),
 				left:left + opt.offsetX
 			});
 		}else{
@@ -797,27 +797,27 @@ Util.loginWindow = function(method, callback){
 	 * @param {Object} msg
 	 * @param {Object} type  [info,error,ok]
 	 */
-	$.simpleAlert=function(msg,type,delay){
+	jQuery.simpleAlert=function(msg,type,delay){
 		if(msg == "close"){
-			$("#simplealert").remove();
+			jQuery("#simplealert").remove();
 			return;
 		}
-		if($("#simplealert").length){
-			$("#simplealert").remove();
+		if(jQuery("#simplealert").length){
+			jQuery("#simplealert").remove();
 		}
 		var alertType="simplealert-icon-info";
 		if(type){
 			alertType = "simplealert-icon-" + type;
 		}
-		var simpleAlert = $("<div id='simplealert' class='simplealert'></div>").appendTo("body");
+		var simpleAlert = jQuery("<div id='simplealert' class='simplealert'></div>").appendTo("body");
 		var html = "<div class='"+alertType+"'>";
 		if(type == "loading"){
 			html += "<img src='/images/default/designer/loading.gif' style='margin:10px 0px 0px 12px'/>";
 		}
 		html += "</div><div class='simplealert-msg'>"+msg+"</div><div class='simplealert-right'></div>";
 		simpleAlert.html(html);
-		simpleAlert.css("top", ( $(window).height() - simpleAlert.height() ) / 2+$(window).scrollTop() + "px"); 
-	    simpleAlert.css("left", ( $(window).width() - simpleAlert.width() ) / 2+$(window).scrollLeft() + "px");
+		simpleAlert.css("top", ( jQuery(window).height() - simpleAlert.height() ) / 2+jQuery(window).scrollTop() + "px"); 
+	    simpleAlert.css("left", ( jQuery(window).width() - simpleAlert.width() ) / 2+jQuery(window).scrollLeft() + "px");
 		simpleAlert.show();
 		if(delay != "no"){
 			setTimeout(function(){
@@ -830,50 +830,50 @@ Util.loginWindow = function(method, callback){
 	 * 默认的Tooltip
 	 * @param {Object} options
 	 */
-	$.fn.tooltip = function(content, type, fade){
+	jQuery.fn.tooltip = function(content, type, fade){
 		var tip;
 		type = type ? type : "warning";
 		if(type != "none"){
 			content = "<img src='/images/icon/ico-"+type+".png' style='vertical-align:middle;margin-right:5px;'/><span>" 
 				+ content + "</span>";
 		}
-		if($("p#p_toolTip").length){
-			$("p#p_toolTip").remove();
+		if(jQuery("p#p_toolTip").length){
+			jQuery("p#p_toolTip").remove();
 		}
-		$('body').append( '<p id="p_toolTip" class="radius3"><img id="img_toolTip_Arrow" src="/images/icon/arrow-left.png" />'+content+'</p>' );
-		tip =   $('p#p_toolTip');
-		$('p#p_toolTip #img_toolTip_Arrow').css({"position": "absolute", "top": "5px", "left": "-13px"});
+		jQuery('body').append( '<p id="p_toolTip" class="radius3"><img id="img_toolTip_Arrow" src="/images/icon/arrow-left.png" />'+content+'</p>' );
+		tip =   jQuery('p#p_toolTip');
+		jQuery('p#p_toolTip #img_toolTip_Arrow').css({"position": "absolute", "top": "5px", "left": "-13px"});
 		if(!fade){
 			tip.show();
 		}else{
 			tip.fadeIn("fast");
 		}
 		tip.css({
-			left:$(this).offset().left + $(this).width() + 18,
-			top:$(this).offset().top - 16
+			left:jQuery(this).offset().left + jQuery(this).width() + 18,
+			top:jQuery(this).offset().top - 16
 		});
 	};
 
 	/**
 	 * 关闭Tooltip
 	 */
-	$.closeTooltip = function(){
-		$("p#p_toolTip").remove();
+	jQuery.closeTooltip = function(){
+		jQuery("p#p_toolTip").remove();
 	};
 	
-	$.fn.draggable = function(options){
+	jQuery.fn.draggable = function(options){
 		var defaults = {
-			target:$(this)
+			target:jQuery(this)
 		};
-		var opt = $.extend(defaults, options);
-		$(this).unbind("dragstart").bind("dragstart", function(){return false;});
-		$(this).unbind("mousedown.drag").bind("mousedown.drag", function(e){
-			$(document).bind("selectstart", function(){return false;});
+		var opt = jQuery.extend(defaults, options);
+		jQuery(this).unbind("dragstart").bind("dragstart", function(){return false;});
+		jQuery(this).unbind("mousedown.drag").bind("mousedown.drag", function(e){
+			jQuery(document).bind("selectstart", function(){return false;});
 			var downX = e.pageX;
 			var downY = e.pageY;
 			var downLeft = opt.target.offset().left;
 			var downTop = opt.target.offset().top;
-			$(document).bind("mousemove.drag", function(e){
+			jQuery(document).bind("mousemove.drag", function(e){
 				var left = e.pageX - downX + downLeft;
 				var top = e.pageY - downY + downTop;
 				if(opt.bounding){
@@ -894,16 +894,16 @@ Util.loginWindow = function(method, callback){
 					});
 				}
 			});
-			$(document).bind("mouseup.drag", function(e){
-				$(document).unbind("selectstart");
-				$(document).unbind("mousemove.drag");
-				$(document).unbind("mouseup.drag");
+			jQuery(document).bind("mouseup.drag", function(e){
+				jQuery(document).unbind("selectstart");
+				jQuery(document).unbind("mousemove.drag");
+				jQuery(document).unbind("mouseup.drag");
 			});
 		});
 	};
 	
-	$.fn.suggest = function(options){
-		var target = $(this);
+	jQuery.fn.suggest = function(options){
+		var target = jQuery(this);
 		var defaults = {
 			valueField: "value",
 			width: target.outerWidth(),
@@ -911,9 +911,9 @@ Util.loginWindow = function(method, callback){
 				return item.text;
 			}
 		};
-		var opt = $.extend(defaults, options);
+		var opt = jQuery.extend(defaults, options);
 		if(!target.data("suggest")){
-			var menu = $("<ul class='suggest_menu'></ul>").appendTo("body");
+			var menu = jQuery("<ul class='suggest_menu'></ul>").appendTo("body");
 			menu.width(opt.width);
 			target.data("suggest", menu);
 		}
@@ -954,7 +954,7 @@ Util.loginWindow = function(method, callback){
 				suggest.empty().popMenu("close");
 			}else if(value != last){
 				index = -1;
-				$.get(opt.url, {q: value}, function(data){
+				jQuery.get(opt.url, {q: value}, function(data){
 					suggest.empty();
 					var items = data.items;
 					if(items.length == 0){
@@ -973,7 +973,7 @@ Util.loginWindow = function(method, callback){
 						});
 						suggest.find(".suggest_item").bind("mousedown", function(e){
 							e.preventDefault();
-							target.val($(this).attr("val"));
+							target.val(jQuery(this).attr("val"));
 							if(opt.onEnter){
 								opt.onEnter(target);
 							}
@@ -996,7 +996,7 @@ Util.loginWindow = function(method, callback){
 	 * @param clickHandler 点击事件，传入参数为当前第几页
 	 * @param barCount 分页条共显示多少个按钮
 	 */
-	$.fn.pagination = function(curPage, totalPage, clickHandler, barCount){
+	jQuery.fn.pagination = function(curPage, totalPage, clickHandler, barCount){
 		if(totalPage <= 0){
 			return;
 		}
@@ -1004,7 +1004,7 @@ Util.loginWindow = function(method, callback){
 		if(barCount){
 			pageBarNum = barCount;
 		}
-		var tar = $(this).addClass("pagination");
+		var tar = jQuery(this).addClass("pagination");
 		var start = 1;
 		var end = totalPage;
 		if(totalPage > pageBarNum){
@@ -1049,16 +1049,16 @@ Util.loginWindow = function(method, callback){
 		tar.html(pageHtml);
 		if(clickHandler){
 			tar.find("a[p]").bind("click", function(){
-				var page = $(this).attr("p");
+				var page = jQuery(this).attr("p");
 				clickHandler(page);
 			});
 		}
 	};
 	//文件上传前判断文件大小
-	$.fn.fileSize = function(){
+	jQuery.fn.fileSize = function(){
 		 var target = this.get(0);
 		 var fileSize = 0;
-         if ($.browser.msie && !target.files) {
+         if (jQuery.browser.msie && !target.files) {
              var filePath = target.value;
              var fileSystem = new ActiveXObject("Scripting.FileSystemObject");   
              var file = fileSystem.GetFile (filePath);
@@ -1068,11 +1068,11 @@ Util.loginWindow = function(method, callback){
          }
 		 return fileSize*1024;
 	};
-	$.fn.errorTip = function(content, type){
+	jQuery.fn.errorTip = function(content, type){
 		var tip;
 		var classType = "error"
-		if($(".signin-error").length){
-			$(".signin-error").remove();
+		if(jQuery(".signin-error").length){
+			jQuery(".signin-error").remove();
 		}
 		if(type != null){
 			classType = type;
@@ -1080,31 +1080,31 @@ Util.loginWindow = function(method, callback){
 		var html = '<span class="signin-error"><span class="signin-'+classType+'-tip">' +
 					content + '<label class="signin-'+classType+'-tip-arrow right"></label>' +
 					'<label class="signin-'+classType+'-tip-arrow right1"></label></span></span>';
-		if($(this).offset().left < 200){
+		if(jQuery(this).offset().left < 200){
 			html = '<span class="signin-error"><span class="signin-'+classType+'-tip">' +
 					content + '<label class="signin-'+classType+'-tip-arrow left"></label>' +
 					'<label class="signin-'+classType+'-tip-arrow left1"></label></span></span>';
 		}
-		$('body').append(html);
-		tip = $('.signin-error');
+		jQuery('body').append(html);
+		tip = jQuery('.signin-error');
 		tip.css({
-			left:$(this).offset().left - tip.width(),
-			top:$(this).offset().top+$(this).height()/2-7,
+			left:jQuery(this).offset().left - tip.width(),
+			top:jQuery(this).offset().top+jQuery(this).height()/2-7,
 			opacity:"0",
 			filter:"alpha(opacity=0)"
 		});
-		$(this).addClass(classType);
-		if($(this).offset().left < 200){
+		jQuery(this).addClass(classType);
+		if(jQuery(this).offset().left < 200){
 			tip.animate({
-				left:$(this).offset().left + tip.width(),
-				top:$(this).offset().top+$(this).height()/2-7,
+				left:jQuery(this).offset().left + tip.width(),
+				top:jQuery(this).offset().top+jQuery(this).height()/2-7,
 				opacity:"0.7",
 				filter:"alpha(opacity=70)"
 			}, 200);
 		}else{
 			tip.animate({
-				left:$(this).offset().left - tip.width() - 14,
-				top:$(this).offset().top+$(this).height()/2-7,
+				left:jQuery(this).offset().left - tip.width() - 14,
+				top:jQuery(this).offset().top+jQuery(this).height()/2-7,
 				opacity:"0.7",
 				filter:"alpha(opacity=70)"
 			}, 200);
@@ -1114,9 +1114,9 @@ Util.loginWindow = function(method, callback){
 	/**
 	 * 关闭Tooltip
 	 */
-	$.closeErrorTip = function(){
-		$(".signin-error").remove();
-		$("input.error").removeClass("error");
+	jQuery.closeErrorTip = function(){
+		jQuery(".signin-error").remove();
+		jQuery("input.error").removeClass("error");
 	};
 	
 })(jQuery);
@@ -1229,17 +1229,17 @@ String.prototype.byteLength = function() {
  * @return {}
  */
 function initTemplateCategorySelect(){
-	$("#template-category-select li").unbind().bind("click", function(){
-        $(".template-category li").removeClass("current");
-        $(this).addClass("current");
-		var category = $(this).attr("category");
+	jQuery("#template-category-select li").unbind().bind("click", function(){
+        jQuery(".template-category li").removeClass("current");
+        jQuery(this).addClass("current");
+		var category = jQuery(this).attr("category");
 		//加载模板文件
 		getTemplates(category);
     });
-    $(".item-container").die().live("click", function(){
-    	$(".template_selected").removeClass("template_selected");
-    	$(this).addClass("template_selected");
-    	$("#template_select_ok").enable();
+    jQuery(".item-container").die().live("click", function(){
+    	jQuery(".template_selected").removeClass("template_selected");
+    	jQuery(this).addClass("template_selected");
+    	jQuery("#template_select_ok").enable();
     }).live("dblclick", function(){
 		templateSelected();    
     });
@@ -1255,20 +1255,20 @@ function getTemplates(category){
 	        category: category
 	    	}, function(data){
 	    		if(category == "my_template"){
-	    			$(".template-select").remove();
+	    			jQuery(".template-select").remove();
 	    		}else{
-	    			$(".template-select[chartId!='']").remove();
-	    			if($(".template-select[chartId='']").length == 0){
-	    				$("#template-container").append('<div class="item-container template-select template_selected radius3" chartId=""><div></div>Blank</div>');
+	    			jQuery(".template-select[chartId!='']").remove();
+	    			if(jQuery(".template-select[chartId='']").length == 0){
+	    				jQuery("#template-container").append('<div class="item-container template-select template_selected radius3" chartId=""><div></div>Blank</div>');
 	    			}
 	    		}
 		        for (var i = 0; i < data.templates.length; i++) {
 		            var tem = data.templates[i];
-		            $("#template-container").append('<div define="' + tem.chartId + '" class="item-container template-select radius3"><div><img src="/file/response/' + tem.thumbnail + '/chart_image"/></div>' + tem.title + '</div>');
+		            jQuery("#template-container").append('<div define="' + tem.chartId + '" class="item-container template-select radius3"><div><img src="/file/response/' + tem.thumbnail + '/chart_image"/></div>' + tem.title + '</div>');
 		        }
-		        var selected = $(".template_selected");
+		        var selected = jQuery(".template_selected");
 				if(selected.length <= 0){
-					$("#template_select_ok").disable();
+					jQuery("#template_select_ok").disable();
 				}
 	    });
 }
@@ -1281,26 +1281,26 @@ function globalNewDialog(teamId, folderId, source){
 	globalNewTeamId = teamId;
 	globalNewFolderId = folderId;
 	
-	if($("#dialog_new_diagram").length == 0){
+	if(jQuery("#dialog_new_diagram").length == 0){
 		Util.ajax({
 			url: "/diagraming/new_dialog",
 			data:{},
 			success: function(data){
-				$("body").append(data);
+				jQuery("body").append(data);
 				//弹出新建窗口
-		    	$("#dialog_new_diagram").dialog();
+		    	jQuery("#dialog_new_diagram").dialog();
 		    	initTemplateCategorySelect();
-		        $("#template_select_ok").bind("click", function(){
+		        jQuery("#template_select_ok").bind("click", function(){
 		        	templateSelected(source);
 		        });
-		        $("#template_select_cancel").bind("click", function(){
-		        	$("#dialog_new_diagram").dialog("close");
+		        jQuery("#template_select_cancel").bind("click", function(){
+		        	jQuery("#dialog_new_diagram").dialog("close");
 		        });
 				getTemplates("uncategorized");
 			}
 		});
 	}else{
-		$("#dialog_new_diagram").dialog();
+		jQuery("#dialog_new_diagram").dialog();
 	}
 }
 
@@ -1309,17 +1309,17 @@ function globalNewDialog(teamId, folderId, source){
  * @return {}
  */
 function templateSelected(source){
-	var selected = $(".template_selected");
+	var selected = jQuery(".template_selected");
 	if(selected.length <= 0){
 		return;
 	}
-	var currentTag = $("#template-category-select li.current");
+	var currentTag = jQuery("#template-category-select li.current");
 	var category = currentTag.attr("category");
 	var templateId = selected.attr("define");
 	if(!templateId){
 		templateId = "";
 	}
-	$("#dialog_new_diagram").dialog("close");
+	jQuery("#dialog_new_diagram").dialog("close");
 	var url = "/diagraming/new?template=" + templateId + "&category=" + category;
 	if(category == "my_template"){
 		url = "/diagrams/new_from_template?chartId=" + templateId;

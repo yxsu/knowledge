@@ -14,14 +14,14 @@ Designer.addFunction("open", function(definition){
 	if(typeof definition == "string"){
 		eval('definition = ' + definition);
 	}
-	$(".shape_box").remove();
+	jQuery(".shape_box").remove();
 	Model.define.elements = {};
 	Model.persistence.elements = {};
  	Model.define.page = definition.page;
  	Model.persistence.page = Utils.copy(definition.page);
  	Designer.initialize.initCanvas();
  	var shapes = definition.elements;
-    $(".diagram_title").text(definition.title);
+    jQuery(".diagram_title").text(definition.title);
  	//先构造形状，再构造连接线，因为连接线的绘制过程有可能依赖所连接的图形
  	var shapeCount = 0;
  	for(var shapeId in shapes){
@@ -780,20 +780,20 @@ Designer.addFunction("setReadonly", function(readonly){
 	}
 	if(readonly){
 		//只读
-		$(".diagram_title").addClass("readonly");
-		$(".menubar").hide();
-		$(".toolbar").hide();
+		jQuery(".diagram_title").addClass("readonly");
+		jQuery(".menubar").hide();
+		jQuery(".toolbar").hide();
 		//隐藏图形面板
-		$("#note_list").addClass("readonly");
-		$("#shape_panel").addClass("readonly");
-		$("#designer_viewport").addClass("readonly");
+		jQuery("#note_list").addClass("readonly");
+		jQuery("#shape_panel").addClass("readonly");
+		jQuery("#designer_viewport").addClass("readonly");
 		//取消快捷键
 		Designer.hotkey.cancel();
 		Designer.op.cancel();
-		$(window).trigger("resize.designer");
+		jQuery(window).trigger("resize.designer");
 		//隐藏Dock
-		$("#dock").hide();
-		$(".dock_view").hide();
+		jQuery("#dock").hide();
+		jQuery(".dock_view").hide();
 		Dock.currentView = "";
 		Designer.contextMenu.destroy();
 	}

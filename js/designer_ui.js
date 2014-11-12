@@ -5,13 +5,13 @@
 var UI = {
 	init: function(){
 	    //save
-		$(".btn#save").bind("click", function(){
+		jQuery(".btn#save").bind("click", function(){
 			//save content
-            $.ajax({
-                url: 'index.php',
+            jQuery.ajax({
+                url: '/index.php',
                 type: 'POST',
                 data: {
-                    title: $(".diagram_title").text(),
+                    title: jQuery(".diagram_title").text(),
                     content: JSON.stringify(Model.define.elements)
                 }
             }).done(function(){
@@ -21,15 +21,15 @@ var UI = {
             })
 		});
 		//修改标题
-		$(".diagram_title").bind("click", function(){
-			if($(this).hasClass("readonly")){
+		jQuery(".diagram_title").bind("click", function(){
+			if(jQuery(this).hasClass("readonly")){
 				return;
 			}
-			var title = $(this).text();
-			$(this).hide();
-			$("#title_container").append("<input type='text'/>");
-			$("#title_container").children("input").val(title).select();
-			$("#title_container").children("input").bind("blur", function(){
+			var title = jQuery(this).text();
+			jQuery(this).hide();
+			jQuery("#title_container").append("<input type='text'/>");
+			jQuery("#title_container").children("input").val(title).select();
+			jQuery("#title_container").children("input").bind("blur", function(){
 				changeTitle();
 			}).bind("keydown", function(e){
 				if(e.keyCode == 13){
@@ -38,34 +38,34 @@ var UI = {
 			});
 		});
 		function changeTitle(){
-			var newTitle = $.trim($("#title_container").children("input").val());
-			var oldTitle = $(".diagram_title").text();
+			var newTitle = jQuery.trim(jQuery("#title_container").children("input").val());
+			var oldTitle = jQuery(".diagram_title").text();
 			var title = newTitle != "" ? newTitle : oldTitle;
-			$("title").text(title + " - Knowledge");
-			$(".diagram_title").text(title).show();
-			$("#title_container").children("input").remove();
+			jQuery("title").text(title + " - Knowledge");
+			jQuery(".diagram_title").text(title).show();
+			jQuery("#title_container").children("input").remove();
 		}
 		/** ############################Toolbar列表############################ */
 		//撤销
-		$("#bar_undo").button({
+		jQuery("#bar_undo").button({
 			onClick: function(){
 				MessageSource.undo();
 			}
 		});
 		//恢复
-		$("#bar_redo").button({
+		jQuery("#bar_redo").button({
 			onClick: function(){
 				MessageSource.redo();
 			}
 		});
 		//格式刷
-		$("#bar_brush").button({
+		jQuery("#bar_brush").button({
 			onClick: function(){
-				if($("#bar_brush").button("isSelected")){
+				if(jQuery("#bar_brush").button("isSelected")){
 					//取消格式刷
-					$("#bar_brush").button("unselect");
-					$("#designer_op_help").hide();
-					$(document).unbind("keydown.cancelbrush");
+					jQuery("#bar_brush").button("unselect");
+					jQuery("#designer_op_help").hide();
+					jQuery(document).unbind("keydown.cancelbrush");
 					Utils.selectCallback = null;
 				}else{
 					Designer.clipboard.brush();
@@ -73,28 +73,28 @@ var UI = {
 			}
 		});
 		//字体
-		$("#bar_font_family").button({
+		jQuery("#bar_font_family").button({
 			onMousedown: function(){
-				$("#font_list").dropdown({
-					target: $("#bar_font_family"),
+				jQuery("#font_list").dropdown({
+					target: jQuery("#bar_font_family"),
 					onSelect: function(item){
 						var font = item.text();
 						Designer.setFontStyle({fontFamily: font});
-						$("#bar_font_family").button("setText", font);
+						jQuery("#bar_font_family").button("setText", font);
 					}
 				});
 				//选中
-				var family = $("#bar_font_family").text().trim();
-				$("#font_list").children().each(function(){
-					if($(this).text() == family){
-						$("#font_list").dropdown("select", $(this));
+				var family = jQuery("#bar_font_family").text().trim();
+				jQuery("#font_list").children().each(function(){
+					if(jQuery(this).text() == family){
+						jQuery("#font_list").dropdown("select", jQuery(this));
 						return false;
 					}
 				});
 			}
 		});
 		//字号
-		$("#bar_font_size").spinner({
+		jQuery("#bar_font_size").spinner({
 			min: 12,
 			max: 100,
 			step: 1,
@@ -103,50 +103,50 @@ var UI = {
 				Designer.setFontStyle({size: val});
 			}
 		});
-		$("#bar_font_size").spinner("setValue", "13px");
+		jQuery("#bar_font_size").spinner("setValue", "13px");
 		//加粗
-		$("#bar_font_bold").button({
+		jQuery("#bar_font_bold").button({
 			onClick: function(){
-				var bold = !$("#bar_font_bold").button("isSelected");
+				var bold = !jQuery("#bar_font_bold").button("isSelected");
 				Designer.setFontStyle({bold: bold});
-				$("#bar_font_bold").toggleClass("selected");
+				jQuery("#bar_font_bold").toggleClass("selected");
 			}
 		});
 		//斜体
-		$("#bar_font_italic").button({
+		jQuery("#bar_font_italic").button({
 			onClick: function(){
-				var italic = !$("#bar_font_italic").button("isSelected");
+				var italic = !jQuery("#bar_font_italic").button("isSelected");
 				Designer.setFontStyle({italic: italic});
-				$("#bar_font_italic").toggleClass("selected");
+				jQuery("#bar_font_italic").toggleClass("selected");
 			}
 		});
 		//下划线
-		$("#bar_font_underline").button({
+		jQuery("#bar_font_underline").button({
 			onClick: function(){
-				var underline = !$("#bar_font_underline").button("isSelected");
+				var underline = !jQuery("#bar_font_underline").button("isSelected");
 				Designer.setFontStyle({underline: underline});
-				$("#bar_font_underline").toggleClass("selected");
+				jQuery("#bar_font_underline").toggleClass("selected");
 			}
 		});
 		//字体颜色
-		$("#bar_font_color").button({
+		jQuery("#bar_font_color").button({
 			onMousedown: function(){
-				var color = $("#bar_font_color").button("getColor");
-				$.colorpicker({
-					target: $("#bar_font_color"),
+				var color = jQuery("#bar_font_color").button("getColor");
+				jQuery.colorpicker({
+					target: jQuery("#bar_font_color"),
 					onSelect: function(color){
 						Designer.setFontStyle({color: color});
-						$("#bar_font_color").button("setColor", color)
+						jQuery("#bar_font_color").button("setColor", color)
 					},
 					color: color
 				});
 			}
 		});
 		//文本对齐
-		$("#bar_font_align").button({
+		jQuery("#bar_font_align").button({
 			onMousedown: function(){
-				$("#font_align_list").dropdown({
-					target: $("#bar_font_align"),
+				jQuery("#font_align_list").dropdown({
+					target: jQuery("#bar_font_align"),
 					onSelect: function(item){
 						var align = {};
 						align[item.attr("cate")] = item.attr("al");
@@ -156,23 +156,23 @@ var UI = {
 			}
 		});
 		//填充
-		$("#bar_fill").button({
+		jQuery("#bar_fill").button({
 			onMousedown: function(){
-				var color = $("#bar_fill").button("getColor");
-				$.colorpicker({
-					target: $("#bar_fill"),
+				var color = jQuery("#bar_fill").button("getColor");
+				jQuery.colorpicker({
+					target: jQuery("#bar_fill"),
 					onSelect: function(color){
 						Designer.setFillStyle({type: "solid", color: color});
-						$("#bar_fill").button("setColor", color)
+						jQuery("#bar_fill").button("setColor", color)
 					},
 					color: color,
 					extend: "<div id='bar_fill_gradient' title='Gradient' class='toolbar_button active'><div class='ico gradient'></div></div><div id='bar_fill_img' title='Image...' class='toolbar_button active'><div class='ico ico_img'></div></div><div id='bar_fill_more' class='toolbar_button active'>More...</div>"
 				});
-				$("#bar_fill_gradient").unbind().bind("click", function(){
+				jQuery("#bar_fill_gradient").unbind().bind("click", function(){
 					Designer.setFillStyle({type: "gradient"});
-					$("#color_picker").dropdown("close");
+					jQuery("#color_picker").dropdown("close");
 				});
-				$("#bar_fill_img").unbind().bind("click", function(){
+				jQuery("#bar_fill_img").unbind().bind("click", function(){
 					UI.showImageSelect(function(fileId, w, h){
 						Designer.setFillStyle({
 							type: "image",
@@ -181,33 +181,33 @@ var UI = {
 							imageH: h
 						});
 					});
-					$("#color_picker").dropdown("close");
+					jQuery("#color_picker").dropdown("close");
 				});
-				$("#bar_fill_more").unbind().bind("click", function(){
+				jQuery("#bar_fill_more").unbind().bind("click", function(){
 					Dock.showView("graphic");
-					$("#color_picker").dropdown("close");
+					jQuery("#color_picker").dropdown("close");
 				});
 			}
 		});
 		//线条颜色
-		$("#bar_line_color").button({
+		jQuery("#bar_line_color").button({
 			onMousedown: function(){
-				var color = $("#bar_line_color").button("getColor");
-				$.colorpicker({
-					target: $("#bar_line_color"),
+				var color = jQuery("#bar_line_color").button("getColor");
+				jQuery.colorpicker({
+					target: jQuery("#bar_line_color"),
 					onSelect: function(color){
 						Designer.setLineStyle({lineColor: color});
-						$("#bar_line_color").button("setColor", color)
+						jQuery("#bar_line_color").button("setColor", color)
 					},
 					color: color
 				});
 			}
 		});
 		//线条宽度
-		$("#bar_line_width").button({
+		jQuery("#bar_line_width").button({
 			onMousedown: function(){
-				$("#line_width_list").dropdown({
-					target: $("#bar_line_width"),
+				jQuery("#line_width_list").dropdown({
+					target: jQuery("#bar_line_width"),
 					onSelect: function(item){
 						var width = parseInt(item.text());
 						Designer.setLineStyle({lineWidth: width});
@@ -215,18 +215,18 @@ var UI = {
 				});
 				//选中
 				var width = Utils.getSelected()[0].lineStyle.lineWidth;
-				$("#line_width_list").children().each(function(){
-					if(parseInt($(this).text()) == width){
-						$("#line_width_list").dropdown("select", $(this));
+				jQuery("#line_width_list").children().each(function(){
+					if(parseInt(jQuery(this).text()) == width){
+						jQuery("#line_width_list").dropdown("select", jQuery(this));
 					}
 				});
 			}
 		});
 		//线条样式
-		$("#bar_line_style").button({
+		jQuery("#bar_line_style").button({
 			onMousedown: function(){
-				$("#line_style_list").dropdown({
-					target: $("#bar_line_style"),
+				jQuery("#line_style_list").dropdown({
+					target: jQuery("#bar_line_style"),
 					onSelect: function(item){
 						var lineStyle = item.attr("line");
 						Designer.setLineStyle({lineStyle: lineStyle});
@@ -234,96 +234,96 @@ var UI = {
 				});
 				//选中
 				var style = Utils.getSelected()[0].lineStyle.lineStyle;
-				var item = $("#line_style_list").children("li[line="+style+"]");
-				$("#line_style_list").dropdown("select", item);
+				var item = jQuery("#line_style_list").children("li[line="+style+"]");
+				jQuery("#line_style_list").dropdown("select", item);
 			}
 		});
 		//连接线类型
-		$("#bar_linkertype").button({
+		jQuery("#bar_linkertype").button({
 			onMousedown: function(){
-				$("#line_type_list").dropdown({
-					target: $("#bar_linkertype"),
+				jQuery("#line_type_list").dropdown({
+					target: jQuery("#bar_linkertype"),
 					onSelect: function(item){
 						var type = item.attr("tp");
 						Designer.setLinkerType(type);
 						var cls = item.children("div").attr("class");
-						$("#bar_linkertype").children("div:eq(0)").attr("class", cls);
+						jQuery("#bar_linkertype").children("div:eq(0)").attr("class", cls);
 					}
 				});
 			}
 		});
 		//开始箭头
-		$("#bar_beginarrow").button({
+		jQuery("#bar_beginarrow").button({
 			onMousedown: function(){
-				$("#beginarrow_list").dropdown({
-					target: $("#bar_beginarrow"),
+				jQuery("#beginarrow_list").dropdown({
+					target: jQuery("#bar_beginarrow"),
 					onSelect: function(item){
 						var arrow = item.attr("arrow");
 						Designer.setLineStyle({beginArrowStyle: arrow});
 						var cls = item.children("div").attr("class");
-						$("#bar_beginarrow").children("div:eq(0)").attr("class", cls);
+						jQuery("#bar_beginarrow").children("div:eq(0)").attr("class", cls);
 					}
 				});
 				//选中
 				var style = Utils.getSelectedLinkers()[0].lineStyle.beginArrowStyle;
-				var item = $("#beginarrow_list").children("li[arrow="+style+"]");
-				$("#beginarrow_list").dropdown("select", item);
+				var item = jQuery("#beginarrow_list").children("li[arrow="+style+"]");
+				jQuery("#beginarrow_list").dropdown("select", item);
 			}
 		});
 		//结束箭头
-		$("#bar_endarrow").button({
+		jQuery("#bar_endarrow").button({
 			onMousedown: function(){
-				$("#endarrow_list").dropdown({
-					target: $("#bar_endarrow"),
+				jQuery("#endarrow_list").dropdown({
+					target: jQuery("#bar_endarrow"),
 					onSelect: function(item){
 						var arrow = item.attr("arrow");
 						Designer.setLineStyle({endArrowStyle: arrow});
 						var cls = item.children("div").attr("class");
-						$("#bar_endarrow").children("div:eq(0)").attr("class", cls);
+						jQuery("#bar_endarrow").children("div:eq(0)").attr("class", cls);
 					}
 				});
 				//选中
 				var style = Utils.getSelectedLinkers()[0].lineStyle.endArrowStyle;
-				var item = $("#endarrow_list").children("li[arrow="+style+"]");
-				$("#endarrow_list").dropdown("select", item);
+				var item = jQuery("#endarrow_list").children("li[arrow="+style+"]");
+				jQuery("#endarrow_list").dropdown("select", item);
 			}
 		});
 		//顶层底层
-		$("#bar_front").button({
+		jQuery("#bar_front").button({
 			onClick: function(){
 				Designer.layerShapes("front");
 			}
 		});
-		$("#bar_back").button({
+		jQuery("#bar_back").button({
 			onClick: function(){
 				Designer.layerShapes("back");
 			}
 		});
 		//加解锁
-		$("#bar_lock").button({
+		jQuery("#bar_lock").button({
 			onClick: function(){
 				Designer.lockShapes();
 			}
 		});
-		$("#bar_unlock").button({
+		jQuery("#bar_unlock").button({
 			onClick: function(){
 				Designer.unlockShapes();
 			}
 		});
-		$("#bar_link").button({
+		jQuery("#bar_link").button({
 			onClick: function(){
 				UI.showInsertLink();
 			}
 		});
 		/** ##############菜单列表############## */
-		$("#menu_bar").children().bind("mousedown", function(e){
-			var tar = $(this);
+		jQuery("#menu_bar").children().bind("mousedown", function(e){
+			var tar = jQuery(this);
 			showMenuBarList(tar);
 			e.stopPropagation();
 		});
-		$("#menu_bar").children().bind("mouseenter", function(){
-			var tar = $(this);
-			if($("#ui_container").find(".options_menu:visible").length > 0){
+		jQuery("#menu_bar").children().bind("mouseenter", function(){
+			var tar = jQuery(this);
+			if(jQuery("#ui_container").find(".options_menu:visible").length > 0){
 				showMenuBarList(tar);
 			}
 		});
@@ -334,34 +334,34 @@ var UI = {
 			if(menuBar.hasClass("readonly")){
 				return;
 			}
-			$("#" + menuId).dropdown({
+			jQuery("#" + menuId).dropdown({
 				target: menuBar,
 				onSelect: function(item){
 					menuSelected(item);
 				}
 			});
 			if(menuId == "bar_list_page"){
-				var item = $("#bar_list_pagesize").children("li[w="+Model.define.page.width+"][h="+Model.define.page.height+"]");
+				var item = jQuery("#bar_list_pagesize").children("li[w="+Model.define.page.width+"][h="+Model.define.page.height+"]");
 				if(item.length > 0){
-					$("#bar_list_pagesize").dropdown("select", item);
+					jQuery("#bar_list_pagesize").dropdown("select", item);
 				}else{
-					$("#bar_list_pagesize").dropdown("select", $("#page_size_custom"));
+					jQuery("#bar_list_pagesize").dropdown("select", jQuery("#page_size_custom"));
 				}
-				$("#page_size_w").spinner("setValue", Model.define.page.width + "px");
-				$("#page_size_h").spinner("setValue", Model.define.page.height + "px");
-				item = $("#bar_list_padding").children("li[p="+Model.define.page.padding+"]");
-				$("#bar_list_padding").dropdown("select", item);
-				item = $("#bar_list_gridsize").children("li[s="+Model.define.page.gridSize+"]");
-				$("#bar_list_gridsize").dropdown("select", item);
+				jQuery("#page_size_w").spinner("setValue", Model.define.page.width + "px");
+				jQuery("#page_size_h").spinner("setValue", Model.define.page.height + "px");
+				item = jQuery("#bar_list_padding").children("li[p="+Model.define.page.padding+"]");
+				jQuery("#bar_list_padding").dropdown("select", item);
+				item = jQuery("#bar_list_gridsize").children("li[s="+Model.define.page.gridSize+"]");
+				jQuery("#bar_list_gridsize").dropdown("select", item);
 				if(Model.define.page.showGrid){
-					$("#bar_list_page").dropdown("select", $("#bar_list_page").children("li[ac=set_page_showgrid]")); 
+					jQuery("#bar_list_page").dropdown("select", jQuery("#bar_list_page").children("li[ac=set_page_showgrid]")); 
 				}else{
-					$("#bar_list_page").dropdown("unselect", $("#bar_list_page").children("li[ac=set_page_showgrid]"));
+					jQuery("#bar_list_page").dropdown("unselect", jQuery("#bar_list_page").children("li[ac=set_page_showgrid]"));
 				}
 			}else if(menuId == "bar_list_view"){
-				var item = $("#bar_list_view").children(".static[zoom='"+Designer.config.scale+"']");
+				var item = jQuery("#bar_list_view").children(".static[zoom='"+Designer.config.scale+"']");
 				if(item.length){
-					$("#bar_list_page").dropdown("select", item);
+					jQuery("#bar_list_page").dropdown("select", item);
 				}
 			}
 		}
@@ -370,13 +370,13 @@ var UI = {
 			var action = item.attr("ac");
 			//编辑菜单
 			if(action == "rename"){
-				$(".diagram_title").trigger("click");
+				jQuery(".diagram_title").trigger("click");
 			}else if(action == "close"){
 				window.location.href = "/diagraming/back?id=" + chartId;
 			}else if(action == "saveAs"){
 				UI.showSaveAs();
 			}else if(action == "export"){
-				$("#export_dialog").dlg();
+				jQuery("#export_dialog").dlg();
 			}else if(action == "undo"){
 				MessageSource.undo();
 			}else if(action == "redo"){
@@ -484,7 +484,7 @@ var UI = {
 				UI.gettingStart(); 
 			}
 		}
-		$("#page_size_w").spinner({
+		jQuery("#page_size_w").spinner({
 			min: 200,
 			unit: "px",
 			step: 100,
@@ -492,7 +492,7 @@ var UI = {
 				Designer.setPageStyle({width: val});
 			}
 		});
-		$("#page_size_h").spinner({
+		jQuery("#page_size_h").spinner({
 			min: 200,
 			unit: "px",
 			step: 100,
@@ -501,15 +501,15 @@ var UI = {
 			}
 		});
 		//给设置页面背景色，放一个colorpicker
-		var pickerHtml = $("#color_picker").html();
-		var newPicker = $("<div class='menu color_picker extend_menu'>"+pickerHtml+"</div>").appendTo($("#bar_page_color"));
+		var pickerHtml = jQuery("#color_picker").html();
+		var newPicker = jQuery("<div class='menu color_picker extend_menu'>"+pickerHtml+"</div>").appendTo(jQuery("#bar_page_color"));
 		newPicker.css("right", "-179px");
 		newPicker.children(".color_items").children("div").unbind().bind("click", function(){
-			var color = $(this).css("background-color");
+			var color = jQuery(this).css("background-color");
 			color = color.replace(/\s/g, "");
 			color = color.substring(4, color.length - 1);
 			Designer.setPageStyle({backgroundColor: color});
-			$("#bar_list_page").dropdown("close");
+			jQuery("#bar_list_page").dropdown("close");
 		});
 		//抛出事件，控制状态
 		Designer.events.push("selectChanged", 0);
@@ -530,35 +530,35 @@ var UI = {
 		var lockedCount = Utils.getSelectedLockedIds().length;
 		var groupCount = Utils.getSelectedGroups().length;
 		//排列菜单
-		var arrangeMenu = $("#bar_list_arrange");
+		var arrangeMenu = jQuery("#bar_list_arrange");
 		if(count == 0){
-			$(".toolbar").find(".selected").removeClass("selected");
+			jQuery(".toolbar").find(".selected").removeClass("selected");
 			//没有选中，让某些按钮失效
-			if ($("#designer_op_help").is(":visible")) {
-				$("#bar_brush").button("enable");
-				$("#bar_brush").button("select");
+			if (jQuery("#designer_op_help").is(":visible")) {
+				jQuery("#bar_brush").button("enable");
+				jQuery("#bar_brush").button("select");
 			}else{
-				$("#bar_brush").button("disable");
+				jQuery("#bar_brush").button("disable");
 			}
 			//字体
-			$("#bar_font_family").button("disable");
-			$("#bar_font_size").button("disable");
-			$("#bar_font_bold").button("disable");
-			$("#bar_font_italic").button("disable");
-			$("#bar_font_underline").button("disable");
-			$("#bar_font_color").button("disable");
-			$("#bar_font_align").button("disable");
+			jQuery("#bar_font_family").button("disable");
+			jQuery("#bar_font_size").button("disable");
+			jQuery("#bar_font_bold").button("disable");
+			jQuery("#bar_font_italic").button("disable");
+			jQuery("#bar_font_underline").button("disable");
+			jQuery("#bar_font_color").button("disable");
+			jQuery("#bar_font_align").button("disable");
 			//线条
-			$("#bar_line_color").button("disable");
-			$("#bar_line_width").button("disable");
-			$("#bar_line_style").button("disable");
+			jQuery("#bar_line_color").button("disable");
+			jQuery("#bar_line_width").button("disable");
+			jQuery("#bar_line_style").button("disable");
 			//顶层底层
-			$("#bar_front").button("disable");
-			$("#bar_back").button("disable");
+			jQuery("#bar_front").button("disable");
+			jQuery("#bar_back").button("disable");
 			//锁定
-			$("#bar_lock").button("disable");
+			jQuery("#bar_lock").button("disable");
 			//编辑菜单
-			var editMenu = $("#bar_list_edit");
+			var editMenu = jQuery("#bar_list_edit");
 			editMenu.children("li[ac=cut]").menuitem("disable");
 			editMenu.children("li[ac=copy]").menuitem("disable");
 			editMenu.children("li[ac=duplicate]").menuitem("disable");
@@ -572,28 +572,28 @@ var UI = {
 			arrangeMenu.children("li[ac=lock]").menuitem("disable");
 		}else{
 			//选中，让某些按钮激活
-			$("#bar_brush").button("enable");
-			if ($("#designer_op_help").is(":visible")) {
-				$("#bar_brush").button("select");
+			jQuery("#bar_brush").button("enable");
+			if (jQuery("#designer_op_help").is(":visible")) {
+				jQuery("#bar_brush").button("select");
 			}
-			$("#bar_font_family").button("enable");
-			$("#bar_font_size").button("enable");
-			$("#bar_font_bold").button("enable");
-			$("#bar_font_italic").button("enable");
-			$("#bar_font_underline").button("enable");
-			$("#bar_font_color").button("enable");
-			$("#bar_font_align").button("enable");
+			jQuery("#bar_font_family").button("enable");
+			jQuery("#bar_font_size").button("enable");
+			jQuery("#bar_font_bold").button("enable");
+			jQuery("#bar_font_italic").button("enable");
+			jQuery("#bar_font_underline").button("enable");
+			jQuery("#bar_font_color").button("enable");
+			jQuery("#bar_font_align").button("enable");
 			//线条
-			$("#bar_line_color").button("enable");
-			$("#bar_line_width").button("enable");
-			$("#bar_line_style").button("enable");
+			jQuery("#bar_line_color").button("enable");
+			jQuery("#bar_line_width").button("enable");
+			jQuery("#bar_line_style").button("enable");
 			//顶层底层
-			$("#bar_front").button("enable");
-			$("#bar_back").button("enable");
+			jQuery("#bar_front").button("enable");
+			jQuery("#bar_back").button("enable");
 			//锁定
-			$("#bar_lock").button("enable");
+			jQuery("#bar_lock").button("enable");
 			//编辑菜单
-			var editMenu = $("#bar_list_edit");
+			var editMenu = jQuery("#bar_list_edit");
 			editMenu.children("li[ac=cut]").menuitem("enable");
 			editMenu.children("li[ac=copy]").menuitem("enable");
 			editMenu.children("li[ac=duplicate]").menuitem("enable");
@@ -607,86 +607,86 @@ var UI = {
 			arrangeMenu.children("li[ac=lock]").menuitem("enable");
 			//设置Toolbar样式
 			var shape = Model.getShapeById(selectedIds[0]);
-			$("#bar_font_family").button("setText", shape.fontStyle.fontFamily);
-			$("#bar_font_size").spinner("setValue", shape.fontStyle.size + "px");
+			jQuery("#bar_font_family").button("setText", shape.fontStyle.fontFamily);
+			jQuery("#bar_font_size").spinner("setValue", shape.fontStyle.size + "px");
 			if(shape.fontStyle.bold){
-				$("#bar_font_bold").button("select");
+				jQuery("#bar_font_bold").button("select");
 			}else{
-				$("#bar_font_bold").button("unselect");
+				jQuery("#bar_font_bold").button("unselect");
 			}
 			if(shape.fontStyle.italic){
-				$("#bar_font_italic").button("select");
+				jQuery("#bar_font_italic").button("select");
 			}else{
-				$("#bar_font_italic").button("unselect");
+				jQuery("#bar_font_italic").button("unselect");
 			}
 			if(shape.fontStyle.underline){
-				$("#bar_font_underline").button("select");
+				jQuery("#bar_font_underline").button("select");
 			}else{
-				$("#bar_font_underline").button("unselect");
+				jQuery("#bar_font_underline").button("unselect");
 			}
-			$("#bar_font_color").button("setColor", shape.fontStyle.color);
-			$("#bar_line_color").button("setColor", shape.lineStyle.lineColor);
+			jQuery("#bar_font_color").button("setColor", shape.fontStyle.color);
+			jQuery("#bar_line_color").button("setColor", shape.lineStyle.lineColor);
 		}
 		//通过图形的数量，判读是否可以填充
 		if(shapeCount == 0){
-			$("#bar_fill").button("disable");
+			jQuery("#bar_fill").button("disable");
 		}else{
-			$("#bar_fill").button("enable");
+			jQuery("#bar_fill").button("enable");
 			var shape = Model.getShapeById(shapeIds[0]);
 			//图形填充
 			if(shape.fillStyle.type == "solid"){
-				$("#bar_fill").button("setColor", shape.fillStyle.color);
+				jQuery("#bar_fill").button("setColor", shape.fillStyle.color);
 			}else if(shape.fillStyle.type == "gradient"){
-				$("#bar_fill").button("setColor", shape.fillStyle.endColor);
+				jQuery("#bar_fill").button("setColor", shape.fillStyle.endColor);
 			}
 		}
 		if(shapeCount != 1){
-			$("#bar_link").button("disable");
+			jQuery("#bar_link").button("disable");
 		}else{
-			$("#bar_link").button("enable");
+			jQuery("#bar_link").button("enable");
 		}
 		//通过连接线的数量，判断是否可以修改箭头等
 		if(linkerCount == 0){
-			$("#bar_linkertype").button("disable");
-			$("#bar_beginarrow").button("disable");
-			$("#bar_endarrow").button("disable");
+			jQuery("#bar_linkertype").button("disable");
+			jQuery("#bar_beginarrow").button("disable");
+			jQuery("#bar_endarrow").button("disable");
 		}else{
-			$("#bar_linkertype").button("enable");
-			$("#bar_beginarrow").button("enable");
-			$("#bar_endarrow").button("enable");
+			jQuery("#bar_linkertype").button("enable");
+			jQuery("#bar_beginarrow").button("enable");
+			jQuery("#bar_endarrow").button("enable");
 			var shape = Model.getShapeById(linkerIds[0]);
 			//设置Toolbar的线条样式
-			$("#bar_linkertype").children("div:eq(0)").attr("class", "ico linkertype_" + shape.linkerType.toLowerCase());
-			$("#bar_beginarrow").children("div:eq(0)").attr("class", "ico ico_arrow larrow_" + shape.lineStyle.beginArrowStyle.toLowerCase());
-			$("#bar_endarrow").children("div:eq(0)").attr("class", "ico ico_arrow rarrow_" + shape.lineStyle.endArrowStyle.toLowerCase());
+			jQuery("#bar_linkertype").children("div:eq(0)").attr("class", "ico linkertype_" + shape.linkerType.toLowerCase());
+			jQuery("#bar_beginarrow").children("div:eq(0)").attr("class", "ico ico_arrow larrow_" + shape.lineStyle.beginArrowStyle.toLowerCase());
+			jQuery("#bar_endarrow").children("div:eq(0)").attr("class", "ico ico_arrow rarrow_" + shape.lineStyle.endArrowStyle.toLowerCase());
 		}
 		//通过锁定的数量，判断是否可以解除锁定
 		if(lockedCount == 0){
-			$("#bar_unlock").button("disable");
+			jQuery("#bar_unlock").button("disable");
 			arrangeMenu.children("li[ac=unlock]").menuitem("disable");
 		}else{
-			$("#bar_unlock").button("enable");
+			jQuery("#bar_unlock").button("enable");
 			arrangeMenu.children("li[ac=unlock]").menuitem("enable");
 		}
 		//是否激活组合、对齐，条件是选中图形要不少于2个
 		if(count < 2){
 			arrangeMenu.children("li[ac=group]").menuitem("disable");
-			$("#bar_arrange_align").menuitem("disable");
+			jQuery("#bar_arrange_align").menuitem("disable");
 		}else{
 			arrangeMenu.children("li[ac=group]").menuitem("enable");
-			$("#bar_arrange_align").menuitem("enable");
+			jQuery("#bar_arrange_align").menuitem("enable");
 		}
 		//是否激活匹配大小，条件是选中形状要不少于2个
 		if(shapeCount < 2){
-			$("#bar_arrange_match").menuitem("disable");
+			jQuery("#bar_arrange_match").menuitem("disable");
 		}else{
-			$("#bar_arrange_match").menuitem("enable");
+			jQuery("#bar_arrange_match").menuitem("enable");
 		}
 		//是否激活排列图形菜单，条件是选中图形要不少于3个
 		if(count < 3){
-			$("#bar_arrange_dist").menuitem("disable");
+			jQuery("#bar_arrange_dist").menuitem("disable");
 		}else{
-			$("#bar_arrange_dist").menuitem("enable");
+			jQuery("#bar_arrange_dist").menuitem("enable");
 		}
 		//通过组合的数量，判断是否可以取消组合
 		if(groupCount == 0){
@@ -705,13 +705,13 @@ var UI = {
 	 * 打开插入链接
 	 */
 	showInsertLink: function(){
-		$("#link_dialog").dlg();
+		jQuery("#link_dialog").dlg();
 		var addr = Utils.getSelected()[0].link;
 		if(!addr){
 			addr = "";
 		}
-		$("#linkto_addr").val(addr).select();
-		$("#linkto_addr").unbind().bind("keydown", function(e){
+		jQuery("#linkto_addr").val(addr).select();
+		jQuery("#linkto_addr").unbind().bind("keydown", function(e){
 			if(e.keyCode == 13){
 				UI.setLink();
 			}
@@ -721,15 +721,15 @@ var UI = {
 	 * 设置连接
 	 */
 	setLink: function(){
-		var newLink = $("#linkto_addr").val();
-		$.ajax({
+		var newLink = jQuery("#linkto_addr").val();
+		jQuery.ajax({
 			url: '/note/check/',
 			type: 'GET',
 			data: {link: newLink},
 		})
 		.done(function(data) {
 			if(data.indexOf("correct guid is :") == -1){
-				$("#link_dialog").append(data);
+				jQuery("#link_dialog").append(data);
 				return;
 			}
 			//add link attribute
@@ -745,10 +745,10 @@ var UI = {
 				vertical: "topedge"
 			};
 			Designer.addDataAttribute(newAttr);
-			$('#link_dialog').dlg('close');
+			jQuery('#link_dialog').dlg('close');
 		})
 		.fail(function(data) {
-			$("#link_dialog").append(data);
+			jQuery("#link_dialog").append(data);
 		})
 		.always(function() {
 		});
@@ -770,15 +770,15 @@ var UI = {
 			this.imageSelectedCallback = null;
 		}
 		this.fetchingRequest = null;
-		var height = $(window).height() - 200;
+		var height = jQuery(window).height() - 200;
 		if(height > 550){
 			height = 550;
 		}else if(height < 200){
 			height = 200;
 		}
-		$(".image_list").height(height);
+		jQuery(".image_list").height(height);
 //		this.showImageSelectContent("upload");
-		$("#image_dialog").dlg({
+		jQuery("#image_dialog").dlg({
 			onClose: function(){
 				if(UI.fetchingRequest){
 					UI.fetchingRequest.abort();
@@ -786,25 +786,25 @@ var UI = {
 			}
 		});
 		//加载用户图片
-		if($("#image_select_upload").is(":visible")){
+		if(jQuery("#image_select_upload").is(":visible")){
 			UI.loadUserImages();
 		};
 		//左侧分类绑定事件
-		$(".image_sources").children().unbind().bind("click", function(){
-			UI.showImageSelectContent($(this).attr("ty"));
+		jQuery(".image_sources").children().unbind().bind("click", function(){
+			UI.showImageSelectContent(jQuery(this).attr("ty"));
 		});
 		//上传
-		$("#upload_img_res").empty();
-		$("#input_upload_image").unbind().bind("change", function(){
-			$("#upload_img_res").html("<span style='color: #666'>Uploading...</span>");
-			$("#frm_upload_image").submitForm({
+		jQuery("#upload_img_res").empty();
+		jQuery("#input_upload_image").unbind().bind("change", function(){
+			jQuery("#upload_img_res").html("<span style='color: #666'>Uploading...</span>");
+			jQuery("#frm_upload_image").submitForm({
 				success: function(result){
 					if(result.result == "type_wrong"){
-						$("#upload_img_res").html("This file is not an image, please select another one");
+						jQuery("#upload_img_res").html("This file is not an image, please select another one");
 					}else if(result.result == "size_wrong"){
-						$("#upload_img_res").html("This file's size is incorrect, limit 2M");
+						jQuery("#upload_img_res").html("This file's size is incorrect, limit 2M");
 					}else if(result.result == "exception"){
-						$("#upload_img_res").html("Sorry, can't use this image, please choose another one");
+						jQuery("#upload_img_res").html("Sorry, can't use this image, please choose another one");
 					}else{
 						var img = result.image;
 						UI.setShapeImage(img.fileId, img.imageW, img.imageH);
@@ -813,99 +813,99 @@ var UI = {
 			});
 		});
 		//输入URL
-		$("#input_img_url").val("");
-		$("#img_url_area").empty();
+		jQuery("#input_img_url").val("");
+		jQuery("#img_url_area").empty();
 		var oldUrl = "";
 		function urlChanged(){
-			var url = $("#input_img_url").val().trim();
+			var url = jQuery("#input_img_url").val().trim();
 			if(url != oldUrl){
 				oldUrl = url
 				if(url != ""){
 					if(url.indexOf("http") < 0){
 						url = "http://" + url;
 					}
-					$("#img_url_area").html("<span class='img_url_loading_tip'>Loading Image Preview...</span>");
-					var newImage = $("<img class='img_url_loading' src='"+url+"'/>").appendTo("#img_url_area");
+					jQuery("#img_url_area").html("<span class='img_url_loading_tip'>Loading Image Preview...</span>");
+					var newImage = jQuery("<img class='img_url_loading' src='"+url+"'/>").appendTo("#img_url_area");
 					newImage.unbind().bind("load", function(){
 						newImage.show().addClass("img_url_loaded");
-						$(".img_url_loading_tip").remove();
+						jQuery(".img_url_loading_tip").remove();
 					}).bind("error", function(){
-						$("#img_url_area").html("<div class='img_url_error'>We can't find the image at that URL.<ul><li>Please check the address for typing errors.</li><li>Make sure the image is public.</li><ul></div>");
+						jQuery("#img_url_area").html("<div class='img_url_error'>We can't find the image at that URL.<ul><li>Please check the address for typing errors.</li><li>Make sure the image is public.</li><ul></div>");
 					});
 				}
 			}
 		}
-		$("#input_img_url").unbind().bind("paste", function(){
+		jQuery("#input_img_url").unbind().bind("paste", function(){
 			urlChanged();
 		}).bind("keyup", function(){
 			urlChanged();
 		});
 		//搜索
-		$("#input_img_search").unbind().bind("keydown", function(e){
+		jQuery("#input_img_search").unbind().bind("keydown", function(e){
 			if(e.keyCode == 13){
 				UI.searchImgByGoogle();
 			}
 		});
-		$("#btn_img_search").unbind().bind("click", function(){
+		jQuery("#btn_img_search").unbind().bind("click", function(){
 			UI.searchImgByGoogle();
 		});
 		//完成按钮
-		$("#set_image_submit").button("enable");
-		$("#set_image_submit").button({
+		jQuery("#set_image_submit").button("enable");
+		jQuery("#set_image_submit").button({
 			onClick: function(){
-				var currentTab = $(".image_sources").children(".active").attr("ty");
+				var currentTab = jQuery(".image_sources").children(".active").attr("ty");
 				if(currentTab == "upload"){
-					var selectedImg = $("#user_image_items").children(".image_item_selected");
+					var selectedImg = jQuery("#user_image_items").children(".image_item_selected");
 					if(selectedImg.length > 0){
 						var fileId = selectedImg.attr("fileId");
 						var imageW = selectedImg.attr("w");
 						var imageH = selectedImg.attr("h");
 						UI.setShapeImage(fileId, imageW, imageH);
 					}else{
-						$("#image_dialog").dlg("close");
+						jQuery("#image_dialog").dlg("close");
 					}
 				}else if(currentTab == "url"){
-					if($(".img_url_loaded").length > 0){
-						var url = $(".img_url_loaded").attr("src");
+					if(jQuery(".img_url_loaded").length > 0){
+						var url = jQuery(".img_url_loaded").attr("src");
 						UI.setShapeImageByURL(url);
 					}else{
-						$("#image_dialog").dlg("close");
+						jQuery("#image_dialog").dlg("close");
 					}
 				}else{
 					//搜索
-					var selectedImg = $("#google_image_items").children(".image_item_selected");
+					var selectedImg = jQuery("#google_image_items").children(".image_item_selected");
 					if(selectedImg.length > 0){
 						var url = selectedImg.attr("u");
 						UI.setShapeImageByURL(url);
 					}else{
-						$("#image_dialog").dlg("close");
+						jQuery("#image_dialog").dlg("close");
 					}
 				}
 			}
 		});
 		//取消按钮
-		$("#set_image_cancel").button({
+		jQuery("#set_image_cancel").button({
 			onClick: function(){
-				$("#image_dialog").dlg("close");
+				jQuery("#image_dialog").dlg("close");
 			}
 		});
-		$("#set_image_text").empty();
+		jQuery("#set_image_text").empty();
 	},
 	/**
 	 * 显示图片设置类型
 	 */
 	showImageSelectContent: function(type){
-		$(".image_list").hide();
-		$("#image_select_" + type).show().find("input[type=text]").select();
-		$(".image_sources").children().removeClass("active");
-		$(".image_sources").children("li[ty="+type+"]").addClass("active");
+		jQuery(".image_list").hide();
+		jQuery("#image_select_" + type).show().find("input[type=text]").select();
+		jQuery(".image_sources").children().removeClass("active");
+		jQuery(".image_sources").children("li[ty="+type+"]").addClass("active");
 	},
 	/**
 	 * 加载用户图片
 	 */
 	loadUserImages: function(refresh){
-		$("#user_image_items").empty();
-		$.ajax({
+		jQuery("#user_image_items").empty();
+		jQuery.ajax({
 			url: "/user_image/list",
 			success: function(data){
 				if(data.images){
@@ -913,11 +913,11 @@ var UI = {
 						var img = data.images[i];
 						UI.appendUserImage(img);
 					}
-					$("#user_image_items").append("<div style='clear: both'></div>");
+					jQuery("#user_image_items").append("<div style='clear: both'></div>");
 				}
 			}
 		});
-		$("#user_image_items").attr("loaded", "true");
+		jQuery("#user_image_items").attr("loaded", "true");
 	},
 	searchIndex: 0,
 	searchKeywords: "",
@@ -925,24 +925,24 @@ var UI = {
 	 * 通过Google搜索图片
 	 */
 	searchImgByGoogle: function(){
-		var keywords = $("#input_img_search").val();
+		var keywords = jQuery("#input_img_search").val();
 		if(keywords.trim() != ""){
-			$("#google_image_items").empty();
+			jQuery("#google_image_items").empty();
 			this.searchKeywords = encodeURI(keywords);
 			this.searchIndex = 0;
 			this.loadGoogleImg();
 		}else{
-			$("#input_img_search").focus();
+			jQuery("#input_img_search").focus();
 		}
 	},
 	/**
 	 * 加载Google图片 
 	 */
 	loadGoogleImg: function(){
-		$.getScript("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+this.searchKeywords+"&rsz=8&start="+(this.searchIndex * 16)+"&callback=UI.googleImgCallback");
-		$.getScript("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+this.searchKeywords+"&rsz=8&start="+(this.searchIndex * 16 + 8)+"&callback=UI.googleImgCallback");
-		$(".gg_img_more").remove();
-		$("#google_image_items").append("<div class='img_gg_loading_tip'>Loading Images...</div>");
+		jQuery.getScript("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+this.searchKeywords+"&rsz=8&start="+(this.searchIndex * 16)+"&callback=UI.googleImgCallback");
+		jQuery.getScript("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+this.searchKeywords+"&rsz=8&start="+(this.searchIndex * 16 + 8)+"&callback=UI.googleImgCallback");
+		jQuery(".gg_img_more").remove();
+		jQuery("#google_image_items").append("<div class='img_gg_loading_tip'>Loading Images...</div>");
 		this.searchIndex++;
 	},
 	/**
@@ -956,39 +956,39 @@ var UI = {
 			var item = results[i];
 			UI.appendGoogleImage(item);
 		}
-		$("#google_image_items").append("<div style='clear: both'></div>");
-		$(".img_gg_loading_tip").remove();
-		$(".gg_img_more").remove();
+		jQuery("#google_image_items").append("<div style='clear: both'></div>");
+		jQuery(".img_gg_loading_tip").remove();
+		jQuery(".gg_img_more").remove();
 		if(this.searchIndex <= 3){
-			$("#google_image_items").append("<div onclick='UI.loadGoogleImg()' class='gg_img_more toolbar_button active'>Show More Results...</div>");
+			jQuery("#google_image_items").append("<div onclick='UI.loadGoogleImg()' class='gg_img_more toolbar_button active'>Show More Results...</div>");
 		}
 	},
 	/**
 	 * 添加一个用户图片
 	 */
 	appendUserImage: function(img){
-		var box = $("<div class='image_item' id='"+img.imageId+"' fileId='"+img.fileId+"' w='"+img.imageW+"' h='"+img.imageH+"'></div>").appendTo($("#user_image_items"));
+		var box = jQuery("<div class='image_item' id='"+img.imageId+"' fileId='"+img.fileId+"' w='"+img.imageW+"' h='"+img.imageH+"'></div>").appendTo(jQuery("#user_image_items"));
 		box.unbind().bind("click", function(){
-			$(".image_item_selected").removeClass('image_item_selected');
-			$(this).addClass('image_item_selected');
+			jQuery(".image_item_selected").removeClass('image_item_selected');
+			jQuery(this).addClass('image_item_selected');
 		}).bind("mouseenter", function(){
-			var target = $(this);
-			var remove = $("<div class='ico ico_remove_red'></div>").appendTo(target);
+			var target = jQuery(this);
+			var remove = jQuery("<div class='ico ico_remove_red'></div>").appendTo(target);
 			var id = target.attr("id");
 			remove.bind("click", function(){
 				target.fadeOut();
-				$.ajax({
+				jQuery.ajax({
 					url: "/user_image/remove",
 					data: {imageId: id}
 				});
 			});
 		}).bind("mouseleave", function(){
-			$(this).find(".ico_remove_red").remove();
+			jQuery(this).find(".ico_remove_red").remove();
 		});
 		var location = "/file/id/"+img.fileId+"/diagram_user_image";
-		var newImage = $("<img src='"+location+"'/>").appendTo(box);
+		var newImage = jQuery("<img src='"+location+"'/>").appendTo(box);
 		newImage.bind("load", function(){
-			$(this).css("margin-top", (140 - $(this).height())/2);
+			jQuery(this).css("margin-top", (140 - jQuery(this).height())/2);
 		});
 	},
 	/**
@@ -996,14 +996,14 @@ var UI = {
 	 */
 	appendGoogleImage: function(img){
 		var title = img.title + " (" + img.width + " × " + img.height + ")";
-		var box = $("<div class='image_item' u='"+img.url+"' title='"+title+"'></div>").appendTo($("#google_image_items"));
+		var box = jQuery("<div class='image_item' u='"+img.url+"' title='"+title+"'></div>").appendTo(jQuery("#google_image_items"));
 		box.unbind().bind("click", function(){
-			$(".image_item_selected").removeClass('image_item_selected');
-			$(this).addClass('image_item_selected');
+			jQuery(".image_item_selected").removeClass('image_item_selected');
+			jQuery(this).addClass('image_item_selected');
 		});
-		var newImage = $("<img src='"+img.tbUrl+"'/>").appendTo(box);
+		var newImage = jQuery("<img src='"+img.tbUrl+"'/>").appendTo(box);
 		newImage.bind("load", function(){
-			$(this).css("margin-top", (140 - $(this).height())/2);
+			jQuery(this).css("margin-top", (140 - jQuery(this).height())/2);
 		});
 	},
 	/**
@@ -1014,7 +1014,7 @@ var UI = {
 		if(this.imageSelectedCallback){
 			this.imageSelectedCallback(fileId, w, h);
 		}
-		$("#image_dialog").dlg("close");
+		jQuery("#image_dialog").dlg("close");
 	},
 	/**
 	 * 加载URL图片的ajax请求对象
@@ -1026,17 +1026,17 @@ var UI = {
 	 * @param {} url
 	 */
 	setShapeImageByURL: function(url){
-		$("#set_image_text").removeClass("errored").text("Setting image, please wait...");
-		$("#set_image_submit").button("disable");
-		UI.fetchingRequest = $.ajax({
+		jQuery("#set_image_text").removeClass("errored").text("Setting image, please wait...");
+		jQuery("#set_image_submit").button("disable");
+		UI.fetchingRequest = jQuery.ajax({
 			url: "/user_image/reference",
 			data: {url: url},
 			success: function(result){
-				$("#set_image_submit").button("enable");
+				jQuery("#set_image_submit").button("enable");
 				if(result.result == "exception"){
-					$("#set_image_text").addClass("errored").html("Sorry, can't use this image, please choose another one");
+					jQuery("#set_image_text").addClass("errored").html("Sorry, can't use this image, please choose another one");
 				}else{
-					$("#set_image_text").empty();
+					jQuery("#set_image_text").empty();
 					var img = result.image;
 					UI.setShapeImage(img.fileId, img.imageW, img.imageH);
 				}
@@ -1053,10 +1053,10 @@ var UI = {
 	insertImage: function(fileId, w, h){
 		w = parseInt(w);
 		h = parseInt(h);
-		var layout = $("#designer_layout");
+		var layout = jQuery("#designer_layout");
 		var centerX = layout.width()/2 + layout.offset().left;
 		var centerY = layout.height()/2 + layout.offset().top;
-		var pos = Utils.getRelativePos(centerX, centerY, $("#designer_canvas"));
+		var pos = Utils.getRelativePos(centerX, centerY, jQuery("#designer_canvas"));
 		var shape = Model.create("standardImage", pos.x.restoreScale() - w/2, pos.y.restoreScale() - h/2);
 		shape.props.w = w;
 		shape.props.h = h;
@@ -1071,70 +1071,70 @@ var UI = {
 	 */
 	doExport: function(){
 		var definition = JSON.stringify(Model.define);
-		$("#export_definition").val(definition);
-		$("#export_title").val($(".diagram_title").text());
-		$("#export_form").submit();
-		$('#export_dialog').dlg('close');
+		jQuery("#export_definition").val(definition);
+		jQuery("#export_title").val(jQuery(".diagram_title").text());
+		jQuery("#export_form").submit();
+		jQuery('#export_dialog').dlg('close');
 	},
 	/**
 	 * 展示hotkey列表
 	 */
 	showHotKey: function(){
-		var height = $(window).height() - 175;
+		var height = jQuery(window).height() - 175;
 		if(height > 500){
 			height = 500+"px";
 		}
-		$("#hotkey_list").dlg();
-		$("#hotkey_list").css({"top":"28px"});
-		$("#hotkey_list .dialog_content").css({"height":height});
+		jQuery("#hotkey_list").dlg();
+		jQuery("#hotkey_list").css({"top":"28px"});
+		jQuery("#hotkey_list .dialog_content").css({"height":height});
 	},
 	/**
 	 * 显示反馈dialog
 	 */
 	showFeedBack: function(){
-		$("#send_feedback").css({
+		jQuery("#send_feedback").css({
     		width: "auto",
     		height: "auto"
     	});
-		var sendFeedBack = $("#send_feedback");
+		var sendFeedBack = jQuery("#send_feedback");
 		sendFeedBack.dlg();
-		$("#feedback_email").focus();
-		$("#feedback_message").val("");
-		$(".feedback_error_email_format").hide();
-		$(".feedback_error_msg").hide();
+		jQuery("#feedback_email").focus();
+		jQuery("#feedback_message").val("");
+		jQuery(".feedback_error_email_format").hide();
+		jQuery(".feedback_error_msg").hide();
 	},
 	/**
 	 * 发送反馈
 	 */
 	sendFeedBack: function(dom){
-		$(".feedback_error_email_format").hide();
-		$(".feedback_error_msg").hide();
-		var email = $.trim($("#feedback_email").val());
+		jQuery(".feedback_error_email_format").hide();
+		jQuery(".feedback_error_msg").hide();
+		var email = jQuery.trim(jQuery("#feedback_email").val());
 		var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
 		if(!reg.test(email)){
-			$("#feedback_email").focus();
-			$(".feedback_error_email_format").show();
+			jQuery("#feedback_email").focus();
+			jQuery(".feedback_error_email_format").show();
 			return;
 		}
-		var feedbackMessage = $.trim($("#feedback_message").val());
+		var feedbackMessage = jQuery.trim(jQuery("#feedback_message").val());
 		if(feedbackMessage == ""){
-			$("#feedback_message").val("").focus();
-			$(".feedback_error_msg").show();
+			jQuery("#feedback_message").val("").focus();
+			jQuery(".feedback_error_msg").show();
 			return;
 		}
 		Util.ajax({
 			url:"/support/save_ask",
 			data:{
 				content: feedbackMessage,
-				username: $("#feedback_name").val(),
+				username: jQuery("#feedback_name").val(),
 				email: email,
 				url: location.href
 			},
 	  	    success:function(data){
-	  	    	$(".dlg_mask").remove();
-				$("#send_feedback").animate({
-		    		left: $(window).width(),
-		    		top: $(window).height(),
+	  	    	jQuery(".dlg_mask").remove();
+				jQuery("#send_feedback").animate({
+		    		left: jQuery(window).width(),
+		    		top: jQuery(window).height(),
 		    		width: 0,
 		    		height: 0,
 		    		opacty: 0.2
@@ -1149,30 +1149,30 @@ var UI = {
 		this.showStartStep(1);
 	},
 	showStartStep: function(step, dom){
-		$(".mark_content").hide();
-		var content = $(".mark"+step+"_content");
+		jQuery(".mark_content").hide();
+		var content = jQuery(".mark"+step+"_content");
 		content.show();
 		var top;
 		var left;
 		if(step == 1){
-			top = $("#shape_panel").offset().top + 70;
-			left = $("#shape_panel").offset().left + $("#shape_panel").width() + 10;
+			top = jQuery("#shape_panel").offset().top + 70;
+			left = jQuery("#shape_panel").offset().left + jQuery("#shape_panel").width() + 10;
 		}else if(step == 2){
-			top = $(".row2").offset().top + 30;
-			left = $("#menu_bar_insert").offset().left + $("#menu_bar_insert").width() - content.outerWidth()/2;
+			top = jQuery(".row2").offset().top + 30;
+			left = jQuery("#menu_bar_insert").offset().left + jQuery("#menu_bar_insert").width() - content.outerWidth()/2;
 		}else if(step == 3){
-			top = $(".toolbar").offset().top + 40;
+			top = jQuery(".toolbar").offset().top + 40;
 			left = 270;
 		}else if(step == 4){
-			top = $("#dock").offset().top + 10;
-			left = $("#dock").offset().left - content.outerWidth() - 10
+			top = jQuery("#dock").offset().top + 10;
+			left = jQuery("#dock").offset().left - content.outerWidth() - 10
 		}else if(step == "created"){
 			top = dom.offset().top + dom.height()/2 - content.outerHeight()/2;
 			if(top <= 0){
 				top = 0;
 			}
-			if(top + content.outerHeight() > $(window).height()){
-				top = $(window).height() - content.outerHeight();
+			if(top + content.outerHeight() > jQuery(window).height()){
+				top = jQuery(window).height() - content.outerHeight();
 			}
 			left = dom.offset().left + dom.width() + 10;
 		}
@@ -1183,7 +1183,7 @@ var UI = {
 	 * @param {} dom
 	 */
 	closeGettingStart: function(dom){
-		$(".mark_content").hide();
+		jQuery(".mark_content").hide();
 	},
 	/**
 	 * Getting Start END--
@@ -1194,105 +1194,105 @@ var UI = {
 			url: "/collaboration/get_colla_role_list",
 			data: {chartId: chartId},
 			success: function(data){
-				$("#colla_dialog").find(".role_list").html(data).scrollTop(999);
-				$("#colla_dialog").removeClass("_update");
-				$("#colla_dialog").css({"top": ($(window).height()-$("#colla_dialog").outerHeight())*0.5+"px"});
-				$("#colla_dialog").dlg();
-				$("#colla_suggest_box").empty();
-				$("#add_prompt4").hide();
-				$("#add_prompt3").hide();
-				$("#add_prompt2").hide();
-				$("#add_prompt1").show();
+				jQuery("#colla_dialog").find(".role_list").html(data).scrollTop(999);
+				jQuery("#colla_dialog").removeClass("_update");
+				jQuery("#colla_dialog").css({"top": (jQuery(window).height()-jQuery("#colla_dialog").outerHeight())*0.5+"px"});
+				jQuery("#colla_dialog").dlg();
+				jQuery("#colla_suggest_box").empty();
+				jQuery("#add_prompt4").hide();
+				jQuery("#add_prompt3").hide();
+				jQuery("#add_prompt2").hide();
+				jQuery("#add_prompt1").show();
 			}
 		});
 		
 		var lastVal = "";
-		$("#input_add_colla").val("").unbind().bind("keyup", function(){
+		jQuery("#input_add_colla").val("").unbind().bind("keyup", function(){
 			//加载信息
-			var value = $(this).val();
+			var value = jQuery(this).val();
 			if(value == lastVal){
 				return;
 			}
 			lastVal = value;
 			if(value == ""){
-				$("#colla_suggest_box").empty();
-				$("#add_prompt4").hide();
-				$("#add_prompt3").hide();
-				$("#add_prompt2").hide();
-				$("#add_prompt1").show();
+				jQuery("#colla_suggest_box").empty();
+				jQuery("#add_prompt4").hide();
+				jQuery("#add_prompt3").hide();
+				jQuery("#add_prompt2").hide();
+				jQuery("#add_prompt1").show();
 				return;
 			}
 			Util.ajax({
 				url: "/collaboration/get_new_members",
 				data: {value: value},
 				success: function(data){
-					$("#colla_suggest_box").html(data);
-					if($("#colla_suggest_box").find("ul").length > 0){
-						$("#add_prompt4").hide();
-						$("#add_prompt3").hide();
-						$("#add_prompt2").show();
-						$("#add_prompt1").hide();
+					jQuery("#colla_suggest_box").html(data);
+					if(jQuery("#colla_suggest_box").find("ul").length > 0){
+						jQuery("#add_prompt4").hide();
+						jQuery("#add_prompt3").hide();
+						jQuery("#add_prompt2").show();
+						jQuery("#add_prompt1").hide();
 					}else{
-						$("#add_prompt4").hide();
-						$("#add_prompt3").hide();
-						$("#add_prompt2").hide();
-						$("#add_prompt1").show();
+						jQuery("#add_prompt4").hide();
+						jQuery("#add_prompt3").hide();
+						jQuery("#add_prompt2").hide();
+						jQuery("#add_prompt1").show();
 					}
-					$(".colla_suggest").find("li").unbind().bind("click", function(){
-						$("#add_prompt4").hide();
-						$("#add_prompt3").hide();
-						$("#add_prompt2").show();
-						$("#add_prompt1").hide();
-						var value = $.trim($("#input_add_colla").val());
-						$(".colla_suggest").find("li").removeClass("seled");
-						$(this).addClass("seled");
-						var type = $(this).attr("joinType");
-						var target = $(this).attr("target");
+					jQuery(".colla_suggest").find("li").unbind().bind("click", function(){
+						jQuery("#add_prompt4").hide();
+						jQuery("#add_prompt3").hide();
+						jQuery("#add_prompt2").show();
+						jQuery("#add_prompt1").hide();
+						var value = jQuery.trim(jQuery("#input_add_colla").val());
+						jQuery(".colla_suggest").find("li").removeClass("seled");
+						jQuery(this).addClass("seled");
+						var type = jQuery(this).attr("joinType");
+						var target = jQuery(this).attr("target");
 						if(type == "user"){
-							var userName = $(this).attr("username");
-							$("#input_add_colla").val(userName);
-							$("#add_userid").val(target);
+							var userName = jQuery(this).attr("username");
+							jQuery("#input_add_colla").val(userName);
+							jQuery("#add_userid").val(target);
 						}else{
-							$("#input_add_colla").val(target);
-							$("#add_userid").val(target);
+							jQuery("#input_add_colla").val(target);
+							jQuery("#add_userid").val(target);
 						}
-						$("#add_type").val(type);
+						jQuery("#add_type").val(type);
 					});
 				}
 			});
 		});
 	},
 	doAddCollaboration: function(){
-		if($(".colla_suggest").length >0){
-			if($(".colla_suggest").find(".seled").length == 0){
-				$("#add_prompt1").hide();
-				$("#add_prompt2").show();
-				$("#add_prompt3").hide();
-				$("#add_prompt4").hide();
-				var top = ($(window).outerHeight()-104)*0.5+100;
-				var left = ($(window).outerWidth()-272)*0.5;
-				$("#confirm_dlg").removeClass("newSize").css({top: top+"px", left: left+"px"});
-				$("#confirm_dlg").addClass("newSize").css({
-						top: ($(window).outerHeight()-$("#confirm_dlg").height())*0.5+"px", 
-						left: ($(window).outerWidth()-$("#confirm_dlg").width())*0.5+"px",
+		if(jQuery(".colla_suggest").length >0){
+			if(jQuery(".colla_suggest").find(".seled").length == 0){
+				jQuery("#add_prompt1").hide();
+				jQuery("#add_prompt2").show();
+				jQuery("#add_prompt3").hide();
+				jQuery("#add_prompt4").hide();
+				var top = (jQuery(window).outerHeight()-104)*0.5+100;
+				var left = (jQuery(window).outerWidth()-272)*0.5;
+				jQuery("#confirm_dlg").removeClass("newSize").css({top: top+"px", left: left+"px"});
+				jQuery("#confirm_dlg").addClass("newSize").css({
+						top: (jQuery(window).outerHeight()-jQuery("#confirm_dlg").height())*0.5+"px", 
+						left: (jQuery(window).outerWidth()-jQuery("#confirm_dlg").width())*0.5+"px",
 						display: "block"
 				});
 			}else{
-				var imgSrc = $(".colla_suggest").find(".seled").find("img").attr("src");
-				var userFullName = $("#input_add_colla").val();
+				var imgSrc = jQuery(".colla_suggest").find(".seled").find("img").attr("src");
+				var userFullName = jQuery("#input_add_colla").val();
 				if(userFullName.length > 30){
 					userFullName = userFullName.substr(0, 30)+"...";
 				}
-				var target = $("#add_userid").val();
-				var role = $("#invit_role").val();
-				var type = $("#add_type").val();
-				$(".add_new_button").find(".designer_button").text("Sending...");
+				var target = jQuery("#add_userid").val();
+				var role = jQuery("#invit_role").val();
+				var type = jQuery("#add_type").val();
+				jQuery(".add_new_button").find(".designer_button").text("Sending...");
 				var target_item = null;
 				if(type == "email"){
-					$(".role_list").find(".role_item").each(function(){
-						if($(this).attr("type") == type && $(this).attr("target") == target){
-							target_item = $(this);
-							$(this).find(".inviting_").text("Inviting again");						
+					jQuery(".role_list").find(".role_item").each(function(){
+						if(jQuery(this).attr("type") == type && jQuery(this).attr("target") == target){
+							target_item = jQuery(this);
+							jQuery(this).find(".inviting_").text("Inviting again");						
 						}
 					});
 				}
@@ -1309,37 +1309,37 @@ var UI = {
 					success: function(data){
 						var result = data.result;
 						if(result == "exists"){
-							$("#add_prompt2").hide();
-							$("#add_prompt1").hide();
-							$("#add_prompt4").hide();
-							$("#add_prompt3").show();
+							jQuery("#add_prompt2").hide();
+							jQuery("#add_prompt1").hide();
+							jQuery("#add_prompt4").hide();
+							jQuery("#add_prompt3").show();
 						}else{
 							Util.ajax({
 								url: "/collaboration/get_colla_role_list",
 								data: {chartId: chartId},
 								success: function(data){
-									$(".role_list").html(data).scrollTop(999);
+									jQuery(".role_list").html(data).scrollTop(999);
 								}
 							});
 						}
-						$(".add_new_button").find(".designer_button").text("Send Invitation");
-						$("#colla_dialog").addClass("_update")
-								  .css({top: ($(window).height()-$("#colla_dialog").outerHeight())*0.5+"px"});
+						jQuery(".add_new_button").find(".designer_button").text("Send Invitation");
+						jQuery("#colla_dialog").addClass("_update")
+								  .css({top: (jQuery(window).height()-jQuery("#colla_dialog").outerHeight())*0.5+"px"});
 						if(result != "exists"){
 							setTimeout(function(){
-								$("#add_prompt3").hide();
-								$("#add_prompt2").hide();
-								$("#add_prompt1").hide();
-								$("#add_prompt4").show();
+								jQuery("#add_prompt3").hide();
+								jQuery("#add_prompt2").hide();
+								jQuery("#add_prompt1").hide();
+								jQuery("#add_prompt4").show();
 							}, 400);
 						}
 						setTimeout(function(){
-							$("#add_prompt3").hide();
-							$("#add_prompt2").hide();
-							$("#add_prompt4").hide();
-							$("#add_prompt1").show();
-							$("#input_add_colla").val("");
-							$("#colla_suggest_box").html("");
+							jQuery("#add_prompt3").hide();
+							jQuery("#add_prompt2").hide();
+							jQuery("#add_prompt4").hide();
+							jQuery("#add_prompt1").show();
+							jQuery("#input_add_colla").val("");
+							jQuery("#colla_suggest_box").html("");
 						}, 1000);
 					}
 				});
@@ -1347,7 +1347,7 @@ var UI = {
 		}
 	},
 	deleteCollaRole: function(dom){
-		var parent = $(dom).parent(".role_item");
+		var parent = jQuery(dom).parent(".role_item");
 		var collaborationId = parent.attr("collaborationId");
 		Util.ajax({
 			url: "/collaboration/delete",
@@ -1357,16 +1357,16 @@ var UI = {
 			}
 		});
 		
-		$("#colla_dialog").addClass("_update")
-						  .css({top: ($(window).height()-$("#colla_dialog").outerHeight())*0.5+"px"});
+		jQuery("#colla_dialog").addClass("_update")
+						  .css({top: (jQuery(window).height()-jQuery("#colla_dialog").outerHeight())*0.5+"px"});
 	},
 	changeCollaRole: function(collaborationId, dom){
 		Util.ajax({
 			url: "/collaboration/set_role",
-			data: {collaborationId: collaborationId, role: $(dom).val()},
+			data: {collaborationId: collaborationId, role: jQuery(dom).val()},
 			success: function(data){
 				if(data.result == "success"){
-					$(dom).parent(".given_role").find(".change_success").stop().animate({"left": "-38px"}, 200).delay(400).animate({"left": "0px"},200);
+					jQuery(dom).parent(".given_role").find(".change_success").stop().animate({"left": "-38px"}, 200).delay(400).animate({"left": "0px"},200);
 				}
 			}
 		});
@@ -1375,18 +1375,18 @@ var UI = {
 	 * 打开图形管理
 	 */
 	showShapesManage: function(){
-		$("#shapes_dialog").dlg();
-		$("#shape_manage_list").children("li").unbind().bind("click", function(){
-			var chkbox = $(this).find("input");
+		jQuery("#shapes_dialog").dlg();
+		jQuery("#shape_manage_list").children("li").unbind().bind("click", function(){
+			var chkbox = jQuery(this).find("input");
 			var checked = !chkbox.is(":checked");
 			chkbox.attr("checked", checked);
 			cateChanged(chkbox);
 		});
-		$("#shape_manage_list").find("input").unbind().bind("click", function(e){
+		jQuery("#shape_manage_list").find("input").unbind().bind("click", function(e){
 			e.stopPropagation();
-			cateChanged($(this));
+			cateChanged(jQuery(this));
 		}).each(function(){
-			var categorys = $(this).val();
+			var categorys = jQuery(this).val();
 			var arr = categorys.split(",");
 			var exists = true;
 			for(var i = 0; i < arr.length; i++){
@@ -1397,7 +1397,7 @@ var UI = {
 					break;
 				}
 			}
-			$(this).attr("checked", exists);
+			jQuery(this).attr("checked", exists);
 		});
 		
 		function cateChanged(chk){
@@ -1406,27 +1406,27 @@ var UI = {
 			var chked = chk.is(":checked");
 			if(arr.length > 1){
 				//是父级节点
-				$("#shape_manage_list").find("input").each(function(){
-					var cate = $(this).val();
+				jQuery("#shape_manage_list").find("input").each(function(){
+					var cate = jQuery(this).val();
 					if(arr.indexOf(cate) >= 0){
 						//是选择父级的子节点
-						$(this).attr("checked", chked);
+						jQuery(this).attr("checked", chked);
 					}
 				});
 			}else{
 				//选择的是子节点
-				$("#shape_manage_list").find(".cate_parent").each(function(){
+				jQuery("#shape_manage_list").find(".cate_parent").each(function(){
 					//获取所有的父节点，判断子节点是否都全部选中了
-					var cates = $(this).val().split(",");
+					var cates = jQuery(this).val().split(",");
 					var allChked = true;
 					for(var i = 0; i < cates.length; i++){
 						var cate = cates[i];
-						if(!$("#shape_manage_list").find("input[value="+cate+"]").is(":checked")){
+						if(!jQuery("#shape_manage_list").find("input[value="+cate+"]").is(":checked")){
 							allChked = false;
 							break;
 						}
 					}
-					$(this).attr("checked", allChked);
+					jQuery(this).attr("checked", allChked);
 				});
 			}
 		}
@@ -1435,8 +1435,8 @@ var UI = {
 	 * 保存图形管理
 	 */
 	saveShapesManage: function(){
-		var checked = $("#shape_manage_list").find("input:checked:not(.cate_parent)").map(function(){
-			return $(this).val();
+		var checked = jQuery("#shape_manage_list").find("input:checked:not(.cate_parent)").map(function(){
+			return jQuery(this).val();
 		}).get();
 		var a = "";
 		//发送消息
@@ -1448,7 +1448,7 @@ var UI = {
 		CLB.send(msgObj);
 		*/
 		Designer.setSchema(checked, function(){
-			$('#shapes_dialog').dlg('close');
+			jQuery('#shapes_dialog').dlg('close');
 		});
 	},
 	/**
@@ -1456,8 +1456,8 @@ var UI = {
 	 */
 	showUserMenu: function(e){
 		e.stopPropagation();
-		$("#user_menu").dropdown({
-			target: $(".user"),
+		jQuery("#user_menu").dropdown({
+			target: jQuery(".user"),
 			position: "right",
 			onSelect: function(item){
 				var action = item.attr("ac");
@@ -1475,17 +1475,17 @@ var UI = {
 	 * 打开另存为
 	 */
 	showSaveAs: function(){
-		$("#saveas_dialog").dlg();
-		$("#saveas_title").val($(".diagram_title").text()).select();
+		jQuery("#saveas_dialog").dlg();
+		jQuery("#saveas_title").val(jQuery(".diagram_title").text()).select();
 	},
 	doSaveAs: function(){
-		if($("#saveas_title").val().trim() == ""){
-			$("#saveas_title").focus();
+		if(jQuery("#saveas_title").val().trim() == ""){
+			jQuery("#saveas_title").focus();
 			return;
 		}
-		$("#hid_saveas_id").val(chartId);
-		$("#saveas_form").submit();
-		$("#btn_dosaveas").removeAttr("onclick");
+		jQuery("#hid_saveas_id").val(chartId);
+		jQuery("#saveas_form").submit();
+		jQuery("#btn_dosaveas").removeAttr("onclick");
 	},
 	/**
 	 * 打开形状的选项
@@ -1530,7 +1530,7 @@ var UI = {
 								//减少了tab
 								if(activeIndex > tabCount - 1){
 									activeIndex = tabCount - 1;
-									$("#change_uitab_index").spinner("setValue", tabCount);
+									jQuery("#change_uitab_index").spinner("setValue", tabCount);
 								}
 								shape.path = [];
 								var newBlock = [];
@@ -1568,7 +1568,7 @@ var UI = {
 								Schema.initShapeFunctions(shape);
 								Model.update(shape);
 								Designer.painter.renderShape(shape);
-								$("#change_uitab_index").spinner("setOptions", {max: tabCount});
+								jQuery("#change_uitab_index").spinner("setOptions", {max: tabCount});
 							}
 						}
 					},{
@@ -1606,9 +1606,9 @@ var UI = {
 			}
 		}
 		function showOptions(shape, options){
-			var box = $("#shape_opt_box");
+			var box = jQuery("#shape_opt_box");
 			if(box.length == 0){
-				box = $("<div id='shape_opt_box'><div class='shape_opts'></div><div class='ico dlg_close'></div></div>").appendTo("#designer_canvas");
+				box = jQuery("<div id='shape_opt_box'><div class='shape_opts'></div><div class='ico dlg_close'></div></div>").appendTo("#designer_canvas");
 				box.bind("mousedown", function(e){
 					e.stopPropagation();
 				});
@@ -1627,12 +1627,12 @@ var UI = {
 			items.empty();
 			for(var i = 0; i < options.length; i++){
 				var opt = options[i];
-				var item = $("<div class='opt'></div>").appendTo(items);
+				var item = jQuery("<div class='opt'></div>").appendTo(items);
 				//标题
 				item.append("<label>"+opt.label+"</label>");
-				var field = $("<div class='field'></div>").appendTo(item);
+				var field = jQuery("<div class='field'></div>").appendTo(item);
 				if(opt.type == "spinner"){
-					var spinner = $("<div class='spinner active' style='width: 55px;'></div>").appendTo(field);
+					var spinner = jQuery("<div class='spinner active' style='width: 55px;'></div>").appendTo(field);
 					if(opt.id){
 						spinner.attr("id", opt.id);
 					}
@@ -1648,7 +1648,7 @@ var UI = {
 		}
 	},
 	hideShapeOptions: function(){
-		$("#shape_opt_box").hide();
+		jQuery("#shape_opt_box").hide();
 	}
 };
 
@@ -1658,33 +1658,33 @@ var UI = {
  */
 var Dock = {
 	init: function(){
-		var layoutW = $("#designer_layout").width();
-		var viewW = $("#layout_block").width();
+		var layoutW = jQuery("#designer_layout").width();
+		var viewW = jQuery("#layout_block").width();
 		//总宽度减去可视区域的宽度，得到滚动条宽度
 		var navRight = layoutW - viewW;
-		$("#dock").css("right", navRight);
-		var dockRight = navRight + $("#dock").outerWidth() - 1;
-		$(".dock_view").css("right", dockRight);
-		if($("#demo_signup").length){
-			var signupH = $("#demo_signup").outerHeight();
-			$("#dock").css("top", signupH);
-			$(".dock_view").css("top", signupH + 10);
+		jQuery("#dock").css("right", navRight);
+		var dockRight = navRight + jQuery("#dock").outerWidth() - 1;
+		jQuery(".dock_view").css("right", dockRight);
+		if(jQuery("#demo_signup").length){
+			var signupH = jQuery("#demo_signup").outerHeight();
+			jQuery("#dock").css("top", signupH);
+			jQuery(".dock_view").css("top", signupH + 10);
 		}
-		$(".ico_dock_collapse").bind("click", function(){
-			$(".dock_view").hide();
-			$(".dock_buttons").children().removeClass("selected");
+		jQuery(".ico_dock_collapse").bind("click", function(){
+			jQuery(".dock_view").hide();
+			jQuery(".dock_buttons").children().removeClass("selected");
 			if(Dock.currentView == "history"){
 				Dock.closeHistory();
 			}
 			Dock.currentView = "";
 		});
-		$(window).bind("resize.dock", function(){
+		jQuery(window).bind("resize.dock", function(){
 			if(Dock.currentView == "attribute"){
 				Dock.fitAttrList();
 			}
 		});
 		//缩放
-		$("#dock_zoom").spinner({
+		jQuery("#dock_zoom").spinner({
 			min: 50,
 			max: 200,
 			unit: "%",
@@ -1694,30 +1694,30 @@ var Dock = {
 			}
 		});
 		//线条颜色
-		$("#dock_line_color").colorButton({
+		jQuery("#dock_line_color").colorButton({
 			onSelect: function(color){
 				Designer.setLineStyle({lineColor: color});
 			}
 		});
 		//线条类型
-		$("#dock_line_style").button({
+		jQuery("#dock_line_style").button({
 			onMousedown: function(){
-				$("#line_style_list").dropdown({
-					target: $("#dock_line_style"),
+				jQuery("#line_style_list").dropdown({
+					target: jQuery("#dock_line_style"),
 					onSelect: function(item){
 						var lineStyle = item.attr("line");
 						Designer.setLineStyle({lineStyle: lineStyle});
 						var cls = item.children("div").attr("class");
-						$("#dock_line_style").children(".linestyle").attr("class", cls);
+						jQuery("#dock_line_style").children(".linestyle").attr("class", cls);
 					}
 				});
 				var style = Utils.getSelected()[0].lineStyle.lineStyle;
-				var item = $("#line_style_list").children("li[line="+style+"]");
-				$("#line_style_list").dropdown("select", item);
+				var item = jQuery("#line_style_list").children("li[line="+style+"]");
+				jQuery("#line_style_list").dropdown("select", item);
 			}
 		});
 		//线条宽度
-		$("#dock_line_width").spinner({
+		jQuery("#dock_line_width").spinner({
 			min: 0,
 			max: 10,
 			unit: "px",
@@ -1727,13 +1727,13 @@ var Dock = {
 			}
 		});
 		//填充类型
-		$("#dock_fill_type").button({
+		jQuery("#dock_fill_type").button({
 			onMousedown: function(){
-				$("#dock_fill_list").dropdown({
-					target: $("#dock_fill_type"),
+				jQuery("#dock_fill_list").dropdown({
+					target: jQuery("#dock_fill_type"),
 					onSelect: function(item){
 						var type = item.attr("ty");
-						$("#dock_fill_type").button("setText", item.text());
+						jQuery("#dock_fill_type").button("setText", item.text());
 						if(type == "image"){
 							UI.showImageSelect(function(fileId, w, h){
 								Designer.setFillStyle({
@@ -1751,77 +1751,77 @@ var Dock = {
 						}
 					}
 				});
-				var type = $("#dock_fill_type").text();
-				$("#dock_fill_list").children().each(function(){
-					if($(this).text() == type){
-						$("#dock_fill_list").dropdown("select", $(this));
+				var type = jQuery("#dock_fill_type").text();
+				jQuery("#dock_fill_list").children().each(function(){
+					if(jQuery(this).text() == type){
+						jQuery("#dock_fill_list").dropdown("select", jQuery(this));
 						return false;
 					}
 				});
 			}
 		});
 		//填充颜色
-		$("#fill_solid_btn").colorButton({
+		jQuery("#fill_solid_btn").colorButton({
 			onSelect: function(color){
 				Designer.setFillStyle({color: color});
 			}
 		});
 		//渐变开始颜色
-		$("#fill_gradient_begin").colorButton({
+		jQuery("#fill_gradient_begin").colorButton({
 			onSelect: function(color){
 				Designer.setFillStyle({beginColor: color});
-				$("#fill_gradient_begin").attr("c", color);
+				jQuery("#fill_gradient_begin").attr("c", color);
 			}
 		});
 		//渐变结束颜色
-		$("#fill_gradient_end").colorButton({
+		jQuery("#fill_gradient_end").colorButton({
 			onSelect: function(color){
 				Designer.setFillStyle({endColor: color});
-				$("#fill_gradient_end").attr("c", color)
+				jQuery("#fill_gradient_end").attr("c", color)
 			}
 		});
 		//渐变颜色交换
-		$("#gradient_swap").button({
+		jQuery("#gradient_swap").button({
 			onClick: function(){
-				var begin = $("#fill_gradient_begin").attr("c");
-				var end = $("#fill_gradient_end").attr("c");
-				$("#fill_gradient_begin").attr("c", end).colorButton("setColor", end);
-				$("#fill_gradient_end").attr("c", begin).colorButton("setColor", begin);
+				var begin = jQuery("#fill_gradient_begin").attr("c");
+				var end = jQuery("#fill_gradient_end").attr("c");
+				jQuery("#fill_gradient_begin").attr("c", end).colorButton("setColor", end);
+				jQuery("#fill_gradient_end").attr("c", begin).colorButton("setColor", begin);
 				Designer.setFillStyle({beginColor: end, endColor: begin});
 			}
 		});
 		//渐变类型
-		$("#gradient_type").button({
+		jQuery("#gradient_type").button({
 			onMousedown: function(){
-				$("#gradient_type_list").dropdown({
-					target: $("#gradient_type"),
+				jQuery("#gradient_type_list").dropdown({
+					target: jQuery("#gradient_type"),
 					onSelect: function(item){
 						var type = item.attr("ty");
-						$("#gradient_type").button("setText", item.text());
+						jQuery("#gradient_type").button("setText", item.text());
 						Designer.setFillStyle({gradientType: type});
-						$(".gradient_details").hide();
-						$("#gradient_type_" + type).show();
+						jQuery(".gradient_details").hide();
+						jQuery("#gradient_type_" + type).show();
 						var shapeIds = Utils.getSelectedShapeIds();
 						var shape = Model.getShapeById(shapeIds[0]);
 						var fillStyle = shape.fillStyle;
 						if(type == "linear"){
-							$("#gradient_angle").spinner("setValue", Math.round(fillStyle.angle/Math.PI * 180) + "°");
+							jQuery("#gradient_angle").spinner("setValue", Math.round(fillStyle.angle/Math.PI * 180) + "°");
 						}else{
-							$("#gradient_radius").spinner("setValue", Math.round(fillStyle.radius * 100) + "%");
+							jQuery("#gradient_radius").spinner("setValue", Math.round(fillStyle.radius * 100) + "%");
 						}
 					}
 				});
-				var type = $("#gradient_type").text().trim();
-				$("#gradient_type_list").children().each(function(){
-					if($(this).text() == type){
-						$("#gradient_type_list").dropdown("select", $(this));
+				var type = jQuery("#gradient_type").text().trim();
+				jQuery("#gradient_type_list").children().each(function(){
+					if(jQuery(this).text() == type){
+						jQuery("#gradient_type_list").dropdown("select", jQuery(this));
 						return false;
 					}
 				});
 			}
 		});
 		//线性渐变角度
-		$("#gradient_angle").spinner({
+		jQuery("#gradient_angle").spinner({
 			min: 0,
 			max: 360,
 			unit: "°",
@@ -1832,7 +1832,7 @@ var Dock = {
 			}
 		});
 		//径向渐变半径
-		$("#gradient_radius").spinner({
+		jQuery("#gradient_radius").spinner({
 			min: 0,
 			max: 100,
 			unit: "%",
@@ -1842,7 +1842,7 @@ var Dock = {
 			}
 		});
 		//改变背景图片
-		$("#fill_change_img").button({
+		jQuery("#fill_change_img").button({
 			onClick: function(){
 				UI.showImageSelect(function(fileId, w, h){
 					Designer.setFillStyle({
@@ -1855,20 +1855,20 @@ var Dock = {
 			}
 		});
 		//背景图片显示
-		$("#fill_img_display").button({
+		jQuery("#fill_img_display").button({
 			onMousedown: function(){
-				$("#img_display_list").dropdown({
-					target: $("#fill_img_display"),
+				jQuery("#img_display_list").dropdown({
+					target: jQuery("#fill_img_display"),
 					onSelect: function(item){
 						var type = item.attr("ty");
-						$("#fill_img_display").button("setText", item.text());
+						jQuery("#fill_img_display").button("setText", item.text());
 						Designer.setFillStyle({display: type});
 					}
 				});
 			}
 		});
 		//透明度
-		$("#spinner_opacity").spinner({
+		jQuery("#spinner_opacity").spinner({
 			min: 0,
 			max: 100,
 			unit: "%",
@@ -1878,7 +1878,7 @@ var Dock = {
 			}
 		});
 		//X坐标
-		$("#dock_metric_x").spinner({
+		jQuery("#dock_metric_x").spinner({
 			min: -800,
 			unit: "px",
 			step: 5,
@@ -1886,9 +1886,9 @@ var Dock = {
 				Designer.setShapeProps({x: val});
 			}
 		});
-		$("#dock_metric_x").spinner("setValue", "0px");
+		jQuery("#dock_metric_x").spinner("setValue", "0px");
 		//宽度
-		$("#dock_metric_w").spinner({
+		jQuery("#dock_metric_w").spinner({
 			min: 20,
 			unit: "px",
 			step: 5,
@@ -1897,7 +1897,7 @@ var Dock = {
 			}
 		});
 		//Y坐标
-		$("#dock_metric_y").spinner({
+		jQuery("#dock_metric_y").spinner({
 			min: -800,
 			unit: "px",
 			step: 5,
@@ -1905,9 +1905,9 @@ var Dock = {
 				Designer.setShapeProps({y: val});
 			}
 		});
-		$("#dock_metric_y").spinner("setValue", "0px");
+		jQuery("#dock_metric_y").spinner("setValue", "0px");
 		//高度
-		$("#dock_metric_h").spinner({
+		jQuery("#dock_metric_h").spinner({
 			min: 20,
 			unit: "px",
 			step: 5,
@@ -1916,7 +1916,7 @@ var Dock = {
 			}
 		});
 		//角度
-		$("#dock_metric_angle").spinner({
+		jQuery("#dock_metric_angle").spinner({
 			min: 0,
 			max: 360,
 			unit: "°",
@@ -1927,28 +1927,28 @@ var Dock = {
 			}
 		});
 		//画布尺寸
-		$("#dock_page_size").button({
+		jQuery("#dock_page_size").button({
 			onMousedown: function(){
-				$("#page_size_list").dropdown({
-					target: $("#dock_page_size"),
+				jQuery("#page_size_list").dropdown({
+					target: jQuery("#dock_page_size"),
 					onSelect: function(item){
 						var w = parseInt(item.attr("w"));
 						var h = parseInt(item.attr("h"));
 						Designer.setPageStyle({width: w, height: h});
-						$("#dock_page_size").button("setText", item.text());
+						jQuery("#dock_page_size").button("setText", item.text());
 					}
 				});
-				var item = $("#page_size_list").children("li[w="+Model.define.page.width+"][h="+Model.define.page.height+"]");
+				var item = jQuery("#page_size_list").children("li[w="+Model.define.page.width+"][h="+Model.define.page.height+"]");
 				if(item.length > 0){
-					$("#page_size_list").dropdown("select", item);
+					jQuery("#page_size_list").dropdown("select", item);
 				}else{
-					$("#page_size_list").dropdown("select", $("#dock_size_custom"));
+					jQuery("#page_size_list").dropdown("select", jQuery("#dock_size_custom"));
 				}
-				$("#dock_size_w").spinner("setValue", Model.define.page.width + "px");
-				$("#dock_size_h").spinner("setValue", Model.define.page.height + "px");
+				jQuery("#dock_size_w").spinner("setValue", Model.define.page.width + "px");
+				jQuery("#dock_size_h").spinner("setValue", Model.define.page.height + "px");
 			}
 		});
-		$("#dock_size_w").spinner({
+		jQuery("#dock_size_w").spinner({
 			min: 200,
 			unit: "px",
 			step: 100,
@@ -1956,7 +1956,7 @@ var Dock = {
 				Designer.setPageStyle({width: val});
 			}
 		});
-		$("#dock_size_h").spinner({
+		jQuery("#dock_size_h").spinner({
 			min: 200,
 			unit: "px",
 			step: 100,
@@ -1965,54 +1965,54 @@ var Dock = {
 			}
 		});
 		//页面边距
-		$("#dock_page_padding").button({
+		jQuery("#dock_page_padding").button({
 			onMousedown: function(){
-				$("#page_padding_list").dropdown({
-					target: $("#dock_page_padding"),
+				jQuery("#page_padding_list").dropdown({
+					target: jQuery("#dock_page_padding"),
 					onSelect: function(item){
 						var p = parseInt(item.attr("p"));
 						Designer.setPageStyle({padding: p})
-						$("#dock_page_padding").button("setText", item.text());
+						jQuery("#dock_page_padding").button("setText", item.text());
 					}
 				});
-				var item = $("#page_padding_list").children("li[p="+Model.define.page.padding+"]");
-				$("#page_padding_list").dropdown("select", item);
+				var item = jQuery("#page_padding_list").children("li[p="+Model.define.page.padding+"]");
+				jQuery("#page_padding_list").dropdown("select", item);
 			}
 		});
 		//画布背景颜色
-		$("#dock_page_color").colorButton({
+		jQuery("#dock_page_color").colorButton({
 			position: "center",
 			onSelect: function(color){
 				Designer.setPageStyle({backgroundColor: color});
 			}
 		});
 		//是否显示网格
-		$("#dock_page_showgrid").bind("change", function(){
-			var showGrid = $(this).is(":checked");
+		jQuery("#dock_page_showgrid").bind("change", function(){
+			var showGrid = jQuery(this).is(":checked");
 			Designer.setPageStyle({showGrid: showGrid});
 			if(showGrid){
-				$("#dock_gridsize_box").show();
+				jQuery("#dock_gridsize_box").show();
 			}else{
-				$("#dock_gridsize_box").hide();
+				jQuery("#dock_gridsize_box").hide();
 			}
 		});
 		//网格大小
-		$("#dock_page_gridsize").button({
+		jQuery("#dock_page_gridsize").button({
 			onMousedown: function(){
-				$("#page_gridsize_list").dropdown({
-					target: $("#dock_page_gridsize"),
+				jQuery("#page_gridsize_list").dropdown({
+					target: jQuery("#dock_page_gridsize"),
 					onSelect: function(item){
 						var s = parseInt(item.attr("s"));
 						Designer.setPageStyle({gridSize: s})
-						$("#dock_page_gridsize").button("setText", item.text());
+						jQuery("#dock_page_gridsize").button("setText", item.text());
 					}
 				});
-				var item = $("#page_gridsize_list").children("li[s="+Model.define.page.gridSize+"]");
-				$("#page_gridsize_list").dropdown("select", item);
+				var item = jQuery("#page_gridsize_list").children("li[s="+Model.define.page.gridSize+"]");
+				jQuery("#page_gridsize_list").dropdown("select", item);
 			}
 		});
 		//播放速度
-		$("#spinner_play_speed").spinner({
+		jQuery("#spinner_play_speed").spinner({
 			min: 1,
 			max: 30,
 			unit: "s",
@@ -2022,18 +2022,18 @@ var Dock = {
 				
 			}
 		});
-		$("#spinner_play_speed").spinner("setValue", "2s");
+		jQuery("#spinner_play_speed").spinner("setValue", "2s");
 		//版本播放
-		$("#btn_history_play").button({
+		jQuery("#btn_history_play").button({
 			onClick: function(){
-				if($("#btn_history_play").children().hasClass("ico_pause")){
+				if(jQuery("#btn_history_play").children().hasClass("ico_pause")){
 					Dock.pauseVersions();
 				}else{
 					Dock.playVersions();
 				}
 			}
 		});
-		$("#btn_history_restore").button({
+		jQuery("#btn_history_restore").button({
 			onClick: function(){
 				Dock.restoreVersion();
 			}
@@ -2050,13 +2050,13 @@ var Dock = {
 	 * @param {} name
 	 */
 	showView: function(name){
-		if($("#dock_btn_" + name).button("isDisabled")){
+		if(jQuery("#dock_btn_" + name).button("isDisabled")){
 			return;
 		}
-		$(".dock_view").hide();
-		$(".dock_view_" + name).show();
-		$(".dock_buttons").children().removeClass("selected");
-		$("#dock_btn_" + name).addClass("selected");
+		jQuery(".dock_view").hide();
+		jQuery(".dock_view_" + name).show();
+		jQuery(".dock_buttons").children().removeClass("selected");
+		jQuery("#dock_btn_" + name).addClass("selected");
 		if(Dock.currentView == "history" && name != "history"){
 			Dock.closeHistory();
 		}
@@ -2068,33 +2068,33 @@ var Dock = {
 	 * @param {} fillStyle
 	 */
 	setFillStyle: function(fillStyle){
-		$("#dock_fill_type").button("setText", $("#dock_fill_list").children("li[ty="+fillStyle.type+"]").text());
-		$(".fill_detail").hide();
+		jQuery("#dock_fill_type").button("setText", jQuery("#dock_fill_list").children("li[ty="+fillStyle.type+"]").text());
+		jQuery(".fill_detail").hide();
 		if(fillStyle.type == "solid"){
-			$(".fill_detail_solid").show();
-			$("#fill_solid_btn").colorButton("setColor", fillStyle.color);
+			jQuery(".fill_detail_solid").show();
+			jQuery("#fill_solid_btn").colorButton("setColor", fillStyle.color);
 		}else if(fillStyle.type == "gradient"){
-			$(".fill_detail_gradient").show();
+			jQuery(".fill_detail_gradient").show();
 			//渐变颜色
-			$("#fill_gradient_begin").attr("c", fillStyle.beginColor).colorButton("setColor", fillStyle.beginColor);
-			$("#fill_gradient_end").attr("c", fillStyle.endColor).colorButton("setColor", fillStyle.endColor);
+			jQuery("#fill_gradient_begin").attr("c", fillStyle.beginColor).colorButton("setColor", fillStyle.beginColor);
+			jQuery("#fill_gradient_end").attr("c", fillStyle.endColor).colorButton("setColor", fillStyle.endColor);
 			//渐变类型
-			$("#gradient_type").button("setText", $("#gradient_type_list").children("li[ty="+fillStyle.gradientType+"]").text());
-			$(".gradient_details").hide();
+			jQuery("#gradient_type").button("setText", jQuery("#gradient_type_list").children("li[ty="+fillStyle.gradientType+"]").text());
+			jQuery(".gradient_details").hide();
 			if(fillStyle.gradientType == "linear"){
-				$("#gradient_type_linear").show();
-				$("#gradient_angle").spinner("setValue", Math.round(fillStyle.angle/Math.PI * 180) + "°");
+				jQuery("#gradient_type_linear").show();
+				jQuery("#gradient_angle").spinner("setValue", Math.round(fillStyle.angle/Math.PI * 180) + "°");
 			}else{
-				$("#gradient_type_radial").show();
-				$("#gradient_radius").spinner("setValue", Math.round(fillStyle.radius * 100) + "%");
+				jQuery("#gradient_type_radial").show();
+				jQuery("#gradient_radius").spinner("setValue", Math.round(fillStyle.radius * 100) + "%");
 			}
 		}else if(fillStyle.type == "image"){
-			$(".fill_detail_image").show();
+			jQuery(".fill_detail_image").show();
 			var display = "fill";
 			if(fillStyle.display){
 				display = fillStyle.display;
 			}
-			$("#fill_img_display").button("setText", $("#img_display_list").children("li[ty="+display+"]").text());
+			jQuery("#fill_img_display").button("setText", jQuery("#img_display_list").children("li[ty="+display+"]").text());
 		}
 	},
 	/**
@@ -2105,90 +2105,90 @@ var Dock = {
 			if(drawNav){
 				Navigator.draw();
 			}
-			$("#dock_zoom").spinner("setValue", Math.round(Designer.config.scale * 100) + "%");
+			jQuery("#dock_zoom").spinner("setValue", Math.round(Designer.config.scale * 100) + "%");
 		}else if(this.currentView == "graphic"){
 			var selectedIds = Utils.getSelectedIds();
 			var count = selectedIds.length;
 			var shapeIds = Utils.getSelectedShapeIds();
 			var shapeCount = shapeIds.length;
 			if(count == 0){
-				$("#dock_line_color").button("disable");
-				$("#dock_line_style").button("disable");
-				$("#dock_line_width").button("disable");
+				jQuery("#dock_line_color").button("disable");
+				jQuery("#dock_line_style").button("disable");
+				jQuery("#dock_line_width").button("disable");
 			}else{
-				$("#dock_line_color").button("enable");
-				$("#dock_line_style").button("enable");
-				$("#dock_line_width").button("enable");
+				jQuery("#dock_line_color").button("enable");
+				jQuery("#dock_line_style").button("enable");
+				jQuery("#dock_line_width").button("enable");
 				var shape = Model.getShapeById(selectedIds[0]);
-				$("#dock_line_color").colorButton("setColor", shape.lineStyle.lineColor);
-				var lineStyleCls = $("#line_style_list").children("li[line="+shape.lineStyle.lineStyle+"]").children().attr("class");
-				$("#dock_line_style").children(".linestyle").attr("class", lineStyleCls);
-				$("#dock_line_width").spinner("setValue", shape.lineStyle.lineWidth + "px");
+				jQuery("#dock_line_color").colorButton("setColor", shape.lineStyle.lineColor);
+				var lineStyleCls = jQuery("#line_style_list").children("li[line="+shape.lineStyle.lineStyle+"]").children().attr("class");
+				jQuery("#dock_line_style").children(".linestyle").attr("class", lineStyleCls);
+				jQuery("#dock_line_width").spinner("setValue", shape.lineStyle.lineWidth + "px");
 			}
 			if(shapeCount == 0){
-				$("#dock_fill_type").button("disable");
-				$("#spinner_opacity").button("disable");
+				jQuery("#dock_fill_type").button("disable");
+				jQuery("#spinner_opacity").button("disable");
 				Dock.setFillStyle({type: "none"});
 			}else{
-				$("#dock_fill_type").button("enable");
-				$("#spinner_opacity").button("enable");
+				jQuery("#dock_fill_type").button("enable");
+				jQuery("#spinner_opacity").button("enable");
 				var shape = Model.getShapeById(shapeIds[0]);
 				Dock.setFillStyle(shape.fillStyle);
-				$("#spinner_opacity").spinner("setValue", Math.round(shape.shapeStyle.alpha/1*100) + "%");
+				jQuery("#spinner_opacity").spinner("setValue", Math.round(shape.shapeStyle.alpha/1*100) + "%");
 			}
 		}else if(this.currentView == "metric"){
 			var shapeIds = Utils.getSelectedShapeIds();
 			var shapeCount = shapeIds.length;
 			if(shapeCount == 0){
-				$("#dock_metric_x").button("disable");
-				$("#dock_metric_w").button("disable");
-				$("#dock_metric_y").button("disable");
-				$("#dock_metric_h").button("disable");
-				$("#dock_metric_angle").button("disable");
+				jQuery("#dock_metric_x").button("disable");
+				jQuery("#dock_metric_w").button("disable");
+				jQuery("#dock_metric_y").button("disable");
+				jQuery("#dock_metric_h").button("disable");
+				jQuery("#dock_metric_angle").button("disable");
 			}else{
 				var shape = Model.getShapeById(shapeIds[0]);
-				$("#dock_metric_x").button("enable").spinner("setValue", Math.round(shape.props.x) + "px");
-				$("#dock_metric_w").button("enable").spinner("setValue", Math.round(shape.props.w) + "px");
-				$("#dock_metric_y").button("enable").spinner("setValue", Math.round(shape.props.y) + "px");
-				$("#dock_metric_h").button("enable").spinner("setValue", Math.round(shape.props.h) + "px");
-				$("#dock_metric_angle").button("enable").spinner("setValue", Math.round(shape.props.angle/Math.PI*180) + "°");
+				jQuery("#dock_metric_x").button("enable").spinner("setValue", Math.round(shape.props.x) + "px");
+				jQuery("#dock_metric_w").button("enable").spinner("setValue", Math.round(shape.props.w) + "px");
+				jQuery("#dock_metric_y").button("enable").spinner("setValue", Math.round(shape.props.y) + "px");
+				jQuery("#dock_metric_h").button("enable").spinner("setValue", Math.round(shape.props.h) + "px");
+				jQuery("#dock_metric_angle").button("enable").spinner("setValue", Math.round(shape.props.angle/Math.PI*180) + "°");
 			}
 		}else if(this.currentView == "page"){
 			var page = Model.define.page;
 			var w = page.width;
 			var h = page.height;
-			var sizeItem = $("#page_size_list").children("li[w="+w+"][h="+h+"]");
+			var sizeItem = jQuery("#page_size_list").children("li[w="+w+"][h="+h+"]");
 			var sizeText = "";
 			if(sizeItem.length > 0){
 				sizeText = sizeItem.text();
 			}else{
-				sizeText = $("#dock_size_custom").text();
+				sizeText = jQuery("#dock_size_custom").text();
 			}
-			$("#dock_page_size").button("setText", sizeText);
-			$("#dock_page_padding").button("setText", page.padding + "px");
-			$("#dock_page_color").colorButton("setColor", page.backgroundColor);
-			$("#dock_page_showgrid").attr("checked", page.showGrid);
+			jQuery("#dock_page_size").button("setText", sizeText);
+			jQuery("#dock_page_padding").button("setText", page.padding + "px");
+			jQuery("#dock_page_color").colorButton("setColor", page.backgroundColor);
+			jQuery("#dock_page_showgrid").attr("checked", page.showGrid);
 			if(page.showGrid){
-				$("#dock_gridsize_box").show();
+				jQuery("#dock_gridsize_box").show();
 			}else{
-				$("#dock_gridsize_box").hide();
+				jQuery("#dock_gridsize_box").hide();
 			}
 			var gridText = "";
-			var gridItem = $("#page_gridsize_list").children("li[s="+page.gridSize+"]");
+			var gridItem = jQuery("#page_gridsize_list").children("li[s="+page.gridSize+"]");
 			if(gridItem.length > 0){
 				var gridText = gridItem.text();
 			}
-			$("#dock_page_gridsize").button("setText", gridText);
+			jQuery("#dock_page_gridsize").button("setText", gridText);
 		}else if(this.currentView == "attribute"){
 			var selectedIds = Utils.getSelectedIds();
 			var count = selectedIds.length;
 			if(count != 1){
-				$(".attr_list").html("<li class='attr_none'>Select one shape to view data attributes.</li>");
-				$(".attr_add").hide();
+				jQuery(".attr_list").html("<li class='attr_none'>Select one shape to view data attributes.</li>");
+				jQuery(".attr_add").hide();
 				this.fitAttrList();
 			}else{
 				this.setAttributeList();
-				$(".attr_add").show();
+				jQuery(".attr_add").show();
 				//初始化添加
 				this.cancelAttrAdd();
 			}
@@ -2208,28 +2208,28 @@ var Dock = {
 	 */
 	loadHistorys: function(){
 		if(chartId == ""){
-			$("#history_container").html("<div style='padding: 20px 10px;'>You are in a demo state, can't view revision history.</div>")
+			jQuery("#history_container").html("<div style='padding: 20px 10px;'>You are in a demo state, can't view revision history.</div>")
 			return;
 		}
-		$.ajax({
+		jQuery.ajax({
 			url: "/diagraming/history",
 			data: {chartId: chartId},
 			success: function(data){
 				Dock.historyVersions = data;
 				if(data.versions.length == 0){
-					$("#history_container").html('<div style="padding: 20px 10px;">No reversion history. <br/>Each modification will generate a new version of history for you.</div>');
+					jQuery("#history_container").html('<div style="padding: 20px 10px;">No reversion history. <br/>Each modification will generate a new version of history for you.</div>');
 				}else{
-					$("#history_container").html('<ul id="history_versions"></ul>');
+					jQuery("#history_container").html('<ul id="history_versions"></ul>');
 					var users = data.users;
 					for(var i = 0; i < data.versions.length; i++){
 						var v = data.versions[i];
-						var newVersion = $('<li vid="'+v.versionId+'" def="'+v.definitionId+'" ind="'+i+'"><div class="version_time">'+v.updateTime+'</div><div class="version_name"></div></li>').appendTo($("#history_versions"));
+						var newVersion = jQuery('<li vid="'+v.versionId+'" def="'+v.definitionId+'" ind="'+i+'"><div class="version_time">'+v.updateTime+'</div><div class="version_name"></div></li>').appendTo(jQuery("#history_versions"));
 						var nameContainer = newVersion.children(".version_name");
 						for(var j = 0; j < v.userIds.length; j++){
 							var userId = v.userIds[j];
 							nameContainer.append("<div>"+users[userId]+"</div>");
 						}
-						var remarkContainer = $("<div class='history_remark'><div class='remark_container'><div class='remark_text'></div><a onclick='Dock.editHistoryRemark(event, \""+v.versionId+"\")' href='javascript:'>Edit annotation</a></div></div>").appendTo(newVersion);
+						var remarkContainer = jQuery("<div class='history_remark'><div class='remark_container'><div class='remark_text'></div><a onclick='Dock.editHistoryRemark(event, \""+v.versionId+"\")' href='javascript:'>Edit annotation</a></div></div>").appendTo(newVersion);
 						if(v.remark){
 							remarkContainer.find(".remark_text").text(v.remark);
 						}
@@ -2244,40 +2244,40 @@ var Dock = {
 	 * 重置版本历史
 	 */
 	resetVersions: function(){
-		$("#history_versions").children("li").unbind().bind("click", function(){
+		jQuery("#history_versions").children("li").unbind().bind("click", function(){
 			if(Dock.playingTimeout != null){
 				return;
 			}
-			if($(this).hasClass("selected")){
+			if(jQuery(this).hasClass("selected")){
 				Dock.closeHistory();
 			}else{
-				$("#history_versions").children(".selected").removeClass("selected");
-				$(this).addClass("selected");
-				var defId = $(this).attr("def");
+				jQuery("#history_versions").children(".selected").removeClass("selected");
+				jQuery(this).addClass("selected");
+				var defId = jQuery(this).attr("def");
 				Dock.showHistoryVersion(defId);
 			}
-			var current = $("#history_versions").children(".selected");
+			var current = jQuery("#history_versions").children(".selected");
 			if(current.length != 0 && current.attr("ind") != "0"){
-				$("#spinner_play_speed").button("enable");
-				$("#btn_history_play").button("enable");
-				$("#btn_history_restore").button("enable");
+				jQuery("#spinner_play_speed").button("enable");
+				jQuery("#btn_history_play").button("enable");
+				jQuery("#btn_history_restore").button("enable");
 			}else{
-				$("#spinner_play_speed").button("disable");
-				$("#btn_history_play").button("disable");
-				$("#btn_history_restore").button("disable");
+				jQuery("#spinner_play_speed").button("disable");
+				jQuery("#btn_history_play").button("disable");
+				jQuery("#btn_history_restore").button("disable");
 			}
 		});
-		$("#history_versions").height("auto");
-		var top = $("#history_versions").offset().top;
-		var bottom = top + $("#history_versions").height() + 75;
-		if(bottom > $(window).height()){
-			var height = $(window).height() - top - 75;
+		jQuery("#history_versions").height("auto");
+		var top = jQuery("#history_versions").offset().top;
+		var bottom = top + jQuery("#history_versions").height() + 75;
+		if(bottom > jQuery(window).height()){
+			var height = jQuery(window).height() - top - 75;
 			if(height < 140){
 				height = 140;
 			}
-			$("#history_versions").height(height);
+			jQuery("#history_versions").height(height);
 		}else{
-			$("#history_versions").height("auto");
+			jQuery("#history_versions").height("auto");
 		}
 	},
 	/**
@@ -2286,7 +2286,7 @@ var Dock = {
 	 */
 	editHistoryRemark: function(event, versionId){
 		event.stopPropagation();
-		var versionDom = $("#history_versions").children("li[vid="+versionId+"]");
+		var versionDom = jQuery("#history_versions").children("li[vid="+versionId+"]");
 		versionDom.find(".remark_container").hide();
 		var currentRemark = versionDom.find(".remark_text").text();
 		var editContainer = versionDom.find(".edit_container");
@@ -2315,26 +2315,26 @@ var Dock = {
 	 * 取消版本注释的编辑
 	 */
 	cancelHistoryRemark: function(){
-		$(".remark_container").show();
-		$(".edit_container").hide();
+		jQuery(".remark_container").show();
+		jQuery(".edit_container").hide();
 	},
 	/**
 	 * 展示历史版本
 	 */
 	showHistoryVersion: function(defId){
-		$("#spinner_play_speed").button("disable");
-		$("#btn_history_play").button("disable");
-		$("#btn_history_restore").button("disable");
+		jQuery("#spinner_play_speed").button("disable");
+		jQuery("#btn_history_play").button("disable");
+		jQuery("#btn_history_restore").button("disable");
 		Dock.cancelHistoryRemark();
-		$.ajax({
+		jQuery.ajax({
 			url: "/diagraming/getdefinition",
 			data: {definitionId: defId},
 			success: function(data){
 				Dock.openHistory(data.definition);
-				if($("#history_versions").children(".selected").attr("ind") != "0"){
-					$("#spinner_play_speed").button("enable");
-					$("#btn_history_play").button("enable");
-					$("#btn_history_restore").button("enable");
+				if(jQuery("#history_versions").children(".selected").attr("ind") != "0"){
+					jQuery("#spinner_play_speed").button("enable");
+					jQuery("#btn_history_play").button("enable");
+					jQuery("#btn_history_restore").button("enable");
 				}
 			}
 		});
@@ -2343,14 +2343,14 @@ var Dock = {
 	 * 播放版本历史
 	 */
 	playVersions: function(){
-		var current = $("#history_versions").children(".selected");
+		var current = jQuery("#history_versions").children(".selected");
 		if(current.length == 0){
 			return;
 		}
 		var index = parseInt(current.attr("ind"));
 		Dock.playOneVersion(--index, 0);
-		$("#btn_history_play").children().attr("class", "ico ico_pause");
-		$("#btn_history_play").attr("title", "Pause").trigger("mouseenter");
+		jQuery("#btn_history_play").children().attr("class", "ico ico_pause");
+		jQuery("#btn_history_play").attr("title", "Pause").trigger("mouseenter");
 	},
 	/**
 	 * 终止播放
@@ -2360,19 +2360,19 @@ var Dock = {
 			clearTimeout(this.playingTimeout);
 		}
 		this.playingTimeout = null;
-		$("#btn_history_play").children().attr("class", "ico ico_play");
-		$("#btn_history_play").attr("title", "Play from this revision");
-		$(".ico_playing").remove();
-		var current = $("#history_versions").children(".selected");
-		$("#history_versions").children(".playing").removeClass("playing");
+		jQuery("#btn_history_play").children().attr("class", "ico ico_play");
+		jQuery("#btn_history_play").attr("title", "Play from this revision");
+		jQuery(".ico_playing").remove();
+		var current = jQuery("#history_versions").children(".selected");
+		jQuery("#history_versions").children(".playing").removeClass("playing");
 		if(current.length != 0 && current.attr("ind") != "0"){
-			$("#spinner_play_speed").button("enable");
-			$("#btn_history_play").button("enable");
-			$("#btn_history_restore").button("enable");
+			jQuery("#spinner_play_speed").button("enable");
+			jQuery("#btn_history_play").button("enable");
+			jQuery("#btn_history_restore").button("enable");
 		}else{
-			$("#spinner_play_speed").button("disable");
-			$("#btn_history_play").button("disable");
-			$("#btn_history_restore").button("disable");
+			jQuery("#spinner_play_speed").button("disable");
+			jQuery("#btn_history_play").button("disable");
+			jQuery("#btn_history_restore").button("disable");
 		}
 	},
 	playingTimeout: null,
@@ -2380,10 +2380,10 @@ var Dock = {
 	 * 播放一个版本
 	 */
 	playOneVersion: function(index, msgIndex){
-		var current = $("#history_versions").children("li[ind="+index+"]");
-		$("#history_versions").children(".selected").removeClass("selected");
+		var current = jQuery("#history_versions").children("li[ind="+index+"]");
+		jQuery("#history_versions").children(".selected").removeClass("selected");
 		current.addClass("selected").addClass("playing");
-		$(".ico_playing").remove();
+		jQuery(".ico_playing").remove();
 		current.append("<div class='ico ico_playing'></div>");
 		
 		var version = Dock.historyVersions.versions[index];
@@ -2392,9 +2392,9 @@ var Dock = {
 		MessageSource.receive(messages);
 		var top = current.position().top;
 		if(top < 0){
-			$("#history_versions").scrollTop($("#history_versions").scrollTop() + top);
+			jQuery("#history_versions").scrollTop(jQuery("#history_versions").scrollTop() + top);
 		}
-		var time = $("#spinner_play_speed").spinner("getValue") * 1000;
+		var time = jQuery("#spinner_play_speed").spinner("getValue") * 1000;
 		if(index == 0 && msgIndex == version.messages.length - 1){
 			this.pauseVersions();
 		}else{
@@ -2416,18 +2416,18 @@ var Dock = {
 	 */
 	openHistory: function(definition){
 		if(this.currentDefinition == null){
-			this.currentDefinition = $.extend(true, {}, Model.define);
+			this.currentDefinition = jQuery.extend(true, {}, Model.define);
 		}
 		Utils.unselect();
 		Designer.open(definition);
 		//取消快捷键
 		Designer.hotkey.cancel();
 		Designer.op.cancel();
-		$("#menu_bar").children().addClass("readonly");
-		$(".diagram_title").addClass("readonly");
-		$(".dock_buttons").children().addClass("disabled");
-		$("#dock_btn_history").removeClass("disabled");
-		$(".panel_box").addClass("readonly");
+		jQuery("#menu_bar").children().addClass("readonly");
+		jQuery(".diagram_title").addClass("readonly");
+		jQuery(".dock_buttons").children().addClass("disabled");
+		jQuery("#dock_btn_history").removeClass("disabled");
+		jQuery(".panel_box").addClass("readonly");
 		//中止监听
 		//CLB.stopListen();
 	},
@@ -2448,12 +2448,12 @@ var Dock = {
 		//重新初始化快捷键
 		Designer.hotkey.init();
 		Designer.op.init();
-		$("#menu_bar").children().removeClass("readonly");
-		$(".diagram_title").removeClass("readonly");
-		$(".dock_buttons").children().removeClass("disabled");
-		$("#dock_btn_history").removeClass("disabled");
-		$(".panel_box").removeClass("readonly");
-		$("#history_versions").children(".selected").removeClass("selected");
+		jQuery("#menu_bar").children().removeClass("readonly");
+		jQuery(".diagram_title").removeClass("readonly");
+		jQuery(".dock_buttons").children().removeClass("disabled");
+		jQuery("#dock_btn_history").removeClass("disabled");
+		jQuery(".panel_box").removeClass("readonly");
+		jQuery("#history_versions").children(".selected").removeClass("selected");
 		//继续监听
 		//CLB.listen();
 		Dock.loadHistorys();
@@ -2462,7 +2462,7 @@ var Dock = {
 	 * 恢复版本
 	 */
 	restoreVersion: function(){
-		var selected = $("#history_versions").children(".selected");
+		var selected = jQuery("#history_versions").children(".selected");
 		if(selected.length){
 			MessageSource.beginBatch();
 			var elements = Dock.currentDefinition.elements;
@@ -2499,12 +2499,12 @@ var Dock = {
 	setAttributeList: function(){
 		var selectedIds = Utils.getSelectedIds();
 		var shape = Model.getShapeById(selectedIds[0]);
-		$(".attr_list").empty();
+		jQuery(".attr_list").empty();
 		if(shape.dataAttributes){
 			for (var i = 0; i < shape.dataAttributes.length; i++) {
 				var attr = shape.dataAttributes[i];
-				var typeText = $("#attr_add_type").children("option[value="+attr.type+"]").text();
-				var item = $("<li id='"+attr.id+"' class='attr_item attr_item_"+attr.id+"' onclick=\"Dock.editAttr('"+attr.id+"')\"><div class='attr_name'>"+attr.name+"</div><div class='attr_type'>"+typeText+"</div><div class='attr_value'>"+attr.value+"</div><div style='clear: both'></div></li>").appendTo($(".attr_list"));
+				var typeText = jQuery("#attr_add_type").children("option[value="+attr.type+"]").text();
+				var item = jQuery("<li id='"+attr.id+"' class='attr_item attr_item_"+attr.id+"' onclick=\"Dock.editAttr('"+attr.id+"')\"><div class='attr_name'>"+attr.name+"</div><div class='attr_type'>"+typeText+"</div><div class='attr_value'>"+attr.value+"</div><div style='clear: both'></div></li>").appendTo(jQuery(".attr_list"));
 				if(attr.category != "default"){
 					item.append("<div class='ico ico_attr_delete' onclick=\"Dock.deleteAttr('"+attr.id+"', event)\"></div>");
 				}
@@ -2516,31 +2516,31 @@ var Dock = {
 	 * 让数据属性列表适应
 	 */
 	fitAttrList: function(){
-		var scroll = $(".attr_list").scrollTop();
-		$(".attr_list").height("auto");
-		var top = $(".attr_list").offset().top;
-		var bottom = top + $(".attr_list").height() + 10;
-		if(bottom > $(window).height()){
-			var height = $(window).height() - top - 10;
+		var scroll = jQuery(".attr_list").scrollTop();
+		jQuery(".attr_list").height("auto");
+		var top = jQuery(".attr_list").offset().top;
+		var bottom = top + jQuery(".attr_list").height() + 10;
+		if(bottom > jQuery(window).height()){
+			var height = jQuery(window).height() - top - 10;
 			if(height < 140){
 				height = 140;
 			}
-			$(".attr_list").height(height);
+			jQuery(".attr_list").height(height);
 		}else{
-			$(".attr_list").height("auto");
+			jQuery(".attr_list").height("auto");
 		}
-		$(".attr_list").scrollTop(scroll);
+		jQuery(".attr_list").scrollTop(scroll);
 	},
 	/**
 	 * 打开数据属性添加
 	 */
 	showAttrAdd: function(){
-		$("#attr_add_btn").hide();
-		$(".attr_add_items").show();
-		$("#attr_add_name").val("").focus();
-		$("#attr_add_type").val("string");
-		$("#attr_add_type").unbind().bind("change", function(){
-			Dock.setAttrValueInput(null, $(this).val());
+		jQuery("#attr_add_btn").hide();
+		jQuery(".attr_add_items").show();
+		jQuery("#attr_add_name").val("").focus();
+		jQuery("#attr_add_type").val("string");
+		jQuery("#attr_add_type").unbind().bind("change", function(){
+			Dock.setAttrValueInput(null, jQuery(this).val());
 		});
 		Dock.setAttrValueInput(null, "string");
 		this.fitAttrList();
@@ -2549,13 +2549,13 @@ var Dock = {
 	 * 保存数据属性添加
 	 */
 	saveAttrAdd: function(){
-		var name = $("#attr_add_name").val();
+		var name = jQuery("#attr_add_name").val();
 		if(name == ""){
-			$("#attr_add_name").focus();
+			jQuery("#attr_add_name").focus();
 			return;
 		}
-		var type = $("#attr_add_type").val();
-		var value = $("#attr_add_value_arera").children().val();
+		var type = jQuery("#attr_add_type").val();
+		var value = jQuery("#attr_add_value_arera").children().val();
 		var newAttr = {
 			name: name,
 			type: type,
@@ -2570,8 +2570,8 @@ var Dock = {
 	 * 取消数据属性添加
 	 */
 	cancelAttrAdd: function(){
-		$("#attr_add_btn").show();
-		$(".attr_add_items").hide();
+		jQuery("#attr_add_btn").show();
+		jQuery(".attr_add_items").hide();
 		this.fitAttrList();
 	},
 	/**
@@ -2579,15 +2579,15 @@ var Dock = {
 	 * @param {} attrId
 	 */
 	editAttr: function(attrId){
-		var item = $(".attr_item_" + attrId);
+		var item = jQuery(".attr_item_" + attrId);
 		if(item.hasClass("attr_editing")){
 			return;
 		}
-		if($(".attr_editing").length > 0){
-			var editingId = $(".attr_editing").attr("id");
+		if(jQuery(".attr_editing").length > 0){
+			var editingId = jQuery(".attr_editing").attr("id");
 			this.saveAttrEdit(editingId);
 		}
-		item = $(".attr_item_" + attrId);
+		item = jQuery(".attr_item_" + attrId);
 		item.addClass("attr_editing");
 		var attr = Designer.getDataAttrById(attrId);
 		//属性值输入
@@ -2597,18 +2597,18 @@ var Dock = {
 			//属性名和类型输入
 			var nameDiv = item.children(".attr_name");
 			nameDiv.empty();
-			var nameInput = $("<input type='text' class='input_text' style='width: 88px'/>").appendTo(nameDiv);
+			var nameInput = jQuery("<input type='text' class='input_text' style='width: 88px'/>").appendTo(nameDiv);
 			nameInput.val(attr.name).select();
 			var typeDiv = item.children(".attr_type");
 			typeDiv.empty();
-			var select = $("<select class='input_select' style='width: 60px'></select>").appendTo(typeDiv);
-			select.html($("#attr_add_type").html()).val(attr.type);
+			var select = jQuery("<select class='input_select' style='width: 60px'></select>").appendTo(typeDiv);
+			select.html(jQuery("#attr_add_type").html()).val(attr.type);
 			select.bind("change", function(){
-				Dock.setAttrValueInput(attr, $(this).val());
+				Dock.setAttrValueInput(attr, jQuery(this).val());
 			});
 		}
 		//添加显示设置
-		var displayArea = $("<div class='attr_edit_display'></div>").appendTo(item);
+		var displayArea = jQuery("<div class='attr_edit_display'></div>").appendTo(item);
 		//显示为的按钮
 		displayArea.append("<div class='dock_label'>Display As:</div>");
 		displayArea.append("<div id='attr_edit_showtype' class='toolbar_button active btn_inline' style='width: 75px;'><div class='text_content'></div><div class='ico ico_dropdown'></div></div>");
@@ -2621,28 +2621,28 @@ var Dock = {
 			showType = attr.showType;
 		}
 		this.setAttrDisplay(showType);
-		$("#attr_edit_showtype").attr("ty", showType).button({
+		jQuery("#attr_edit_showtype").attr("ty", showType).button({
 			onMousedown: function(){
-				$("#attr_display_list").dropdown({
-					target: $("#attr_edit_showtype"),
+				jQuery("#attr_display_list").dropdown({
+					target: jQuery("#attr_edit_showtype"),
 					onSelect: function(item){
 						var type = item.attr("ty");
-						$("#attr_edit_showtype").attr("ty", type).button("setText", item.text());
+						jQuery("#attr_edit_showtype").attr("ty", type).button("setText", item.text());
 						Dock.setAttrDisplay(type);
 					}
 				});
-				var type = $("#attr_edit_showtype").text().trim();
-				$("#attr_display_list").children().each(function(){
-					if($(this).text() == type){
-						$("#attr_display_list").dropdown("select", $(this));
+				var type = jQuery("#attr_edit_showtype").text().trim();
+				jQuery("#attr_display_list").children().each(function(){
+					if(jQuery(this).text() == type){
+						jQuery("#attr_display_list").dropdown("select", jQuery(this));
 						return false;
 					}
 				});
 			}
 		});
-		$("#attr_edit_showtype").attr("ty", showType).button("setText", $("#attr_display_list").children("li[ty="+showType+"]").html());
+		jQuery("#attr_edit_showtype").attr("ty", showType).button("setText", jQuery("#attr_display_list").children("li[ty="+showType+"]").html());
 		if(showType != "none"){
-			$("#attr_display_name").attr("checked", attr.showName);
+			jQuery("#attr_display_name").attr("checked", attr.showName);
 			if(showType == "icon"){
 				this.setAttrIcon(attr.icon);
 			}
@@ -2655,17 +2655,17 @@ var Dock = {
 		if(attr.vertical){
 			vertical = attr.vertical;
 		}
-		$("#attr_location_h").button("setText", $("#attr_location_h_list").children("li[loc="+horizontal+"]").html());
-		$("#attr_location_h").attr("loc", horizontal);
-		$("#attr_location_v").button("setText", $("#attr_location_v_list").children("li[loc="+vertical+"]").html());
-		$("#attr_location_v").attr("loc", vertical);
+		jQuery("#attr_location_h").button("setText", jQuery("#attr_location_h_list").children("li[loc="+horizontal+"]").html());
+		jQuery("#attr_location_h").attr("loc", horizontal);
+		jQuery("#attr_location_v").button("setText", jQuery("#attr_location_v_list").children("li[loc="+vertical+"]").html());
+		jQuery("#attr_location_v").attr("loc", vertical);
 		//添加保存按钮
 		item.append("<div class='attr_edit_btns'><div id='save_edit_attr' class='toolbar_button active'>OK</div><div id='cancel_edit_attr' class='toolbar_button active' style='margin-left: 5px;'>Cancel</div></div>");
-		$("#save_edit_attr").bind("click", function(e){
+		jQuery("#save_edit_attr").bind("click", function(e){
 			e.stopPropagation();
 			Dock.saveAttrEdit(attrId);
 		});
-		$("#cancel_edit_attr").bind("click", function(e){
+		jQuery("#cancel_edit_attr").bind("click", function(e){
 			e.stopPropagation();
 			Dock.setAttributeList();
 		})
@@ -2679,16 +2679,16 @@ var Dock = {
 		var valueArea;
 		if(attr != null){
 			//如果为null，则是添加时调用，否则为修改
-			valueArea = $(".attr_editing").children(".attr_value");
+			valueArea = jQuery(".attr_editing").children(".attr_value");
 		}else{
-			valueArea = $("#attr_add_value_arera");
+			valueArea = jQuery("#attr_add_value_arera");
 		}
 		valueArea.empty();
 		var result;
 		if(type == "boolean"){
-			result = $("<select class='input_select'><option value=''></option><option value='true'>true</option><option value='false'>false</option></select>").appendTo(valueArea);;
+			result = jQuery("<select class='input_select'><option value=''></option><option value='true'>true</option><option value='false'>false</option></select>").appendTo(valueArea);;
 		}else if(type == "list"){
-			result = $("<select class='input_select'></select>").appendTo(valueArea);
+			result = jQuery("<select class='input_select'></select>").appendTo(valueArea);
 			if(attr.listItems){
 				for (var i = 0; i < attr.listItems.length; i++) {
 					var listItem = attr.listItems[i];
@@ -2696,7 +2696,7 @@ var Dock = {
 				}
 			}
 		}else{
-			result = $("<input type='text' class='input_text'/>").appendTo(valueArea);
+			result = jQuery("<input type='text' class='input_text'/>").appendTo(valueArea);
 		}
 		if(attr == null){
 			valueArea.children().css("width", "260px");
@@ -2709,16 +2709,16 @@ var Dock = {
 	 * 添加数据显示的编辑项
 	 */
 	appendDisplayItems: function(){
-		var optionsArea = $(".attr_display_options");
+		var optionsArea = jQuery(".attr_display_options");
 		//详细区域，包括是否显示name，图标
-		var detailArea = $("<div class='opt_area'></div>").appendTo(optionsArea);
+		var detailArea = jQuery("<div class='opt_area'></div>").appendTo(optionsArea);
 		detailArea.append("<input id='attr_display_name' type='checkbox'/><label for='attr_display_name'>Show Name</label>");
 		//选择图标的Button
-		var iconButtonArea = $("<div id='attr_icon_area' style='padding-top:5px;'></div>").appendTo(detailArea);
+		var iconButtonArea = jQuery("<div id='attr_icon_area' style='padding-top:5px;'></div>").appendTo(detailArea);
 		iconButtonArea.append("<div class='dock_label'>Icon:</div>");
 		iconButtonArea.append("<div id='attr_display_icon' ico='' class='toolbar_button active btn_inline' style='width: 50px'><div class='text_content'></div><div class='ico ico_dropdown'></div></div>");
 		iconButtonArea.append("<div style='clear: both'></div>");
-		if($("#attr_icon_list").children("li").html() == ""){
+		if(jQuery("#attr_icon_list").children("li").html() == ""){
 			//初始化图标选择
 			var html = "";
 			var index = 1;
@@ -2730,10 +2730,10 @@ var Dock = {
 				html += "<div onmousedown='Dock.setAttrIcon("+index+")' class='attr_icon_item'></div>";
 				index++;
 			}
-			$("#attr_icon_list").children("li").html(html);
+			jQuery("#attr_icon_list").children("li").html(html);
 		}
 		//位置设置区域
-		var locationArea = $("<div class='opt_area location_area'></div>").appendTo(optionsArea);
+		var locationArea = jQuery("<div class='opt_area location_area'></div>").appendTo(optionsArea);
 		locationArea.append("<div>Display Location:</div>");
 		locationArea.append("<div class='dock_label'>Horizontal:</div>");
 		locationArea.append("<div id='attr_location_h' class='toolbar_button active btn_inline' loc='mostright'><div class='text_content location_content'><div><span style='left: 11px'></span></div>Most Right</div><div class='ico ico_dropdown'></div></div>");
@@ -2742,31 +2742,31 @@ var Dock = {
 		locationArea.append("<div id='attr_location_v' class='toolbar_button active btn_inline' loc='mostbottom'><div class='text_content location_content'><div><span style='top: 11px'></span></div>Most Bottom</div><div class='ico ico_dropdown'></div></div>");
 		locationArea.append("<div style='clear: both'></div>");
 		optionsArea.append("<div style='clear: both'></div>");
-		$("#attr_display_icon").button({
+		jQuery("#attr_display_icon").button({
 			onMousedown: function(){
-				$("#attr_icon_list").dropdown({
-					target: $("#attr_display_icon")
+				jQuery("#attr_icon_list").dropdown({
+					target: jQuery("#attr_display_icon")
 				});
 			}
 		});
-		$("#attr_location_h").button({
+		jQuery("#attr_location_h").button({
 			onMousedown: function(){
-				$("#attr_location_h_list").dropdown({
-					target: $("#attr_location_h"),
+				jQuery("#attr_location_h_list").dropdown({
+					target: jQuery("#attr_location_h"),
 					onSelect: function(item){
-						$("#attr_location_h").button("setText", item.html());
-						$("#attr_location_h").attr("loc", item.attr("loc"));
+						jQuery("#attr_location_h").button("setText", item.html());
+						jQuery("#attr_location_h").attr("loc", item.attr("loc"));
 					}
 				});
 			}
 		});
-		$("#attr_location_v").button({
+		jQuery("#attr_location_v").button({
 			onMousedown: function(){
-				$("#attr_location_v_list").dropdown({
-					target: $("#attr_location_v"),
+				jQuery("#attr_location_v_list").dropdown({
+					target: jQuery("#attr_location_v"),
 					onSelect: function(item){
-						$("#attr_location_v").button("setText", item.html());
-						$("#attr_location_v").attr("loc", item.attr("loc"));
+						jQuery("#attr_location_v").button("setText", item.html());
+						jQuery("#attr_location_v").attr("loc", item.attr("loc"));
 					}
 				});
 			}
@@ -2778,13 +2778,13 @@ var Dock = {
 	 */
 	setAttrDisplay: function(type){
 		if(type == "none"){
-			$(".attr_display_options").hide();
+			jQuery(".attr_display_options").hide();
 		}else{
-			$(".attr_display_options").show();
+			jQuery(".attr_display_options").show();
 			if(type == "icon"){
-				$("#attr_icon_area").show();
+				jQuery("#attr_icon_area").show();
 			}else{
-				$("#attr_icon_area").hide();
+				jQuery("#attr_icon_area").hide();
 			}
 		}
 	},
@@ -2793,9 +2793,9 @@ var Dock = {
 	 * @param {} icon
 	 */
 	setAttrIcon: function(icon){
-		$("#attr_display_icon").attr("ico", icon).button("setText", "");
+		jQuery("#attr_display_icon").attr("ico", icon).button("setText", "");
 		if(icon){
-			$("#attr_display_icon").button("setText", "<img src='/images/data-attr/"+icon+".png'/>");
+			jQuery("#attr_display_icon").button("setText", "<img src='/images/data-attr/"+icon+".png'/>");
 		}
 	},
 	/**
@@ -2803,7 +2803,7 @@ var Dock = {
 	 * @param {} attrId
 	 */
 	saveAttrEdit: function(attrId){
-		var item = $(".attr_item_" + attrId);
+		var item = jQuery(".attr_item_" + attrId);
 		if(!item.hasClass("attr_editing")){
 			return;
 		}
@@ -2818,14 +2818,14 @@ var Dock = {
 			attr.type = item.children(".attr_type").children("select").val();
 		}
 		attr.value = item.children(".attr_value").children().val();
-		var showType = $("#attr_edit_showtype").attr("ty");
+		var showType = jQuery("#attr_edit_showtype").attr("ty");
 		attr.showType = showType;
 		if(showType != "none"){
-			attr.showName = $("#attr_display_name").is(":checked");
-			attr.horizontal = $("#attr_location_h").attr("loc");
-			attr.vertical = $("#attr_location_v").attr("loc");
+			attr.showName = jQuery("#attr_display_name").is(":checked");
+			attr.horizontal = jQuery("#attr_location_h").attr("loc");
+			attr.vertical = jQuery("#attr_location_v").attr("loc");
 			if(showType == "icon"){
-				attr.icon = $("#attr_display_icon").attr("ico");
+				attr.icon = jQuery("#attr_display_icon").attr("ico");
 			}
 		}
 		//BPMN数据属性规则
@@ -2908,7 +2908,7 @@ var Dock = {
 	 */
 	deleteAttr: function(attrId, event){
 		event.stopPropagation();
-		var item = $(".attr_item_" + attrId);
+		var item = jQuery(".attr_item_" + attrId);
 		item.remove();
 		this.fitAttrList();
 		Designer.deleteDataAttribute(attrId);
@@ -2926,21 +2926,21 @@ var Dock = {
 		} else {
 			//无法进入全屏，提示错误
 			if(presentation){
-				$("#fullscreen_tip").find(".t").text("Since your browser's limitations, can't enter presentation view.");
+				jQuery("#fullscreen_tip").find(".t").text("Since your browser's limitations, can't enter presentation view.");
 			}else{
-				$("#fullscreen_tip").find(".t").text("Can't enter full screen, you can press F11 to enter.");
+				jQuery("#fullscreen_tip").find(".t").text("Can't enter full screen, you can press F11 to enter.");
 			}
-			$("#fullscreen_tip").fadeIn();
+			jQuery("#fullscreen_tip").fadeIn();
 		}
 	},
 	/**
 	 * 进入演示视图
 	 */
 	enterPresentation: function(){
-		$("#designer").bind('webkitfullscreenchange', function(e) {
+		jQuery("#designer").bind('webkitfullscreenchange', function(e) {
 			Dock.manageFullScreen();
 		});
-		$(document).bind('mozfullscreenchange', function(e) {
+		jQuery(document).bind('mozfullscreenchange', function(e) {
 			Dock.manageFullScreen();
 		}).bind('fullscreenchange', function(e) {
 			Dock.manageFullScreen();
@@ -2958,33 +2958,33 @@ var Dock = {
 		var designer = Utils.getDomById("designer");
 		if(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement){
 			//如果进入全屏状态
-			$("#shape_panel").addClass("readonly");
-			$("#note_list").addClass("readonly");
-			$("#designer_viewport").addClass("readonly");
-			$(window).unbind("resize.designer");
-			$("#designer_layout").height(window.screen.height);
+			jQuery("#shape_panel").addClass("readonly");
+			jQuery("#note_list").addClass("readonly");
+			jQuery("#designer_viewport").addClass("readonly");
+			jQuery(window).unbind("resize.designer");
+			jQuery("#designer_layout").height(window.screen.height);
 			//取消快捷键
 			Designer.hotkey.cancel();
 			Designer.op.cancel();
 			//隐藏Dock
-			$("#dock").hide();
-			$(".dock_view").hide();
+			jQuery("#dock").hide();
+			jQuery(".dock_view").hide();
 			Designer.contextMenu.destroy();
 			Designer.op.canvasFreeDraggable();
 		}else{
-			$("#shape_panel").removeClass("readonly");
-			$("#note_list").removeClass("readonly");
-			$("#designer_viewport").removeClass("readonly");
+			jQuery("#shape_panel").removeClass("readonly");
+			jQuery("#note_list").removeClass("readonly");
+			jQuery("#designer_viewport").removeClass("readonly");
 			Designer.initialize.initLayout();
 			Designer.hotkey.init();
 			Designer.op.init();
-			$("#dock").show();
+			jQuery("#dock").show();
 			if(Dock.currentView != ""){
 				Dock.showView(Dock.currentView);
 			}
 			Designer.contextMenu.init();
-			$("#designer").unbind('webkitfullscreenchange');
-			$("#designer").unbind('mozfullscreenchange').unbind('fullscreenchange');
+			jQuery("#designer").unbind('webkitfullscreenchange');
+			jQuery("#designer").unbind('mozfullscreenchange').unbind('fullscreenchange');
 		}
 	}
 };
@@ -3000,30 +3000,30 @@ var Navigator = {
 	 */
 	init: function(){
 		/*
-		$("#designer_layout").bind("scroll", function(){
+		jQuery("#designer_layout").bind("scroll", function(){
 			Navigator.setView();
 		});
 		//绑定拖动
-		$("#navigation_eye").bind("mousedown", function(downE){
-			var eye = $(this);
+		jQuery("#navigation_eye").bind("mousedown", function(downE){
+			var eye = jQuery(this);
 			var beginPos = eye.position();
 			//先取消滚动事件
-			$("#designer_layout").unbind("scroll");
-			var layout = $("#designer_layout");
+			jQuery("#designer_layout").unbind("scroll");
+			var layout = jQuery("#designer_layout");
 			var beginTop = layout.scrollTop();
 			var beginLeft = layout.scrollLeft();
 			//设计器画布
-			var designerCanvas = $("#designer_canvas");
+			var designerCanvas = jQuery("#designer_canvas");
 	 		var canvasW = designerCanvas.width();
 	 		var canvasH = designerCanvas.height();
 	 		//鹰眼视图画布
-	 		var canvas = $("#navigation_canvas");
+	 		var canvas = jQuery("#navigation_canvas");
 	 		var navW = canvas.width();
 			var navH = canvas.height();
 			//宽高比例
 			var scaleW = canvasW / navW;
 			var scaleH = canvasH / navH;
-			$(document).bind("mousemove.navigator", function(moveE){
+			jQuery(document).bind("mousemove.navigator", function(moveE){
 				var offsetX = moveE.pageX - downE.pageX;
 				var offsetY = moveE.pageY - downE.pageY;
 				var newLeft = beginLeft + offsetX * scaleW;
@@ -3035,24 +3035,24 @@ var Navigator = {
 					top: beginPos.top + offsetY
 				});
 			});
-			$(document).bind("mouseup.navigator", function(moveE){
-				$(document).unbind("mousemove.navigator");
-				$(document).unbind("mouseup.navigator");
+			jQuery(document).bind("mouseup.navigator", function(moveE){
+				jQuery(document).unbind("mousemove.navigator");
+				jQuery(document).unbind("mouseup.navigator");
 				Navigator.setView();
 				//重新绑定
-				$("#designer_layout").bind("scroll", function(){
+				jQuery("#designer_layout").bind("scroll", function(){
 					Navigator.setView();
 				});
 			});
 		});
-		$("#navigation_canvas").bind("click", function(e){
-			var pos = Utils.getRelativePos(e.pageX, e.pageY, $(this));
+		jQuery("#navigation_canvas").bind("click", function(e){
+			var pos = Utils.getRelativePos(e.pageX, e.pageY, jQuery(this));
 			//设计器画布
-			var designerCanvas = $("#designer_canvas");
+			var designerCanvas = jQuery("#designer_canvas");
 	 		var canvasW = designerCanvas.width();
 	 		var canvasH = designerCanvas.height();
 	 		//鹰眼视图画布
-	 		var canvas = $("#navigation_canvas");
+	 		var canvas = jQuery("#navigation_canvas");
 	 		var navW = canvas.width();
 			var navH = canvas.height();
 			//宽高比例
@@ -3062,7 +3062,7 @@ var Navigator = {
 			var canvasX = pos.x * scaleW;
 			var canvasY = pos.y * scaleH;
 			//把点击坐标，置于屏幕中心
-			var layout = $("#designer_layout");
+			var layout = jQuery("#designer_layout");
 			var margin = Designer.config.pageMargin;
 			layout.scrollLeft(canvasX + margin - layout.width()/2);
 			layout.scrollTop(canvasY + margin - layout.height()/2);
@@ -3078,7 +3078,7 @@ var Navigator = {
 			window.clearTimeout(this.drawNavigationTimeout);
 		}
 		this.drawNavigationTimeout = setTimeout(function(){
-			var canvas = $("#navigation_canvas");
+			var canvas = jQuery("#navigation_canvas");
 			var ctx = canvas[0].getContext("2d");
 			ctx.save();
 			ctx.clearRect(0, 0, canvas.width(), canvas.height());
@@ -3134,17 +3134,17 @@ var Navigator = {
 	 */
 	setView: function(){
 		/*
- 		var navigator = $("#navigation_eye");
+ 		var navigator = jQuery("#navigation_eye");
  		//设计器可见视图
- 		var layout = $("#designer_layout");
+ 		var layout = jQuery("#designer_layout");
  		var viewW = layout.width();
  		var viewH = layout.height();
  		//鹰眼视图画布
- 		var canvas = $("#navigation_canvas");
+ 		var canvas = jQuery("#navigation_canvas");
  		var navW = canvas.width();
 		var navH = canvas.height();
 		//设计器画布
- 		var designerCanvas = $("#designer_canvas");
+ 		var designerCanvas = jQuery("#designer_canvas");
  		var canvasW = designerCanvas.width();
  		var canvasH = designerCanvas.height();
  		var margin = Designer.config.pageMargin;
@@ -3209,33 +3209,33 @@ var Navigator = {
 	/**
 	 * 按钮
 	 */
-	$.fn.button = function(options){
+	jQuery.fn.button = function(options){
 		if(typeof options == "string"){
 			if(options == "disable"){
-				$(this).addClass("disabled");
-				$(this).find("input").attr("disabled", true);
+				jQuery(this).addClass("disabled");
+				jQuery(this).find("input").attr("disabled", true);
 			}else if(options == "enable"){
-				$(this).removeClass("disabled");
-				$(this).find("input").attr("disabled", false);
+				jQuery(this).removeClass("disabled");
+				jQuery(this).find("input").attr("disabled", false);
 			}else if(options == "isDisabled"){
-				return $(this).hasClass("disabled");
+				return jQuery(this).hasClass("disabled");
 			}else if(options == "isSelected"){
-				return $(this).hasClass("selected");
+				return jQuery(this).hasClass("selected");
 			}else if(options == "unselect"){
-				$(this).removeClass("selected");
+				jQuery(this).removeClass("selected");
 			}else if(options == "select"){
-				$(this).addClass("selected");
+				jQuery(this).addClass("selected");
 			}else if(options == "setText"){
-				$(this).children(".text_content").html(arguments[1]);
+				jQuery(this).children(".text_content").html(arguments[1]);
 			}else if(options == "setColor"){
-				$(this).children(".btn_color").css("background-color", "rgb(" + arguments[1] + ")");
+				jQuery(this).children(".btn_color").css("background-color", "rgb(" + arguments[1] + ")");
 			}else if(options == "getColor"){
-				var color = $(this).children(".btn_color").css("background-color").replace(/\s/g, "");
+				var color = jQuery(this).children(".btn_color").css("background-color").replace(/\s/g, "");
 				return color.substring(4, color.length - 1);
 			}
-			return $(this);
+			return jQuery(this);
 		}
-		var target = $(this);
+		var target = jQuery(this);
 		target.unbind("click");
 		target.unbind("mousedown")
 		if(options.onClick){
@@ -3258,14 +3258,14 @@ var Navigator = {
 	};
 	var currentMenu = null;
 	//下拉控件
-	$.fn.dropdown = function(options){
-		var menu = $(this);
+	jQuery.fn.dropdown = function(options){
+		var menu = jQuery(this);
 		menu.find(".ico_selected").remove();
 		if(typeof options == "string"){
 			if(options == "close"){
 				menu.hide();
 				currentMenu.target.removeClass("selected");
-				$(document).unbind("mousedown.ui_dropdown");
+				jQuery(document).unbind("mousedown.ui_dropdown");
 				currentMenu = null;
 			}else if(options == "select"){
 				arguments[1].prepend("<div class='ico ico_selected'></div>");
@@ -3278,7 +3278,7 @@ var Navigator = {
 			 */
 			currentMenu.menu.dropdown("close");
 		}
-		var menu = $(this);
+		var menu = jQuery(this);
 		var tar = options.target;
 		currentMenu = {
 			target: tar,
@@ -3296,8 +3296,8 @@ var Navigator = {
 			left = offset.left;
 		}
 		var top = offset.top + tar.outerHeight();
-		if(top + menu.outerHeight() > $(window).height()){
-			top = $(window).height() - menu.outerHeight();
+		if(top + menu.outerHeight() > jQuery(window).height()){
+			top = jQuery(window).height() - menu.outerHeight();
 		}
 		menu.css({
 			top: top,
@@ -3311,7 +3311,7 @@ var Navigator = {
 		});
 		if(typeof options.bind == "undefined" || options.bind == true){
 			menu.find("li:not(.devider,.menu_text)").unbind().bind("click", function(){
-				var item = $(this);
+				var item = jQuery(this);
 				if(!item.menuitem("isDisabled") && item.children(".extend_menu").length == 0){
 					if(options.onSelect){
 						options.onSelect(item);
@@ -3320,46 +3320,46 @@ var Navigator = {
 				}
 			});
 		}
-		$(document).bind("mousedown.ui_dropdown", function(){
+		jQuery(document).bind("mousedown.ui_dropdown", function(){
 			menu.dropdown("close");
 		});
 	};
 	//调色板
-	$.colorpicker = function(options){
-		var picker = $("#color_picker");
+	jQuery.colorpicker = function(options){
+		var picker = jQuery("#color_picker");
 		picker.find(".selected").removeClass("selected");
 		if(!picker.attr("init")){
 			//没有经过初始化
 			picker.find("div").each(function(){
-				var color = $(this).css("background-color");
+				var color = jQuery(this).css("background-color");
 				color = color.replace(/\s/g, "");
 				color = color.substring(4, color.length - 1);
-				$(this).attr("col", color);
+				jQuery(this).attr("col", color);
 			});
 			picker.attr("init", true);
 		}
-		var opt = $.extend({}, options, {bind: false});
+		var opt = jQuery.extend({}, options, {bind: false});
 		picker.dropdown(opt);
 		picker.children(".color_items").children("div").unbind().bind("click", function(){
 			if(options.onSelect){
-				var color = $(this).css("background-color");
+				var color = jQuery(this).css("background-color");
 				color = color.replace(/\s/g, "");
 				color = color.substring(4, color.length - 1);
 				options.onSelect(color);
 			}
-			$("#color_picker").dropdown("close");
+			jQuery("#color_picker").dropdown("close");
 		});
 		if(options.color){
 			picker.find("div[col='"+options.color+"']").addClass("selected");
 		}
-		$("#color_picker").children(".color_extend").remove();
+		jQuery("#color_picker").children(".color_extend").remove();
 		if(options.extend){
-			$("#color_picker").append("<div class='color_extend'>"+options.extend+"</div>")
+			jQuery("#color_picker").append("<div class='color_extend'>"+options.extend+"</div>")
 		}
 	};
 	//颜色按钮
-	$.fn.colorButton = function(opt){
-		var tar = $(this);
+	jQuery.fn.colorButton = function(opt){
+		var tar = jQuery(this);
 		if(typeof opt == "string"){
 			if(opt == "setColor"){
 				tar.children(".picker_btn_holder").css("background-color", "rgb(" + arguments[1] + ")");
@@ -3372,7 +3372,7 @@ var Navigator = {
 				return;
 			}
 			e.stopPropagation();
-			var options = $.extend({}, opt);
+			var options = jQuery.extend({}, opt);
 			options.target = tar;
 			options.onSelect = function(color){
 				tar.colorButton("setColor", color);
@@ -3380,19 +3380,19 @@ var Navigator = {
 					opt.onSelect(color);
 				}
 			};
-			var color = $(this).children(".picker_btn_holder").css("background-color");
+			var color = jQuery(this).children(".picker_btn_holder").css("background-color");
 			color = color.replace(/\s/g, "");
 			color = color.substring(4, color.length - 1);
 			options.color = color;
-			$.colorpicker(options);
+			jQuery.colorpicker(options);
 		});
 	};
 	/**
 	 * 数字框
 	 * min: 0, max: 360, unit: "°", step: 15,
 	 */
-	$.fn.spinner = function(opt){
-		var spinner = $(this);
+	jQuery.fn.spinner = function(opt){
+		var spinner = jQuery(this);
 		if(typeof opt == "string"){
 			if(opt == "getValue"){
 				var result = spinner.find("input").val();
@@ -3417,7 +3417,7 @@ var Navigator = {
 			step: 1,
 			unit: ""
 		};
-		opt = $.extend(defaults, opt);
+		opt = jQuery.extend(defaults, opt);
 		//将max和min配置放到行内属性中，可以支持动态修改
 		if(typeof opt.min != "undefined"){
 			spinner.attr("min", opt.min);
@@ -3446,24 +3446,24 @@ var Navigator = {
 		});
 		input.bind("keydown", function(e){
 			if(e.keyCode == 13){
-				var newVal = parseInt($(this).val());
+				var newVal = parseInt(jQuery(this).val());
 				if(isNaN(newVal)){
 					newVal = opt.min;
 				}
 				setSpinnerValue(spinner, newVal, opt);
 			}
 		}).bind("focus", function(e){
-			$(this).select();
-			$(this).bind("mouseup", function(e){
+			jQuery(this).select();
+			jQuery(this).bind("mouseup", function(e){
 				e.preventDefault();
-				$(this).unbind("mouseup");
+				jQuery(this).unbind("mouseup");
 			});
-			var box = $(this).parent().parent();
+			var box = jQuery(this).parent().parent();
 			if(!box.hasClass("active")){
 				box.addClass("active inset");
 			}
 		}).bind("blur", function(e){
-			var box = $(this).parent().parent();
+			var box = jQuery(this).parent().parent();
 			if(box.hasClass("inset")){
 				box.removeClass("active inset");
 			}
@@ -3494,8 +3494,8 @@ var Navigator = {
 	/**
 	 * 菜单项
 	 */
-	$.fn.menuitem = function(options){
-		var target = $(this);
+	jQuery.fn.menuitem = function(options){
+		var target = jQuery(this);
 		if(typeof options == "string"){
 			if(options == "disable"){
 				target.addClass("disabled");
@@ -3515,8 +3515,8 @@ var Navigator = {
 	/**
 	 * 窗口
 	 */
-	$.fn.dlg = function(options){
-		var dlg = $(this);
+	jQuery.fn.dlg = function(options){
+		var dlg = jQuery(this);
 		if(typeof options == "string"){
 			if(options == "close"){
 				dlg.children(".dlg_close").trigger("click");
@@ -3524,30 +3524,30 @@ var Navigator = {
 			return;
 		}
 		var defaults = {closable: true};
-		options = $.extend(defaults, options);
+		options = jQuery.extend(defaults, options);
 		var close = dlg.children(".dlg_close");
 		if(close.length == 0){
-			close = $("<div class='ico dlg_close'></div>").appendTo(dlg);
+			close = jQuery("<div class='ico dlg_close'></div>").appendTo(dlg);
 		}
 		if(options.closable == false){
 			close.hide();
 		}else{
 			close.show();
 		}
-		$(".dlg_mask").remove();
-		$("body").append("<div class='dlg_mask'></div>")
+		jQuery(".dlg_mask").remove();
+		jQuery("body").append("<div class='dlg_mask'></div>")
 		close.unbind().bind("click", function(){
 			dlg.hide();
-			$(".dlg_mask").remove();
+			jQuery(".dlg_mask").remove();
 			if(options && options.onClose){
 				options.onClose();
 			}
-			$(document).unbind("keydown.closedlg");
+			jQuery(document).unbind("keydown.closedlg");
 			dlg.find("input,textarea,select").unbind("keydown.closedlg");
 		});
 		dlg.css({
-			left: ($(window).width() - dlg.outerWidth())/2,
-			top: ($(window).height() - dlg.outerHeight())/2
+			left: (jQuery(window).width() - dlg.outerWidth())/2,
+			top: (jQuery(window).height() - dlg.outerHeight())/2
 		});
 		dlg.show();
 		if(options.closable){
@@ -3556,19 +3556,19 @@ var Navigator = {
 					dlg.children(".dlg_close").trigger("click");
 				}
 			});
-			$(document).unbind("keydown.closedlg").bind("keydown.closedlg", function(e){
+			jQuery(document).unbind("keydown.closedlg").bind("keydown.closedlg", function(e){
 				if(e.keyCode == 27){
 					dlg.children(".dlg_close").trigger("click");
 				}
 			});
 		}
 		dlg.children(".dialog_header").unbind("mousedown.drag_dlg").bind("mousedown.drag_dlg", function(e){
-			var target = $(this).parent();
+			var target = jQuery(this).parent();
 			var downX = e.pageX;
 			var downY = e.pageY;
 			var downLeft = target.offset().left;
 			var downTop = target.offset().top;
-			$(document).bind("mousemove.drag_dlg", function(e){
+			jQuery(document).bind("mousemove.drag_dlg", function(e){
 				var left = e.pageX - downX + downLeft;
 				var top = e.pageY - downY + downTop;
 				target.offset({
@@ -3576,9 +3576,9 @@ var Navigator = {
 					top: top
 				});
 			});
-			$(document).bind("mouseup.drag_dlg", function(e){
-				$(document).unbind("mousemove.drag_dlg");
-				$(document).unbind("mouseup.drag_dlg");
+			jQuery(document).bind("mouseup.drag_dlg", function(e){
+				jQuery(document).unbind("mousemove.drag_dlg");
+				jQuery(document).unbind("mouseup.drag_dlg");
 			});
 		});
 	};

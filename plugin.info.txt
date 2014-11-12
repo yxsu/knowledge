@@ -1,0 +1,7 @@
+base   mind
+author Yuxin Su
+email  suyuxin@outlook.com
+date   2014-11-09
+name   Mind plugin
+desc   Show graphics content in dokuwiki
+url    http://www.dokuwiki.org/plugin:mind
